@@ -22,6 +22,7 @@ const SERVER = HTTP.createServer(APP);
 
 //Middleware
 APP.use(EXPRESS.static(__dirname + '/public'));
+APP.use(EXPRESS.static(__dirname + '/js'));
 APP.use(COOKIEPARSER());
 DOTENV.config();
 

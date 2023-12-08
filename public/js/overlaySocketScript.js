@@ -1,5 +1,5 @@
 // Imports
-import {io} from "socket.io-client";
+import io from 'https://cdn.skypack.dev/socket.io-client';
 
 document.addEventListener('DOMContentLoaded', () => {
     // Establish connection
