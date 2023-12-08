@@ -3,7 +3,7 @@ import io from 'https://cdn.skypack.dev/socket.io-client';
 
 document.addEventListener('DOMContentLoaded', () => {
     // Establish connection
-    const SOCKET = io('ws://localhost:3000');
+    const SOCKET = io('ws://spl-lilac.vercel.app/');
 
     SOCKET.on('connect', () => {
         console.log(`Connected with ${SOCKET.id}.`);
