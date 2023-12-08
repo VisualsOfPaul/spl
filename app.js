@@ -5,6 +5,17 @@ const EXPRESS = require('express');
 const SOCKETIO = require('socket.io');
 const DOTENV = require('dotenv');
 
+const TEAMS = {
+    "first" : {
+        "name": "-",
+        "points": 0
+    },
+    "second" : {
+        "name": "-",
+        "points": 0
+    }
+}
+
 // App setup
 const APP = EXPRESS();
 const SERVER = HTTP.createServer(APP);
@@ -46,6 +57,27 @@ const IO = new SOCKETIO.Server(SERVER);
 
 IO.on('connection', (socket) => {
     console.log(`Connected with ${socket.id}.`);
+
+    IO.emit('update-teams', TEAMS)
+
+    socket.on('set-team', (data) => {
+        
+        switch(data.team) {
+            case "1": TEAMS.first.name = data.value; break;
+            case "2": TEAMS.second.name = data.value; break;
+        }
+
+        IO.emit('update-teams', TEAMS)
+    });
+
+    socket.on('set-point', (data) => {
+       switch(data.team) {
+            case "1": TEAMS.first.points = data.operation === "add" ? TEAMS.first.points + 1 : TEAMS.first.points - 1; break;
+            case "2": TEAMS.second.points = data.operation === "add" ? TEAMS.second.points + 1 : TEAMS.second.points - 1; break;
+       }
+
+       IO.emit('update-teams', TEAMS)
+    })
 
     socket.on('disconnect', () => {
         console.log(`Socket ${socket.id} disconnected.`);
