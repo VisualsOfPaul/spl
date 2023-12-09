@@ -7,12 +7,19 @@
 </head>
 <body>
     <main>
+        <section aria-label="Bandage">
+            <h2>Bauchbinde</h2>
+            <form id="bandage">
+                <select id="bandage-select"></select>
+                <button type="submit">Bauchbinde anzeigen</button>
+            </form>
+        </section>
         <section aria-label="Points">
-            <h1>Points</h1>
+            <h1>Punkte</h1>
             <div id="team-1">
                 <h2>Team 1</h2>
                 <select name="team-1-name" id="team-1-name">
-                    <option value="-" disabled selected>Please select a name</option>
+                    <option value="-" disabled selected>Bitte einen Studiengang auswählen...</option>
                     <option value="AI">Allegmeine Informatik</option>
                     <option value="WI">Wirtschaftsinformatik</option>
                     <option value="MI">Medieninformatik</option>
@@ -26,7 +33,7 @@
             <div id="team-2">
                 <h2>Team 2</h2>
                 <select name="team-2-name" id="team-2-name">
-                    <option value="-" disabled selected>Please select a name</option>
+                    <option value="-" disabled selected>Bitte einen Studiengang auswählen...</option>
                     <option value="AI">Allegmeine Informatik</option>
                     <option value="WI">Wirtschaftsinformatik</option>
                     <option value="MI">Medieninformatik</option>
@@ -37,11 +44,15 @@
                     <button value="add">+1</button>
                 </form>
             </div>
+            <form id="show-teams-form">
+                <button type="submit">Show Teams</button>
+            </form>
         </section>
     </main>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-    <script src="/js/saveCookie.mjs" type="module"></script>
-    <script src="/js/dashboardSocketScript.mjs" type="module"></script>
+    <script src="/js/saveCookie.js" type="module"></script>
+    <script src="/js/dashboardSocketScript.js" type="module"></script>
+    <script src="/js/dashboardVueScript.js" type="module"></script>
 </body>
 </html>

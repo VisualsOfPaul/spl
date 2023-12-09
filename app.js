@@ -13,7 +13,8 @@ const TEAMS = {
     "second" : {
         "name": "-",
         "points": 0
-    }
+    },
+    "visible": false
 }
 
 // App setup
@@ -24,6 +25,9 @@ const SERVER = HTTP.createServer(APP);
 APP.use(EXPRESS.static(__dirname + '/static'));
 APP.use(COOKIEPARSER());
 DOTENV.config();
+
+//Modells
+const bandageModel = require('./models/bandageModel.js');
 
 //Routing
 APP.get("/unauthorized", (req, res) => { //login
@@ -52,13 +56,23 @@ APP.get("/view", (req, res) => {
 
 });
 
+
+APP.get("/api/bandages", async (req, res) => {
+    res.send(await bandageModel.getEntries());
+})
+
 // Socket setup
 const IO = new SOCKETIO.Server(SERVER);
 
 IO.on('connection', (socket) => {
     console.log(`Connected with ${socket.id}.`);
 
-    IO.emit('update-teams', TEAMS)
+    IO.emit('update-teams', TEAMS);
+
+    socket.on('show-teams', () => {
+        TEAMS.visible = !TEAMS.visible;
+        IO.emit('update-teams', (TEAMS));
+    })
 
     socket.on('set-team', (data) => {
         
@@ -77,6 +91,10 @@ IO.on('connection', (socket) => {
        }
 
        IO.emit('update-teams', TEAMS)
+    })
+
+    socket.on('show-bandage', (data) => {
+        IO.emit('show-bandage', data)
     })
 
     socket.on('disconnect', () => {

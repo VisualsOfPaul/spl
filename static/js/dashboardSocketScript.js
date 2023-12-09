@@ -1,15 +1,22 @@
 // Imports
 import io from 'https://cdn.skypack.dev/socket.io-client';
+import { getHost } from "./wsHost.js";
 
 document.addEventListener('DOMContentLoaded', () => {
+    
     // Establish connection
-    const SOCKET = io('wss://spl-e931.onrender.com/');
+    const SOCKET = io(getHost(window.location.href));
 
     SOCKET.on('connect', () => {
         console.log(`Connected with ${SOCKET.id}.`);
 
+
         // Variables
+        const BANDAGEFORM = document.querySelector('#bandage');
+        const BANDAGESELECT = BANDAGEFORM.children[0];
         const TEAMS = document.querySelectorAll('div[id^="team"]');
+        const SHOWTEAMSFORM = document.querySelector('#show-teams-form');
+
 
         // Get current stats
         SOCKET.on('update-teams', (data) => {
@@ -24,7 +31,25 @@ document.addEventListener('DOMContentLoaded', () => {
                     entry.selected = true;
                 }
             });
+
+            SHOWTEAMSFORM.children[0].textContent = data.visible ? "Hide Teams" : "Show Teams";
         });
+
+
+        // Show bandage
+        BANDAGEFORM.addEventListener('submit', ($event) => {
+            $event.preventDefault();
+
+            SOCKET.emit('show-bandage', {
+                "actor": BANDAGESELECT.value
+            });
+        });
+
+        // Show teams
+        SHOWTEAMSFORM.addEventListener('submit', ($event) => {
+            $event.preventDefault();
+            SOCKET.emit('show-teams')
+        })
 
         // Set teams
         TEAMS.forEach((team) => {
