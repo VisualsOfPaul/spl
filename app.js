@@ -5,7 +5,7 @@ const EXPRESS = require('express');
 const SOCKETIO = require('socket.io');
 const DOTENV = require('dotenv');
 
-const TEAMS = {
+var teams = {
     "first" : {
         "name": "-",
         "points": 0
@@ -28,8 +28,13 @@ DOTENV.config();
 
 //Modells
 const bandageModel = require('./models/bandageModel.js');
+const teamsModel = require('./models/teamsModel.js');
 
 //Routing
+APP.get("/", (req, res) => {
+    res.redirect('/overlay');
+});
+
 APP.get("/unauthorized", (req, res) => { //login
     res.sendFile(__dirname + "/views/unauthorized.html");
 });
@@ -67,30 +72,48 @@ const IO = new SOCKETIO.Server(SERVER);
 IO.on('connection', (socket) => {
     console.log(`Connected with ${socket.id}.`);
 
-    IO.emit('update-teams', TEAMS);
+    IO.emit('update-teams', teams);
 
     socket.on('show-teams', () => {
-        TEAMS.visible = !TEAMS.visible;
-        IO.emit('update-teams', (TEAMS));
+        teams.visible = !teams.visible;
+        IO.emit('update-teams', (teams));
     })
 
     socket.on('set-team', (data) => {
         
         switch(data.team) {
-            case "1": TEAMS.first.name = data.value; break;
-            case "2": TEAMS.second.name = data.value; break;
+            case "1": teams.first.name = data.value; break;
+            case "2": teams.second.name = data.value; break;
         }
 
-        IO.emit('update-teams', TEAMS)
+
+
+        IO.emit('update-teams', teams)
     });
 
     socket.on('set-point', (data) => {
        switch(data.team) {
-            case "1": TEAMS.first.points = data.operation === "add" ? TEAMS.first.points + 1 : TEAMS.first.points - 1; break;
-            case "2": TEAMS.second.points = data.operation === "add" ? TEAMS.second.points + 1 : TEAMS.second.points - 1; break;
+            case "1": teams.first.points = data.operation === "add" ? teams.first.points + 1 : teams.first.points - 1; break;
+            case "2": teams.second.points = data.operation === "add" ? teams.second.points + 1 : teams.second.points - 1; break;
        }
 
-       IO.emit('update-teams', TEAMS)
+       IO.emit('update-teams', teams)
+    })
+
+    socket.on('reset-teams', () => {
+        teams = {
+            "first" : {
+                "name": "-",
+                "points": 0
+            },
+            "second" : {
+                "name": "-",
+                "points": 0
+            },
+            "visible": false
+        }
+
+        IO.emit('update-teams', teams)
     })
 
     socket.on('show-bandage', (data) => {
