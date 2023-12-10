@@ -16,7 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const BANDAGESELECT = BANDAGEFORM.children[0];
         const TEAMS = document.querySelectorAll('div[id^="team"]');
         const SHOWTEAMSFORM = document.querySelector('#show-teams-form');
-
+        const TEAMPOINTS = document.querySelectorAll('p[id^="points-team-"]');
+        const RESETTEAMSFORM = document.querySelector('#reset-teams-form');
 
         // Get current stats
         SOCKET.on('update-teams', (data) => {
@@ -24,25 +25,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(entry.value === data.first.name) {
                     entry.selected = true;
                 }
+
+                TEAMPOINTS[0].textContent = data.first.points;
             });
 
             Array.from(TEAMS[1].children[1].children).forEach((entry) => {
                 if(entry.value === data.second.name) {
                     entry.selected = true;
                 }
+
+                TEAMPOINTS[1].textContent = data.second.points;
             });
 
             SHOWTEAMSFORM.children[0].textContent = data.visible ? "Hide Teams" : "Show Teams";
-        });
-
-
-        // Show bandage
-        BANDAGEFORM.addEventListener('submit', ($event) => {
-            $event.preventDefault();
-
-            SOCKET.emit('show-bandage', {
-                "actor": BANDAGESELECT.value
-            });
         });
 
         // Show teams
@@ -56,7 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const SELECT = team.children[1];
             const FORM = team.children[2];
 
-            SELECT.addEventListener('change', () => {
+            SELECT.addEventListener('change', ($event) => {
+
                 SOCKET.emit('set-team', {
                     team: SELECT.id.split('-')[1],
                     value: SELECT.value
@@ -70,6 +66,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     team: SELECT.id.split('-')[1],
                     operation: $event.submitter.value
                 });
+            });
+        });
+
+        // Reset teams
+        RESETTEAMSFORM.addEventListener('submit', ($event) => {
+            $event.preventDefault();
+            confirm("Are you sure you want to reset the teams?")
+            SOCKET.emit('reset-teams');
+        });
+
+        // Show bandage
+        BANDAGEFORM.addEventListener('submit', ($event) => {
+            $event.preventDefault();
+
+            SOCKET.emit('show-bandage', {
+                "actor": BANDAGESELECT.value
             });
         });
     });
