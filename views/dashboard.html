@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/dashboard.css">
 </head>
 <body>
     <main>
         <section aria-label="Bandage">
-            <h2>Bauchbinde</h2>
+            <h1>Bauchbinde</h1>
             <form id="bandage">
                 <select id="bandage-select"></select>
                 <button type="submit">Bauchbinde anzeigen</button>
@@ -26,10 +27,10 @@
                     <option value="ITM">IT-Management</option>
                 </select>
                 <form>
-                    <button value="minus">-1</button>
-                    <button value="add">+1</button>
+                    <button value="minus">- 1 Punkt</button>
+                    <button value="add">+ 1 Punkt</button>
                 </form>
-                <p id="points-team-1">0</p>
+                <p class="points-team" id="points-team-1">0 Punkte</p>
             </div>
             <div id="team-2">
                 <h2>Team 2</h2>
@@ -41,10 +42,10 @@
                     <option value="ITM">IT-Management</option>
                 </select>
                 <form>
-                    <button value="minus">-1</button>
-                    <button value="add">+1</button>
+                    <button value="minus">- 1 Punkt</button>
+                    <button value="add">+ 1 Punkt</button>
                 </form>
-                <p id="points-team-1">0</p>
+                <p class="points-team" id="points-team-1">0 Punkte</p>
             </div>
             <form id="show-teams-form">
                 <button type="submit">Show Teams</button>

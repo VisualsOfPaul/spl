@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     entry.selected = true;
                 }
 
-                TEAMPOINTS[0].textContent = data.first.points;
+                TEAMPOINTS[0].textContent = `${data.first.points} Punkte`;
             });
 
             Array.from(TEAMS[1].children[1].children).forEach((entry) => {
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     entry.selected = true;
                 }
 
-                TEAMPOINTS[1].textContent = data.second.points;
+                TEAMPOINTS[1].textContent = `${data.second.points} Punkte`;
             });
 
             SHOWTEAMSFORM.children[0].textContent = data.visible ? "Hide Teams" : "Show Teams";
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Reset teams
         RESETTEAMSFORM.addEventListener('submit', ($event) => {
             $event.preventDefault();
-            confirm("Are you sure you want to reset the teams?")
+            confirm("Willst du die Teams wirklich zurücksetzen?")
             SOCKET.emit('reset-teams');
         });
 
