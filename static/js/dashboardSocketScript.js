@@ -43,6 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show teams
         SHOWTEAMSFORM.addEventListener('submit', ($event) => {
             $event.preventDefault();
+
+            confirm("Are you sure you want to show the teams?")
+
             SOCKET.emit('show-teams')
         })
 
@@ -62,10 +65,18 @@ document.addEventListener('DOMContentLoaded', () => {
             FORM.addEventListener('submit', ($event) => {
                 $event.preventDefault();
 
+                const selectedOption = SELECT.options[SELECT.selectedIndex].value;
+
                 SOCKET.emit('set-point', {
                     team: SELECT.id.split('-')[1],
-                    operation: $event.submitter.value
+                    operation: $event.submitter.value,
+                    selectedOption: selectedOption
                 });
+
+                // SOCKET.emit('set-point', {
+                //     team: SELECT.id.split('-')[1],
+                //     operation: $event.submitter.value
+                // });
             });
         });
 

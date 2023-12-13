@@ -5,18 +5,6 @@ const EXPRESS = require('express');
 const SOCKETIO = require('socket.io');
 const DOTENV = require('dotenv');
 
-var teams = {
-    "first" : {
-        "name": "-",
-        "points": 0
-    },
-    "second" : {
-        "name": "-",
-        "points": 0
-    },
-    "visible": false
-}
-
 // App setup
 const APP = EXPRESS();
 const SERVER = HTTP.createServer(APP);
@@ -28,7 +16,19 @@ DOTENV.config();
 
 //Modells
 const bandageModel = require('./models/bandageModel.js');
-const teamsModel = require('./models/teamsModel.js');
+const pointsModel = require('./models/pointsModel.js');
+
+var teams = {
+    "first" : {
+        "name": "-",
+        "points": 0
+    },
+    "second" : {
+        "name": "-",
+        "points": 0
+    },
+    "visible": false
+}
 
 //Routing
 APP.get("/", (req, res) => {
@@ -69,35 +69,39 @@ APP.get("/api/bandages", async (req, res) => {
 // Socket setup
 const IO = new SOCKETIO.Server(SERVER);
 
-IO.on('connection', (socket) => {
+IO.on('connection', async (socket) => {
     console.log(`Connected with ${socket.id}.`);
+
+    teams.first.points = (await pointsModel.getPoints(teams.first.name)).rows[0].points;
+    teams.second.points = (await pointsModel.getPoints(teams.second.name)).rows[0].points;
 
     IO.emit('update-teams', teams);
 
-    socket.on('show-teams', () => {
+    socket.on('show-teams', async () => {
         teams.visible = !teams.visible;
+        teams.first.points = (await pointsModel.getPoints(teams.first.name)).rows[0].points;
+        teams.second.points = (await pointsModel.getPoints(teams.second.name)).rows[0].points;
         IO.emit('update-teams', (teams));
     })
 
-    socket.on('set-team', (data) => {
+    socket.on('set-team', async (data) => {
         
         switch(data.team) {
             case "1": teams.first.name = data.value; break;
             case "2": teams.second.name = data.value; break;
         }
 
-
+        teams.first.points = (await pointsModel.getPoints(teams.first.name)).rows[0].points;
+        teams.second.points = (await pointsModel.getPoints(teams.second.name)).rows[0].points;
 
         IO.emit('update-teams', teams)
     });
 
-    socket.on('set-point', (data) => {
-       switch(data.team) {
-            case "1": teams.first.points = data.operation === "add" ? teams.first.points + 1 : teams.first.points - 1; break;
-            case "2": teams.second.points = data.operation === "add" ? teams.second.points + 1 : teams.second.points - 1; break;
-       }
-
-       IO.emit('update-teams', teams)
+    socket.on('set-point', async (data) => {
+        pointsModel.setPoints(data.selectedOption, data.operation)
+        teams.first.points = (await pointsModel.getPoints(teams.first.name)).rows[0].points;
+        teams.second.points = (await pointsModel.getPoints(teams.second.name)).rows[0].points;
+        IO.emit('update-teams', teams)
     })
 
     socket.on('reset-teams', () => {
@@ -112,7 +116,7 @@ IO.on('connection', (socket) => {
             },
             "visible": false
         }
-
+        pointsModel.resetPoints();
         IO.emit('update-teams', teams)
     })
 
