@@ -44,9 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
         SHOWTEAMSFORM.addEventListener('submit', ($event) => {
             $event.preventDefault();
 
-            confirm("Are you sure you want to show the teams?")
-
-            SOCKET.emit('show-teams')
+            if( confirm("Willst du das wirklich?") == true ) {
+                SOCKET.emit('show-teams')
+            }
         })
 
         // Set teams
@@ -72,19 +72,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     operation: $event.submitter.value,
                     selectedOption: selectedOption
                 });
-
-                // SOCKET.emit('set-point', {
-                //     team: SELECT.id.split('-')[1],
-                //     operation: $event.submitter.value
-                // });
             });
         });
 
         // Reset teams
         RESETTEAMSFORM.addEventListener('submit', ($event) => {
             $event.preventDefault();
-            confirm("Willst du die Teams wirklich zurücksetzen?")
-            SOCKET.emit('reset-teams');
+            if( confirm("Willst du die Teams wirklich zurücksetzen?") == true ) {
+                SOCKET.emit('reset-teams');
+            }
         });
 
         // Show bandage
