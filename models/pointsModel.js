@@ -17,25 +17,13 @@ const credentials = {
 // Connect to PostgreSQL
 const pool = new Pool(credentials);
 
-exports.setPoints = async (team, operation) => {
+exports.setPoints = async (team, points) => {
 
-	switch(operation) {
-		case "add" : {
-			try {
-				await pool.query(`UPDATE points SET points = points + 1 WHERE teamname = '${team}'`);
-			} catch (error) {
-				console.log(error);
-			} 
-		} break;
-		case "minus" : {
-			try {
-				await pool.query(`UPDATE points SET points = points - 1 WHERE teamname = '${team}'`);
-			} catch (error) {
-				console.log(error);
-			} 
-		} break;
+	try {
+		await pool.query(`UPDATE points SET points = ${points} WHERE teamname = '${team}'`);
+	} catch (error) {
+		console.log(error);
 	}
-
 };
 
 exports.getPoints = async (team) => {

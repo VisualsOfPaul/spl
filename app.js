@@ -72,35 +72,46 @@ const IO = new SOCKETIO.Server(SERVER);
 IO.on('connection', async (socket) => {
     console.log(`Connected with ${socket.id}.`);
 
-    teams.first.points = (await pointsModel.getPoints(teams.first.name)).rows[0].points;
-    teams.second.points = (await pointsModel.getPoints(teams.second.name)).rows[0].points;
+    teams.first.points = Number((await pointsModel.getPoints(teams.first.name)).rows[0].points);
+    teams.second.points = Number((await pointsModel.getPoints(teams.second.name)).rows[0].points);
 
     IO.emit('update-teams', teams);
 
     socket.on('show-teams', async () => {
         teams.visible = !teams.visible;
-        teams.first.points = (await pointsModel.getPoints(teams.first.name)).rows[0].points;
-        teams.second.points = (await pointsModel.getPoints(teams.second.name)).rows[0].points;
         IO.emit('update-teams', (teams));
     })
 
     socket.on('set-team', async (data) => {
+
+        await pointsModel.setPoints(teams.first.name, teams.first.points);
+        await pointsModel.setPoints(teams.second.name, teams.second.points);
         
         switch(data.team) {
             case "1": teams.first.name = data.value; break;
             case "2": teams.second.name = data.value; break;
         }
 
-        teams.first.points = (await pointsModel.getPoints(teams.first.name)).rows[0].points;
-        teams.second.points = (await pointsModel.getPoints(teams.second.name)).rows[0].points;
+        teams.first.points = Number((await pointsModel.getPoints(teams.first.name)).rows[0].points);
+        teams.second.points = Number((await pointsModel.getPoints(teams.second.name)).rows[0].points);
 
         IO.emit('update-teams', teams)
     });
 
     socket.on('set-point', async (data) => {
-        pointsModel.setPoints(data.selectedOption, data.operation)
-        teams.first.points = (await pointsModel.getPoints(teams.first.name)).rows[0].points;
-        teams.second.points = (await pointsModel.getPoints(teams.second.name)).rows[0].points;
+
+        if(data.team === "1") {
+            switch(data.operation) {
+                case "add" : teams.first.points += 1; break;
+                case "minus" : teams.first.points -= 1; break;
+            }
+        } else if(data.team === "2") {
+            switch(data.operation) {
+                case "add" : teams.second.points += 1; break;
+                case "minus" : teams.second.points -= 1; break;
+            }
+        }
+
         IO.emit('update-teams', teams)
     })
 
@@ -125,6 +136,8 @@ IO.on('connection', async (socket) => {
     })
 
     socket.on('disconnect', () => {
+        pointsModel.setPoints(teams.first.name, teams.first.points);
+        pointsModel.setPoints(teams.second.name, teams.second.points);
         console.log(`Socket ${socket.id} disconnected.`);
     });
 })
