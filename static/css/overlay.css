@@ -127,3 +127,15 @@ body {
     font-size: var(--font-size-xl);
     font-weight: 500;
 }
+
+.quiz-container article {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    bottom: 0;
+    width: 100%;
+    padding: var(--spacing-xl);
+    transform: translateY(100%);
+}

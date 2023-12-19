@@ -23,3 +23,31 @@ const bandages = Vue.createApp({
         this.getBandages();
     }
 }).mount("#bandages-container");
+
+
+// Quiz
+const quiz = Vue.createApp({
+    data() {
+        return {
+            quiz: []
+        };
+    },
+    template: `
+        <article v-for="question in quiz">
+            <h1>{{ question.question }}</h1>
+            <ul>
+                <li v-for="answer in question.answers">{{ answer.answer }}</li>
+            </ul>
+        </article>
+    `,
+    methods: {
+        async getQuiz() {
+            const response = await fetch('/api/quiz');
+            const data = await response.json();
+            this.quiz = await data;
+        },
+    },
+    mounted() {
+        this.getQuiz();
+    }
+}).mount("#quiz-container");

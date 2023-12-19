@@ -91,5 +91,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 "actor": BANDAGESELECT.value
             });
         });
+
+        // Show quiz
+        function showQuestion(index) {
+            SOCKET.emit('show-question', {
+                "index": index
+            });
+        }
+
+        window.showQuestion = showQuestion;
+
+        // Send answer
+        function sendAnswer(index, id) {
+            SOCKET.emit('log-answer', {
+                "index": index,
+                "id": id
+            });
+        }
+
+        window.sendAnswer = sendAnswer;
     });
 });

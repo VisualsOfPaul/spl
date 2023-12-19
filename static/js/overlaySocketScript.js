@@ -80,5 +80,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         })
+
+        // Quiz
+        SOCKET.on('show-question', async (data) => {
+            const QUESTIONS = document.querySelectorAll("#quiz-container article");
+
+            gsap.to(QUESTIONS[data.index], {
+                duration: 1,
+                y: 0,
+                ease: "power3.inOut"
+            });
+        });
+
+        SOCKET.on('log-answer', async (data) => {
+            console.log(data);
+        });
     });
 });

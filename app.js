@@ -17,6 +17,7 @@ DOTENV.config();
 //Modells
 const bandageModel = require('./models/bandageModel.js');
 const pointsModel = require('./models/pointsModel.js');
+const quizModel = require('./models/quizModel.js');
 
 var teams = {
     "first" : {
@@ -66,6 +67,11 @@ APP.get("/api/bandages", async (req, res) => {
     res.send(await bandageModel.getEntries());
 })
 
+APP.get("/api/quiz", async (req, res) => {
+    const quizes = await quizModel.getQuizes();
+    res.send(await quizes.rows);
+})
+
 // Socket setup
 const IO = new SOCKETIO.Server(SERVER);
 
@@ -95,7 +101,7 @@ IO.on('connection', async (socket) => {
         teams.first.points = Number((await pointsModel.getPoints(teams.first.name)).rows[0].points);
         teams.second.points = Number((await pointsModel.getPoints(teams.second.name)).rows[0].points);
 
-        IO.emit('update-teams', teams)
+        IO.emit('update-teams', teams);
     });
 
     socket.on('set-point', async (data) => {
@@ -112,7 +118,7 @@ IO.on('connection', async (socket) => {
             }
         }
 
-        IO.emit('update-teams', teams)
+        IO.emit('update-teams', teams);
     })
 
     socket.on('reset-teams', () => {
@@ -128,11 +134,19 @@ IO.on('connection', async (socket) => {
             "visible": false
         }
         pointsModel.resetPoints();
-        IO.emit('update-teams', teams)
+        IO.emit('update-teams', teams);
     })
 
     socket.on('show-bandage', (data) => {
-        IO.emit('show-bandage', data)
+        IO.emit('show-bandage', data);
+    })
+
+    socket.on('show-question', (data) => {
+        IO.emit('show-question', data);
+    });
+
+    socket.on('log-answer', (data) => {
+        IO.emit('log-answer', data);
     })
 
     socket.on('disconnect', () => {
@@ -140,6 +154,8 @@ IO.on('connection', async (socket) => {
         pointsModel.setPoints(teams.second.name, teams.second.points);
         console.log(`Socket ${socket.id} disconnected.`);
     });
+
+    
 })
 
 // Host on port
