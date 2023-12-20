@@ -43,3 +43,32 @@ exports.getQuizes = async () => {
 		console.log(error);
 	}
 };
+
+exports.getQuiz = async (id) => {
+    try {
+        return await pool.query(`
+        SELECT
+            q.id AS question_id,
+            q.question,
+            json_agg(
+                json_build_object(
+                    'id', a.id,
+                    'answer', a.answer,
+                    'correct', a.correct
+                )
+            ) AS answers
+        FROM
+            questions q
+        JOIN
+            answers a ON q.id = a.question_id
+        WHERE
+            q.id = ${id}
+        GROUP BY
+            q.id, q.question
+        ORDER BY
+            q.id ASC;
+        `);
+    } catch (error) {
+        console.log(error);
+    }
+};

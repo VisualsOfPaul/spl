@@ -149,6 +149,22 @@ IO.on('connection', async (socket) => {
         IO.emit('log-answer', data);
     })
 
+    socket.on('show-answer', async (data) => {
+        const quiz = await quizModel.getQuiz(data.index + 1);
+        var correctAnswer = null;
+        quiz.rows[0].answers.forEach((answer) => {
+            if(answer.correct == true) {
+                correctAnswer = answer.answer;
+            }
+        });
+        data.correctAnswer = correctAnswer;
+        IO.emit('show-answer', data);
+    });
+
+    socket.on('reset-quiz', () => {
+        IO.emit('reset-quiz');
+    })
+
     socket.on('disconnect', () => {
         pointsModel.setPoints(teams.first.name, teams.first.points);
         pointsModel.setPoints(teams.second.name, teams.second.points);

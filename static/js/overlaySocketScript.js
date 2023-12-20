@@ -85,6 +85,12 @@ document.addEventListener('DOMContentLoaded', () => {
         SOCKET.on('show-question', async (data) => {
             const QUESTIONS = document.querySelectorAll("#quiz-container article");
 
+            gsap.to(QUESTIONS, {
+                duration: 1,
+                y: "100%",
+                ease: "power3.inOut"
+            })
+
             gsap.to(QUESTIONS[data.index], {
                 duration: 1,
                 y: 0,
@@ -93,7 +99,39 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         SOCKET.on('log-answer', async (data) => {
-            console.log(data);
+            const QUESTIONS = document.querySelectorAll("#quiz-container article");
+            [...QUESTIONS[data.index].children[1].children].forEach((answer) => {
+                answer.classList.remove('selected');
+            });
+            QUESTIONS[data.index].children[1].children[data.id].classList.add('selected')
         });
+
+        SOCKET.on('show-answer', async (data) => {
+            const QUESTIONS = document.querySelectorAll("#quiz-container article");
+            const ANSWERS = [...QUESTIONS[data.index].children[1].children];
+            ANSWERS.forEach((answer) => {
+                if(answer.classList.contains('selected') && answer.innerHTML.includes(data.correctAnswer)) {
+                    answer.classList.add('correct');
+                }
+
+                if(answer.classList.contains('selected') && !answer.innerHTML.includes(data.correctAnswer)) {
+                    answer.classList.add('wrong');
+                }
+
+                if(answer.innerHTML.includes(data.correctAnswer)) {
+                    answer.classList.add('correct');
+                }
+            });
+        });
+
+        SOCKET.on('reset-quiz', () => {
+            const QUESTIONS = document.querySelectorAll("#quiz-container article");
+
+            gsap.to(QUESTIONS, {
+                duration: 1,
+                y: "100%",
+                ease: "power3.inOut"
+            })
+        })
     });
 });

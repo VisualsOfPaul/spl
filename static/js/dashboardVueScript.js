@@ -38,9 +38,10 @@ const quiz = Vue.createApp({
                 <button @click="showQuestion(index)">Frage anzeigen</button>
                 <select v-model="selectedAnswers[index]">
                     <option disabled selected>Antwort festlegen...</option>
-                    <option v-for="answer in question.answers" :value="index">{{ answer.answer }}</option>
+                    <option v-for="(answer, index) in question.answers" :value="index">{{ answer.answer }}</option>
                 </select>
                 <button @click="sendAnswer(index)">Antwort abschicken</button>
+                <button @click="showAnswer(index)" id="show answer">Antwort auflösen</button>
             </li>
         </ol>
     `,
@@ -57,6 +58,10 @@ const quiz = Vue.createApp({
 
         async sendAnswer(index) {
             sendAnswer(index, this.selectedAnswers[index]);
+        },
+
+        async showAnswer(index) {
+            showAnswer(index, this.selectedAnswers[index]);
         }
     },
     mounted() {

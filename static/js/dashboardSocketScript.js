@@ -109,6 +109,25 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        // Show Correct Answer
+        function showAnswer(index, id) {
+            SOCKET.emit('show-answer', {
+                "index": index,
+                "id": id
+            });
+        }
+
+        // Reset Quiz
+        const RESETQUIZFORM = document.querySelector('#reset-quiz');
+        RESETQUIZFORM.addEventListener('submit', ($event) => {
+            $event.preventDefault();
+            if( confirm("Willst du das Quiz wirklich zurücksetzen?") == true ) {
+                SOCKET.emit('reset-quiz');
+            }
+        });
+
+
         window.sendAnswer = sendAnswer;
+        window.showAnswer = showAnswer;
     });
 });

@@ -139,3 +139,15 @@ body {
     padding: var(--spacing-xl);
     transform: translateY(100%);
 }
+
+.selected {
+    background-color: var(--primary-color-lightest);
+}
+
+.correct {
+    background-color: green;
+}
+
+.wrong {
+    background-color: red;
+}
