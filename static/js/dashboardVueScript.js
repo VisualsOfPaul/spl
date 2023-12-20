@@ -37,7 +37,7 @@ const quiz = Vue.createApp({
                 <p>{{ question.question }}</p>
                 <button @click="showQuestion(index)">Frage anzeigen</button>
                 <select v-model="selectedAnswers[index]">
-                    <option disabled selected>Antwort festlegen...</option>
+                    <option value="-">Antwort festlegen...</option>
                     <option v-for="(answer, index) in question.answers" :value="index">{{ answer.answer }}</option>
                 </select>
                 <button @click="sendAnswer(index)">Antwort abschicken</button>
@@ -68,3 +68,30 @@ const quiz = Vue.createApp({
         this.getQuiz();
     }
 }).mount("#quiz");
+
+// Lego builds
+const legoBuilds = Vue.createApp({
+    data() {
+        return {
+            images: []
+        };
+    },
+    template: `
+        <ul>
+            <li v-for="(image, index) in images">
+                <img :src="'/assets/lego-builds/' + image" width="200" height="200">
+                <button @click="showImage(index)">Bild anzeigen</button>
+            </li>
+        </ul>
+    `,
+    methods: {
+        async getBuilds() {
+            const response = await fetch('/api/lego-builds');
+            const data = await response.json();
+            this.images = await data.images;
+        }
+    },
+    mounted() {
+        this.getBuilds();
+    }
+}).mount("#lego-builds-container");

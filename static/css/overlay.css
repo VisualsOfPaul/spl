@@ -13,6 +13,11 @@
 
     --text-color: #202124;
 
+    --selected-color: #CC66AE;
+    --correct-color: #4CAF50;
+    --wrong-color: #F44336;
+
+    --spacing-xs: 0.5rem;
     --spacing-m: 1rem;
     --spacing-l: 2rem;
     --spacing-xl: 3rem;
@@ -23,6 +28,9 @@
     --font-size-m: 1rem;
     --font-size-l: 1.4rem;
     --font-size-xl: 2rem;
+
+    --image-height: 20rem;
+    --image-width: 20rem;
 }
 
 * {
@@ -128,26 +136,107 @@ body {
     font-weight: 500;
 }
 
+/* Quiz */
+
 .quiz-container article {
     position: absolute;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-end;
+    flex-direction: column;
+    align-items: center;
     bottom: 0;
     width: 100%;
-    padding: var(--spacing-xl);
+    gap: var(--spacing-m);
+    padding: var(--spacing-l);
     transform: translateY(100%);
+    background-color: var(--primary-color);
+    z-index: -1;
+}
+
+.quiz-container article header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    width: 50%;
+}
+
+.quiz-container article header h1 {
+    font-size: var(--font-size-m);
+    font-weight: 400;
+    color: var(--secondary-color);
+}
+
+.quiz-container article header h2 {
+    font-size: var(--font-size-xl);
+    font-weight: 500;
+    color: var(--secondary-color);
+}
+
+.quiz-container article ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    gap: var(--spacing-m);
+    justify-content: center;
+}
+
+.answer {
+    width: 45%;
+    box-sizing: border-box;
+    padding: var(--spacing-m);
+    border-radius: var(--border-radius);
+    background-color: var(--primary-color-lighter);
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-m);
+    font-weight: 500;
 }
 
 .selected {
-    background-color: var(--primary-color-lightest);
+    background-color: var(--selected-color);
 }
 
 .correct {
-    background-color: green;
+    background-color: var(--correct-color);
 }
 
 .wrong {
-    background-color: red;
+    background-color: var(--wrong-color);
+}
+
+/* Lego builds */
+.lego-builds-container {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.lego-builds-container ul {
+    height: var(--image-height);
+    width: var(--image-width);
+}
+
+.lego-builds-container ul li {
+    position: absolute;
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(100%);
+}
+
+.lego-builds-container ul li figure {
+    height: var(--image-height);
+    width: var(--image-width);
+}
+
+.lego-builds-container ul li figure img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
 }

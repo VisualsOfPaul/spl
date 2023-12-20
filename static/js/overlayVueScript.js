@@ -34,9 +34,12 @@ const quiz = Vue.createApp({
     },
     template: `
         <article v-for="question in quiz">
-            <h1>{{ question.question }}</h1>
+            <header>
+                <h1>Frage</h1>
+                <h2>{{ question.question }}</h2>
+            </header>
             <ul>
-                <li v-for="answer in question.answers">{{ answer.answer }}</li>
+                <li class="answer" v-for="answer in question.answers">{{ answer.answer }}</li>
             </ul>
         </article>
     `,
@@ -51,3 +54,31 @@ const quiz = Vue.createApp({
         this.getQuiz();
     }
 }).mount("#quiz-container");
+
+// Lego builds
+const legoBuilds = Vue.createApp({
+    data() {
+        return {
+            legoBuilds: []
+        };
+    },
+    template: `
+        <ul>
+            <li v-for="build in legoBuilds">
+                <figure>
+                    <img :src="'/assets/lego-builds/' + build">
+                </figure>
+            </li>
+        </ul>
+    `,
+    methods: {
+        async getLegoBuilds() {
+            const response = await fetch('/api/lego-builds');
+            const data = await response.json();
+            this.legoBuilds = await data.images;
+        }
+    },
+    mounted() {
+        this.getLegoBuilds();
+    }
+}).mount("#lego-builds-container");

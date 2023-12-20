@@ -4,6 +4,7 @@ const HTTP = require('http');
 const EXPRESS = require('express');
 const SOCKETIO = require('socket.io');
 const DOTENV = require('dotenv');
+const FS = require('fs');
 
 // App setup
 const APP = EXPRESS();
@@ -70,6 +71,16 @@ APP.get("/api/bandages", async (req, res) => {
 APP.get("/api/quiz", async (req, res) => {
     const quizes = await quizModel.getQuizes();
     res.send(await quizes.rows);
+})
+
+APP.get("/api/lego-builds", async (req, res) => {
+    let images = [];
+
+    FS.readdirSync('./static/assets/lego-builds').forEach(file => {
+        images.push(file);
+    });
+
+    res.send({images: images});
 })
 
 // Socket setup
