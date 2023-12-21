@@ -143,8 +143,9 @@ document.addEventListener('DOMContentLoaded', () => {
         SOCKET.on('send-lego-builds', (data) => {
             const TOGGLES = document.querySelectorAll('button[id^="toggle-lego-build-"]');
             
-            TOGGLES.forEach((toggle) => {
-                toggle.textContent = data[toggle.id.split('-')[3]].visible ? "Bild verstecken" : "Bild anzeigen";
+            TOGGLES.forEach((toggle, index) => {
+                toggle.textContent = data[index].visible ? "Bild verstecken" : "Bild anzeigen";
+                toggle.classList.toggle('active', data[index].visible);
             });
         });
     });

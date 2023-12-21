@@ -1,31 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-
-:root {
-    --background-color: #fcfcfc;
-
-    --primary-color: #443659;
-    --primary-color-lighter: #574672;
-    --primary-color-lightest: #44365990;
-
-    --secondary-color: #fcfcfc;
-    --text-color: #202124;
-
-    --spacing-m: 1rem;
-    --spacing-l: 2rem;
-    --spacing-xl: 3rem;
-
-    --border-radius: 0.4rem;
-    --border-width: 0.2rem;
-
-    --font-size-m: 1rem;
-    --font-size-l: 1.4rem;
-    --font-size-xl: 2rem;
-}
+/* Base */
 
 * {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+}
+
+::selection {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
 }
 
 body {
@@ -39,13 +22,13 @@ body {
 main {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-xl);
+    gap: var(--spacing-xxl);
 }
 
 section {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-m);
+    gap: var(--spacing-l);
 }
 
 h1 {
@@ -58,31 +41,6 @@ h2 {
     font-weight: 700;
 }
 
-form {
-    display: flex;
-    flex-direction: row;
-    gap: var(--spacing-m);
-}
-
-div {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-m);
-    width: fit-content;
-}
-
-.points-team {
-    display: flex;
-    padding: var(--spacing-m);
-    border: var(--border-width) solid var(--primary-color);
-    width: fit-content;
-    border-radius: var(--border-radius);
-    height: calc(var(--font-size-m) + 2 * var(--spacing-m));
-    display: flex;
-    align-items: center;
-}
-
-/* Button */
 button {
     padding: var(--spacing-m);
     border: none;
@@ -106,18 +64,100 @@ button:active {
     scale: 0.95;
 }
 
-/* Select */
+button.active,
+button:hover.active {
+    background-color: var(--correct-color);
+}
+
 select {
     border: var(--border-width) solid var(--primary-color);
     border-radius: var(--border-radius);
     background-color: transparent;
-    color: var(--tertiary-color);
+    color: var(--text-color);
     font-weight: 500;
+    font-size: var(--font-size-m);
     cursor: pointer;
     transition: 100ms ease-in-out;
     height: calc(var(--font-size-m) + 2 * var(--spacing-m));
+    padding: 0 var(--spacing-m);
 }
 
 select:focus-visible {
     outline: var(--border-width) solid var(--primary-color-lightest);
+}
+
+/* Bandages */
+
+form {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-m);
+}
+
+
+/* Teams */
+
+.teams-container {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-l);
+}
+
+.teams-container article {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-m);
+}
+
+.points-team {
+    display: flex;
+    padding: var(--spacing-m);
+    border: var(--border-width) solid var(--primary-color);
+    width: fit-content;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+}
+
+
+/* Quiz */
+
+.quiz ol {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-l);
+}
+
+.quiz ol li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-m);
+}
+
+.quiz ol li p {
+    font-weight: 500;
+    border: var(--border-width) solid var(--primary-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-m);
+    font-size: var(--font-size-m);
+}
+
+/* Lego builds */
+
+.lego-builds-container ul {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-l);
+}
+
+.lego-builds-container ul li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-m);
+}
+
+.lego-builds-container ul li img {
+    height: calc(var(--image-height) / 2);
+    width: calc(var(--image-width) / 2);
+    border-radius: var(--border-radius);
 }
