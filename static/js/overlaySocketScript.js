@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Variables
         const TEAMS = document.querySelectorAll('section[id="teams"]');
-        let visible = false;
+        let teamsVisible = false;
 
         // Points
         SOCKET.on('update-teams', (data) => {
@@ -24,13 +24,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 team.children[1].children[1].innerHTML = data.second.points;
             });
 
-            visible = data.visible;
+            teamsVisible = data.visible;
+            let visibleBandage = document.querySelector('#bandage.active');
 
             if(data.visible) {
+                if(visibleBandage !== undefined) {
+                    gsap.to(visibleBandage, {
+                        duration: 1,
+                        x: "-100%",
+                        opacity: 0,
+                        ease: "power3.inOut"
+                    });
+                }
+
                 gsap.to(TEAMS, {
                     duration: 1,
                     y: 0,
-                    ease: "power3.inOut"
+                    ease: "power3.inOut",
+                    delay: (visibleBandage !== undefined) ? 1 : 0
                 });
             }
             else {
@@ -45,9 +56,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Bandages
         SOCKET.on('show-bandage', async (data) => {
-            const ACTOR = `#bandages-container div[data-value="${await data.actor}"]`;
+            const ACTOR = document.querySelector(`#bandages-container div[data-value="${await data.actor}"]`);
 
-            if(visible) {
+            ACTOR.classList.add('active');
+
+            if(teamsVisible) {
                 gsap.to(TEAMS, {
                     duration: 1,
                     y: "100%",
@@ -60,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 x: 0,
                 ease: "power3.inOut",
                 opacity: 1,
-                delay: 0.5
+                delay: (teamsVisible) ? 0.5 : 0
             });
 
             gsap.to(ACTOR, {
@@ -71,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 delay: 5
             });
 
-            if(visible) {
+            if(teamsVisible) {
                 gsap.to(TEAMS, {
                     duration: 1,
                     y: 0,
@@ -79,6 +92,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     delay: 5
                 });
             }
+
+            setTimeout(() => {
+                ACTOR.classList.remove('active');
+            }, 5500);
         })
 
         // Quiz

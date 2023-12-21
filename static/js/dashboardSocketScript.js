@@ -38,16 +38,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 TEAMPOINTS[1].textContent = `${data.second.points} Punkte`;
             });
 
-            SHOWTEAMSFORM.children[0].textContent = data.visible ? "Hide Teams" : "Show Teams";
+            SHOWTEAMSFORM.children[0].textContent = data.visible ? "Punkte ausblenden" : "Punkte einblenden";
+
+            if(data.visible) {
+                SHOWTEAMSFORM.children[0].classList.add('active');
+            } else {
+                SHOWTEAMSFORM.children[0].classList.remove('active');
+            }
         });
 
         // Show teams
         SHOWTEAMSFORM.addEventListener('submit', ($event) => {
             $event.preventDefault();
 
-            if( confirm("Willst du das wirklich?") == true ) {
-                SOCKET.emit('show-teams')
-            }
+            SOCKET.emit('show-teams');
+
+            // if( confirm("Willst du das wirklich?") == true ) {
+            //     SOCKET.emit('show-teams');
+            // }
         })
 
         // Set teams
@@ -91,6 +99,12 @@ document.addEventListener('DOMContentLoaded', () => {
             SOCKET.emit('show-bandage', {
                 "actor": BANDAGESELECT.value
             });
+
+            $event.submitter.classList.toggle('active');
+
+            setTimeout(() => {
+                $event.submitter.classList.toggle('active');
+            }, 5000);
         });
 
         // Show quiz

@@ -6,7 +6,7 @@ const bandages = Vue.createApp({
         };
     },
     template: `
-        <div v-for="bandage in bandages" :data-value="bandage.id">
+        <div v-for="bandage in bandages" :data-value="bandage.id" id="bandage">
             <h3>{{ bandage.forename }} {{ bandage.surname }} ({{ bandage.course }})</h3>
             <h4>{{ bandage.pronouns }}</h4>
             <p>{{ bandage.info }}</p>
