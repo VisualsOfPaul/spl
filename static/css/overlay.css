@@ -227,7 +227,7 @@ body {
     border-radius: var(--border-radius);
     overflow: hidden;
     opacity: 0;
-    transform: translateY(100%);
+    transform: translateY(50%);
 }
 
 .lego-builds-container ul li figure {

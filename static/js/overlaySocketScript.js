@@ -133,5 +133,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 ease: "power3.inOut"
             })
         })
+
+        // Lego Builds
+        SOCKET.on('send-lego-builds', async (data) => {
+            const BUILDS = document.querySelectorAll("li[id^='lego-build-image-']");
+
+            data.forEach((build, index) => {
+                if(build.visible) {
+                    gsap.to(BUILDS[index], {
+                        duration: 1,
+                        y: 0,
+                        opacity: 1,
+                        ease: "power3.inOut"
+                    });
+                }
+                else {
+                    gsap.to(BUILDS[index], {
+                        duration: 1,
+                        y: "50%",
+                        opacity: 0,
+                        ease: "power3.inOut"
+                    });
+                }
+            });
+        });
     });
 });

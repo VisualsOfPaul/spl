@@ -20,7 +20,7 @@ const bandageModel = require('./models/bandageModel.js');
 const pointsModel = require('./models/pointsModel.js');
 const quizModel = require('./models/quizModel.js');
 
-var teams = {
+let teams = {
     "first" : {
         "name": "-",
         "points": 0
@@ -31,6 +31,13 @@ var teams = {
     },
     "visible": false
 }
+
+const legoBuilds = Array.from(FS.readdirSync('./static/assets/lego-builds')).map((file, index) => {
+    return {
+        "index": index,
+        "visible": false
+    };
+});
 
 //Routing
 APP.get("/", (req, res) => {
@@ -174,7 +181,21 @@ IO.on('connection', async (socket) => {
 
     socket.on('reset-quiz', () => {
         IO.emit('reset-quiz');
-    })
+    });
+
+    socket.on('toggle-lego-build', (data) => {
+        legoBuilds.forEach((build) => {
+            if(build.index !== data.index) build.visible = false;
+        });
+
+        const build = legoBuilds.find((build) => {
+            return build.index === data.index;
+        });
+
+        build.visible = !build.visible;
+
+        IO.emit('send-lego-builds', legoBuilds);
+    });
 
     socket.on('disconnect', () => {
         pointsModel.setPoints(teams.first.name, teams.first.points);

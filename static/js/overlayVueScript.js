@@ -64,7 +64,7 @@ const legoBuilds = Vue.createApp({
     },
     template: `
         <ul>
-            <li v-for="build in legoBuilds">
+            <li v-for="(build, index) in legoBuilds" :id="'lego-build-image-' + index">
                 <figure>
                     <img :src="'/assets/lego-builds/' + build">
                 </figure>

@@ -109,6 +109,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        window.sendAnswer = sendAnswer;
+
         // Show Correct Answer
         function showAnswer(index, id) {
             SOCKET.emit('show-answer', {
@@ -116,6 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 "id": id
             });
         }
+
+        window.showAnswer = showAnswer;
 
         // Reset Quiz
         const RESETQUIZFORM = document.querySelector('#reset-quiz');
@@ -126,8 +130,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
+        // Toggle lego build
+        async function toggleLegoBuild(index) {
+            SOCKET.emit('toggle-lego-build', {
+                "index": index
+            });
+        }
 
-        window.sendAnswer = sendAnswer;
-        window.showAnswer = showAnswer;
+        window.toggleLegoBuild = toggleLegoBuild;
+
+        // Get lego builds
+        SOCKET.on('send-lego-builds', (data) => {
+            const TOGGLES = document.querySelectorAll('button[id^="toggle-lego-build-"]');
+            
+            TOGGLES.forEach((toggle) => {
+                toggle.textContent = data[toggle.id.split('-')[3]].visible ? "Bild verstecken" : "Bild anzeigen";
+            });
+        });
     });
 });

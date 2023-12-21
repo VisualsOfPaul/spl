@@ -80,7 +80,7 @@ const legoBuilds = Vue.createApp({
         <ul>
             <li v-for="(image, index) in images">
                 <img :src="'/assets/lego-builds/' + image" width="200" height="200">
-                <button @click="showImage(index)">Bild anzeigen</button>
+                <button @click="toggleImage(index)" :id="'toggle-lego-build-' + index">Bild anzeigen</button>
             </li>
         </ul>
     `,
@@ -89,6 +89,10 @@ const legoBuilds = Vue.createApp({
             const response = await fetch('/api/lego-builds');
             const data = await response.json();
             this.images = await data.images;
+        },
+
+        async toggleImage(index) {
+            toggleLegoBuild(index);
         }
     },
     mounted() {
