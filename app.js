@@ -59,7 +59,7 @@ const memory = {
             "solution": 1
         },
         {
-            "calculation": "100 / 80",
+            "calculation": "80 / 10",
             "solution": 8
         },
         {
