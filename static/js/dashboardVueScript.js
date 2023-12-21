@@ -35,7 +35,7 @@ const quiz = Vue.createApp({
         <ol>
             <li v-for="(question, index) in quiz" :id="'question-' + Number(index + 1)">
                 <p>{{ question.question }}</p>
-                <button @click="showQuestion(index)">Frage anzeigen</button>
+                <button @click="showQuestion(index)">Frage einblenden</button>
                 <select v-model="selectedAnswers[index]">
                     <option :value="null" disabled>Antwort auswählen...</option>
                     <option v-for="(answer, index) in question.answers" :value="index">{{ answer.answer }}</option>
@@ -69,7 +69,7 @@ const quiz = Vue.createApp({
     mounted() {
         this.getQuiz();
     }
-}).mount("#quiz");
+}).mount("#quiz-container");
 
 // Lego builds
 const legoBuilds = Vue.createApp({

@@ -99,19 +99,24 @@ document.addEventListener('DOMContentLoaded', () => {
         })
 
         // Quiz
-        SOCKET.on('show-question', async (data) => {
+        SOCKET.on('send-question', async (data) => {
             const QUESTIONS = document.querySelectorAll("#quiz-container article");
 
-            gsap.to(QUESTIONS, {
-                duration: 1,
-                y: "100%",
-                ease: "power3.inOut"
-            })
-
-            gsap.to(QUESTIONS[data.index], {
-                duration: 1,
-                y: 0,
-                ease: "power3.inOut"
+            Object.keys(data).forEach((key, index) => {
+                if(data[key].visible) {
+                    gsap.to(QUESTIONS[index], {
+                        duration: 1,
+                        y: 0,
+                        ease: "power3.inOut"
+                    });
+                }
+                else {
+                    gsap.to(QUESTIONS[index], {
+                        duration: 1,
+                        y: "100%",
+                        ease: "power3.inOut"
+                    });
+                }
             });
         });
 

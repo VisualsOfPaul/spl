@@ -109,12 +109,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Show quiz
         function showQuestion(index) {
-            SOCKET.emit('show-question', {
+            SOCKET.emit('toggle-question', {
                 "index": index
             });
         }
 
         window.showQuestion = showQuestion;
+
+        // Get quiz
+        SOCKET.on('send-question', (data) => {
+            const QUESTIONS = document.querySelectorAll("#quiz-container ol li");
+
+            QUESTIONS.forEach((question, index) => {
+                question.children[1].textContent = data[index].visible ? "Frage ausblenden" : "Frage einblenden";
+                question.children[1].classList.toggle('active', data[index].visible);
+            });
+        });
 
         // Send answer
         function sendAnswer(index, id) {

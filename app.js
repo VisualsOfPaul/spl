@@ -32,14 +32,14 @@ let teams = {
     "visible": false
 }
 
-const legoBuilds = Array.from(FS.readdirSync('./static/assets/lego-builds')).map((file, index) => {
+const LEGOBUILDS = Array.from(FS.readdirSync('./static/assets/lego-builds')).map((file, index) => {
     return {
         "index": index,
         "visible": false
     };
 });
 
-const memory = {
+const MEMORY = {
     "visible": false,
     "tiles" : [
         {
@@ -81,6 +81,8 @@ const memory = {
     ]
 };
 
+const QUIZ = {};
+
 //Routing
 APP.get("/", (req, res) => {
     res.redirect('/overlay');
@@ -120,6 +122,12 @@ APP.get("/api/bandages", async (req, res) => {
 APP.get("/api/quiz", async (req, res) => {
     const quizes = await quizModel.getQuizes();
     res.send(await quizes.rows);
+
+    quizes.rows.forEach((quiz, index) => {
+        QUIZ[index] = {
+            "visible": false
+        }
+    });
 })
 
 APP.get("/api/lego-builds", async (req, res) => {
@@ -133,7 +141,7 @@ APP.get("/api/lego-builds", async (req, res) => {
 })
 
 APP.get("/api/memory", async (req, res) => {
-    res.send(await memory);
+    res.send(await MEMORY);
 })
 
 // Socket setup
@@ -146,8 +154,9 @@ IO.on('connection', async (socket) => {
     teams.second.points = Number((await pointsModel.getPoints(teams.second.name)).rows[0].points);
 
     IO.emit('update-teams', teams);
-    IO.emit('send-lego-builds', legoBuilds);
-    IO.emit('send-memory', memory.visible);
+    IO.emit('send-lego-builds', LEGOBUILDS);
+    IO.emit('send-memory', MEMORY.visible);
+    IO.emit('send-question', QUIZ);
 
     socket.on('show-teams', async () => {
         teams.visible = !teams.visible;
@@ -207,8 +216,16 @@ IO.on('connection', async (socket) => {
         IO.emit('show-bandage', data);
     })
 
-    socket.on('show-question', (data) => {
-        IO.emit('show-question', data);
+    socket.on('toggle-question', (data) => {
+        Object.keys(QUIZ).forEach(key => {
+            if (key !== data.index.toString()) {
+                QUIZ[key].visible = false;
+            }
+        });
+
+        QUIZ[data.index].visible = !QUIZ[data.index].visible;
+
+        IO.emit('send-question', QUIZ);
     });
 
     socket.on('log-answer', (data) => {
@@ -232,23 +249,23 @@ IO.on('connection', async (socket) => {
     });
 
     socket.on('toggle-lego-build', (data) => {
-        legoBuilds.forEach((build) => {
+        LEGOBUILDS.forEach((build) => {
             if(build.index !== data.index) build.visible = false;
         });
 
-        const build = legoBuilds.find((build) => {
+        const build = LEGOBUILDS.find((build) => {
             return build.index === data.index;
         });
 
         build.visible = !build.visible;
 
-        IO.emit('send-lego-builds', legoBuilds);
+        IO.emit('send-lego-builds', LEGOBUILDS);
     });
 
     socket.on('toggle-memory', () => {
-        memory.visible = !memory.visible;
+        MEMORY.visible = !MEMORY.visible;
         
-        IO.emit('send-memory', memory.visible);
+        IO.emit('send-memory', MEMORY.visible);
     });
 
     socket.on('disconnect', () => {
