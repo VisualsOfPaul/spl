@@ -205,3 +205,40 @@ body {
     width: 100%;
     object-fit: cover;
 }
+
+/* Memory */
+
+.memory-container {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.memory-container ul {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: var(--spacing-m);
+    position: absolute;
+    bottom: var(--spacing-l);
+    right: var(--spacing-l);
+    transform: translateY(100%);
+    opacity: 0;
+}
+
+.memory-container ul li {
+    text-align: center;
+    padding: var(--spacing-l);
+    border-radius: var(--border-radius);
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: var(--font-size-m);
+}

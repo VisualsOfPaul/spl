@@ -39,6 +39,48 @@ const legoBuilds = Array.from(FS.readdirSync('./static/assets/lego-builds')).map
     };
 });
 
+const memory = {
+    "visible": false,
+    "tiles" : [
+        {
+            "calculation": "Wurzel aus 25",
+            "solution": 5
+        },
+        {
+            "calculation": "(100 - 96) / 2",
+            "solution": 2
+        },
+        {
+            "calculation": "3 * 2 + 3",
+            "solution": 9
+        },
+        {
+            "calculation": "5 * 2 - 9",
+            "solution": 1
+        },
+        {
+            "calculation": "100 / 80",
+            "solution": 8
+        },
+        {
+            "calculation": "(Wurzel aus 9) + (2 * 6) - 12",
+            "solution": 3
+        },
+        {
+            "calculation": "(5 * 2 - 9) * 0 + 6",
+            "solution": 6
+        },
+        {
+            "calculation": "Wurzel aus 49",
+            "solution": 7
+        },
+        {
+            "calculation": "(76 - 36) / 40",
+            "solution": 4
+        }
+    ]
+};
+
 //Routing
 APP.get("/", (req, res) => {
     res.redirect('/overlay');
@@ -90,6 +132,10 @@ APP.get("/api/lego-builds", async (req, res) => {
     res.send({images: images});
 })
 
+APP.get("/api/memory", async (req, res) => {
+    res.send(await memory);
+})
+
 // Socket setup
 const IO = new SOCKETIO.Server(SERVER);
 
@@ -100,6 +146,8 @@ IO.on('connection', async (socket) => {
     teams.second.points = Number((await pointsModel.getPoints(teams.second.name)).rows[0].points);
 
     IO.emit('update-teams', teams);
+    IO.emit('send-lego-builds', legoBuilds);
+    IO.emit('send-memory', memory.visible);
 
     socket.on('show-teams', async () => {
         teams.visible = !teams.visible;
@@ -197,13 +245,17 @@ IO.on('connection', async (socket) => {
         IO.emit('send-lego-builds', legoBuilds);
     });
 
+    socket.on('toggle-memory', () => {
+        memory.visible = !memory.visible;
+        
+        IO.emit('send-memory', memory.visible);
+    });
+
     socket.on('disconnect', () => {
         pointsModel.setPoints(teams.first.name, teams.first.points);
         pointsModel.setPoints(teams.second.name, teams.second.points);
         console.log(`Socket ${socket.id} disconnected.`);
     });
-
-    
 })
 
 // Host on port

@@ -14,10 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
         // Variables
         const BANDAGEFORM = document.querySelector('#bandage');
         const BANDAGESELECT = BANDAGEFORM.children[0];
-        const TEAMS = document.querySelectorAll('div[id^="team"]');
+        const TEAMS = document.querySelectorAll('article[id^="team"]');
         const SHOWTEAMSFORM = document.querySelector('#show-teams-form');
         const TEAMPOINTS = document.querySelectorAll('p[id^="points-team-"]');
         const RESETTEAMSFORM = document.querySelector('#reset-teams-form');
+        const MEMORYFORM = document.querySelector('#toggle-memory');
 
         // Get current stats
         SOCKET.on('update-teams', (data) => {
@@ -147,6 +148,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 toggle.textContent = data[index].visible ? "Bild verstecken" : "Bild anzeigen";
                 toggle.classList.toggle('active', data[index].visible);
             });
+        });
+
+        // Toogle memory
+        MEMORYFORM.addEventListener('submit', ($event) => {
+            $event.preventDefault();
+
+            SOCKET.emit('toggle-memory');
+        });
+
+        // Get memory
+        SOCKET.on('send-memory', (data) => {
+            const TOGGLE = MEMORYFORM.children[0];
+            
+            TOGGLE.textContent = data ? "Memory verstecken" : "Memory anzeigen";
+            TOGGLE.classList.toggle('active',data);
         });
     });
 });

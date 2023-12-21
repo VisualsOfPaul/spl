@@ -82,3 +82,29 @@ const legoBuilds = Vue.createApp({
         this.getLegoBuilds();
     }
 }).mount("#lego-builds-container");
+
+// Memory
+const memory = Vue.createApp({
+    data() {
+        return {
+            tiles: {}
+        };
+    },
+    template: `
+        <ul>
+            <li v-for="(tile, index) in tiles" :id="'tile-' + index">
+                {{ tile.solution }}
+            </li>
+        </ul>
+    `,
+    methods: {
+        async getTiles() {
+            const response = await fetch('/api/memory');
+            const data = await response.json();
+            this.tiles = await data.tiles;
+        }
+    },
+    mounted() {
+        this.getTiles();
+    }
+}).mount("#memory-container");

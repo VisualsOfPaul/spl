@@ -157,5 +157,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         });
+
+        // Memory
+        SOCKET.on('send-memory', (data) => {
+            const MEMORY = document.querySelector("#memory-container ul");
+
+            if(data) {
+                gsap.to(MEMORY, {
+                    duration: 1,
+                    y: 0,
+                    opacity: 1,
+                    ease: "power3.inOut"
+                });
+            }
+            else {
+                gsap.to(MEMORY, {
+                    duration: 1,
+                    y: "100%",
+                    opacity: 0,
+                    ease: "power3.inOut"
+                });
+            }
+        })
     });
 });
