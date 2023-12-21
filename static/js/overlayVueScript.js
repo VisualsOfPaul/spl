@@ -93,7 +93,7 @@ const memory = Vue.createApp({
     template: `
         <ul>
             <li v-for="(tile, index) in tiles" :id="'tile-' + index">
-                {{ tile.calculation }}
+                {{ tile.solution }}
             </li>
         </ul>
     `,
