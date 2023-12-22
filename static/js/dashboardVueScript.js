@@ -101,3 +101,35 @@ const legoBuilds = Vue.createApp({
         this.getBuilds();
     }
 }).mount("#lego-builds-container");
+
+// Lego builds
+const navigation = Vue.createApp({
+    data() {
+        return {
+            games: []
+        };
+    },
+    template: `
+        <ul>
+            <li v-for="(game, index) in games">
+                <button @click="switchView(index)" :id="'switch-view-' + index">{{ game.name }}</button>
+            </li>
+        </ul>
+    `,
+    methods: {
+        async getGames() {
+            const allGames = document.querySelectorAll("section[data-navigation]");
+            allGames.forEach(game => {
+                this.games.push({
+                    name: game.dataset.navigation
+                });
+            });
+        },
+        async switchView(index) {
+            switchView(index);
+        }
+    },
+    mounted() {
+        this.getGames();
+    }
+}).mount("#navigation-container");

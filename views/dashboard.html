@@ -9,71 +9,78 @@
 </head>
 <body>
     <main>
-        <section aria-label="Bandage">
-            <h1>Bauchbinde</h1>
-            <form id="bandage">
-                <select id="bandage-select"></select>
-                <button type="submit">Bauchbinde anzeigen</button>
-            </form>
-        </section>
-        <section class="points" aria-label="Points">
-            <h1>Punkte</h1>
-            <div class="teams-container">
-                <article class="team-container" id="team-1">
-                    <h2>Team 1</h2>
-                    <select name="team-1-name" id="team-1-name">
-                        <option value="-" disabled selected>Bitte einen Studiengang auswählen...</option>
-                        <option value="AI">Allegmeine Informatik</option>
-                        <option value="WI">Wirtschaftsinformatik</option>
-                        <option value="MI">Medieninformatik</option>
-                        <option value="ITM">IT-Management</option>
-                    </select>
-                    <p class="points-team" id="points-team-1">0 Punkte</p>
-                    <form>
-                        <button value="minus">- 1 Punkt</button>
-                        <button value="add">+ 1 Punkt</button>
-                    </form>
-                </article>
-                <article class="team-container" id="team-2">
-                    <h2>Team 2</h2>
-                    <select name="team-2-name" id="team-2-name">
-                        <option value="-" disabled selected>Bitte einen Studiengang auswählen...</option>
-                        <option value="AI">Allegmeine Informatik</option>
-                        <option value="WI">Wirtschaftsinformatik</option>
-                        <option value="MI">Medieninformatik</option>
-                        <option value="ITM">IT-Management</option>
-                    </select>
-                    <p class="points-team" id="points-team-1">0 Punkte</p>
-                    <form>
-                        <button value="minus">- 1 Punkt</button>
-                        <button value="add">+ 1 Punkt</button>
-                    </form>
-                </article>
-            </div>
-            <form id="show-teams-form">
-                <button type="submit">Punkte anzeigen</button>
-            </form>
-            <form id="reset-teams-form">
-                <button type="submit">Teams zurücksetzen</button>
-            </form>
-        </section>
-        <section class="questions" id="questions">
-            <h1>Quiz</h1>
-            <div class="quiz" id="quiz-container"></div>
-            <form id="reset-quiz">
-                <button>Reset Quiz</button>
-            </form>
-        </section>
-        <section class="lego-builds" id="lego-builds">
-            <h1>Nachbauen</h1>
-            <div class="lego-builds-container" id="lego-builds-container"></div>
-        </section>
-        <section class="memory">
-            <h1>Memory</h1>
-            <form id="toggle-memory">
-                <button>Memory anzeigen</button>
-            </form>
-        </section>
+        <aside>
+            <section aria-label="Bandage">
+                <h1>Bauchbinde</h1>
+                <form id="bandage">
+                    <select id="bandage-select"></select>
+                    <button type="submit">Bauchbinde anzeigen</button>
+                </form>
+            </section>
+            <section class="points" aria-label="Points">
+                <h1>Punkte</h1>
+                <div class="teams-container">
+                    <article class="team-container" id="team-1">
+                        <h2>Team 1</h2>
+                        <select name="team-1-name" id="team-1-name">
+                            <option value="-" disabled selected>Bitte einen Studiengang auswählen...</option>
+                            <option value="AI">Allegmeine Informatik</option>
+                            <option value="WI">Wirtschaftsinformatik</option>
+                            <option value="MI">Medieninformatik</option>
+                            <option value="ITM">IT-Management</option>
+                        </select>
+                        <p class="points-team" id="points-team-1">0 Punkte</p>
+                        <form>
+                            <button value="minus">- 1 Punkt</button>
+                            <button value="add">+ 1 Punkt</button>
+                        </form>
+                    </article>
+                    <article class="team-container" id="team-2">
+                        <h2>Team 2</h2>
+                        <select name="team-2-name" id="team-2-name">
+                            <option value="-" disabled selected>Bitte einen Studiengang auswählen...</option>
+                            <option value="AI">Allegmeine Informatik</option>
+                            <option value="WI">Wirtschaftsinformatik</option>
+                            <option value="MI">Medieninformatik</option>
+                            <option value="ITM">IT-Management</option>
+                        </select>
+                        <p class="points-team" id="points-team-1">0 Punkte</p>
+                        <form>
+                            <button value="minus">- 1 Punkt</button>
+                            <button value="add">+ 1 Punkt</button>
+                        </form>
+                    </article>
+                </div>
+                <form id="show-teams-form">
+                    <button type="submit">Punkte anzeigen</button>
+                </form>
+                <form id="reset-teams-form">
+                    <button type="submit">Teams zurücksetzen</button>
+                </form>
+            </section>
+        </aside>
+        <aside>
+            <nav id="navigation-container">
+
+            </nav>
+            <section class="questions" id="questions" data-navigation="Quiz">
+                <h1>Quiz</h1>
+                <div class="quiz" id="quiz-container"></div>
+                <form id="reset-quiz">
+                    <button>Reset Quiz</button>
+                </form>
+            </section>
+            <section class="lego-builds" id="lego-builds" data-navigation="Nachbauen">
+                <h1>Nachbauen</h1>
+                <div class="lego-builds-container" id="lego-builds-container"></div>
+            </section>
+            <section class="memory" data-navigation="Memory">
+                <h1>Memory</h1>
+                <form id="toggle-memory">
+                    <button>Memory anzeigen</button>
+                </form>
+            </section>
+        </aside>
     </main>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>

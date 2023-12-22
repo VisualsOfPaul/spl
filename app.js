@@ -83,6 +83,8 @@ const MEMORY = {
 
 const QUIZ = {};
 
+let visibleViewIndex = 0;
+
 //Routing
 APP.get("/", (req, res) => {
     res.redirect('/overlay');
@@ -157,6 +159,7 @@ IO.on('connection', async (socket) => {
     IO.emit('send-lego-builds', LEGOBUILDS);
     IO.emit('send-memory', MEMORY.visible);
     IO.emit('send-question', QUIZ);
+    IO.emit('send-view', visibleViewIndex);
 
     socket.on('show-teams', async () => {
         teams.visible = !teams.visible;
@@ -266,6 +269,12 @@ IO.on('connection', async (socket) => {
         MEMORY.visible = !MEMORY.visible;
         
         IO.emit('send-memory', MEMORY.visible);
+    });
+
+    socket.on('switch-view', (data) => {
+        visibleViewIndex = data.index;
+        
+        IO.emit('send-view', visibleViewIndex);
     });
 
     socket.on('disconnect', () => {

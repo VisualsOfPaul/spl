@@ -188,5 +188,28 @@ document.addEventListener('DOMContentLoaded', () => {
             TOGGLE.textContent = data ? "Memory verstecken" : "Memory anzeigen";
             TOGGLE.classList.toggle('active',data);
         });
+
+        // Navigation
+        async function switchView(index) {
+            SOCKET.emit('switch-view', {
+                "index": index
+            });
+        }
+
+        window.switchView = switchView;
+
+        // Get navigation
+        SOCKET.on('send-view', (data) => {
+            const TOGGLES = document.querySelectorAll('button[id^="switch-view-"]');
+            const SECTIONS = document.querySelectorAll('section[data-navigation]');
+            
+            SECTIONS.forEach((section, index) => {
+                section.classList.toggle('active', index === data);
+            });
+
+            TOGGLES.forEach((toggle, index) => {
+                toggle.classList.toggle('active', index === data);
+            });
+        });
     });
 });
