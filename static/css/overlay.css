@@ -221,11 +221,11 @@ body {
 .memory-container ul {
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
     grid-gap: var(--spacing-m);
     position: absolute;
-    bottom: var(--spacing-l);
+    bottom: 0;
     right: var(--spacing-l);
     transform: translateY(100%);
     opacity: 0;

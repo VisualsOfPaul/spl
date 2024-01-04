@@ -44,7 +44,7 @@ const MEMORY = {
     "tiles" : [
         {
             "calculation": "Wurzel aus 25",
-            "solution": 5
+            "solution": 1
         },
         {
             "calculation": "(100 - 96) / 2",
@@ -52,7 +52,7 @@ const MEMORY = {
         },
         {
             "calculation": "3 * 2 + 3",
-            "solution": 9
+            "solution": 4
         },
         {
             "calculation": "5 * 2 - 9",
@@ -60,7 +60,7 @@ const MEMORY = {
         },
         {
             "calculation": "80 / 10",
-            "solution": 8
+            "solution": 5
         },
         {
             "calculation": "(Wurzel aus 9) + (2 * 6) - 12",
@@ -68,15 +68,27 @@ const MEMORY = {
         },
         {
             "calculation": "(5 * 2 - 9) * 0 + 6",
-            "solution": 6
+            "solution": 2
         },
         {
             "calculation": "Wurzel aus 49",
-            "solution": 7
+            "solution": 3
         },
         {
             "calculation": "(76 - 36) / 40",
             "solution": 4
+        },
+        {
+            "calculation": "",
+            "solution": 6
+        },
+        {
+            "calculation": "",
+            "solution": 5
+        },
+        {
+            "calculation": "",
+            "solution": 6
         }
     ]
 };
