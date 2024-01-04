@@ -36,10 +36,11 @@ aside {
 }
 
 nav {
-    position: sticky;
+    position: fixed;
     top: 0;
     background-color: var(--background-color);
     padding: var(--spacing-m) 0;
+    width: calc(50vw - var(--spacing-m) * 2);
 }
 
 nav ul {
