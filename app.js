@@ -195,7 +195,6 @@ IO.on('connection', async (socket) => {
     });
 
     socket.on('set-point', async (data) => {
-
         if(data.team === "1") {
             switch(data.operation) {
                 case "add" : teams.first.points += 1; break;

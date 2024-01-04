@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Set teams
         TEAMS.forEach((team) => {
             const SELECT = team.children[1];
-            const FORM = team.children[2];
+            const FORM = team.children[3];
 
             SELECT.addEventListener('change', ($event) => {
 
