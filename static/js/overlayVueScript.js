@@ -1,15 +1,37 @@
 // Bandages
-const bandages = Vue.createApp({
+const bandagesLeft = Vue.createApp({
     data() {
         return {
             bandages: []
         };
     },
     template: `
-        <div v-for="bandage in bandages" :data-value="bandage.id" id="bandage">
-            <h3>{{ bandage.forename }} {{ bandage.surname }} ({{ bandage.course }})</h3>
-            <h4>{{ bandage.pronouns }}</h4>
-            <p>{{ bandage.info }}</p>
+        <div v-for="bandage in bandages" :data-value="bandage.id" id="bandage" class="bandage-outer">
+            <ul class="corners">
+                <li>&nbsp;</li>
+                <li>&nbsp;</li>
+                <li>&nbsp;</li>
+                <li>&nbsp;</li>
+            </ul>
+            <div class="bandage-inner">
+                <ul class="corners">
+                    <li>&nbsp;</li>
+                    <li>&nbsp;</li>
+                    <li>&nbsp;</li>
+                    <li>&nbsp;</li>
+                </ul>
+
+                <aside>
+                    <figure class="logo-container">
+                        <img src="/assets/img/logo-color.png" class="logo">
+                    </figure>
+                </aside>
+                <aside class="content">
+                    <h3>{{ bandage.forename }} {{ bandage.surname }}</h3>
+                    <h4>{{ bandage.pronouns }}</h4>
+                    <p>{{ bandage.info }}</p>
+                </aside>
+            </div>
         </div>
     `,
     methods: {
@@ -22,8 +44,54 @@ const bandages = Vue.createApp({
     mounted() {
         this.getBandages();
     }
-}).mount("#bandages-container");
+}).mount("#bandages-container-left");
 
+const bandagesRight = Vue.createApp({
+    data() {
+        return {
+            bandages: []
+        };
+    },
+    template: `
+        <div v-for="bandage in bandages" :data-value="bandage.id" id="bandage" class="bandage-outer">
+            <ul class="corners">
+                <li>&nbsp;</li>
+                <li>&nbsp;</li>
+                <li>&nbsp;</li>
+                <li>&nbsp;</li>
+            </ul>
+            <div class="bandage-inner">
+                <ul class="corners">
+                    <li>&nbsp;</li>
+                    <li>&nbsp;</li>
+                    <li>&nbsp;</li>
+                    <li>&nbsp;</li>
+                </ul>
+
+                <aside class="content">
+                    <h3>{{ bandage.forename }} {{ bandage.surname }}</h3>
+                    <h4>{{ bandage.pronouns }}</h4>
+                    <p>{{ bandage.info }}</p>
+                </aside>
+                <aside>
+                <figure class="logo-container">
+                    <img src="/assets/img/logo-color.png" class="logo">
+                </figure>
+            </aside>
+            </div>
+        </div>
+    `,
+    methods: {
+        async getBandages() {
+            const response = await fetch('/api/bandages');
+            const data = await response.json();
+            this.bandages = await data.rows;
+        }
+    },
+    mounted() {
+        this.getBandages();
+    }
+}).mount("#bandages-container-right");
 
 // Quiz
 const quiz = Vue.createApp({

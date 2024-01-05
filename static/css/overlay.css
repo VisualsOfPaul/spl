@@ -1,8 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500;700&display=swap');
+
+:root {
+    --primary-color: #443659;
+    --primary-color-lighter: #574672;
+    --primary-color-lightest: #44365990;
+
+    --secondary-color: #ffffff;
+    --tertiary-color: #C0E2F2;
+
+    --selected-color: #CC66AE;
+    --correct-color: #4CAF50;
+    --wrong-color: #F44336;
+
+    --spacing-s: 0.5rem;
+    --spacing-m: 1rem;
+    --spacing-l: 2rem;
+    --spacing-xl: 3rem;
+    --spacing-xxl: 4rem;
+    --spacing-3xl: 5rem;
+
+    --border-radius: 0.25rem;
+    --border-width: 0.2rem;
+
+    --font-size-m: 1.25rem;
+    --font-size-l: 1.75rem;
+    --font-size-xl: 2rem;
+
+    --image-height: 20rem;
+    --image-width: 20rem;
+
+    /* Border */
+    --border-thickness: 0.625rem;
+
+    --border-outer-color: #624C80;
+    --border-inner-color: #493960;
+    --border-background-color: #312640;
+}
+
 * {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto Mono', sans-serif;
 }
 
 body {
@@ -24,13 +63,152 @@ body {
 
 }
 
-.bandages-container {
+.bandages-container-left,
+.bandages-container-right {
     position: relative;
     width: 100%;
     height: 100%;
 }
 
-.bandages-container div {
+.bandages-container-left .bandage-outer {
+    left: var(--spacing-xxl);
+    transform: translateX(-100%);
+}
+
+.bandages-container-right .bandage-outer {
+    right: var(--spacing-xxl);
+    transform: translateX(100%);
+}
+
+/* Outer border */
+.bandage-outer {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: fit-content;
+    opacity: 0;
+    bottom: var(--spacing-xxl);
+    gap: var(--spacing-m);
+    box-shadow:
+        calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+        var(--border-thickness) 0 0 0 var(--border-outer-color),
+        0 calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+        0 var(--border-thickness) 0 0 var(--border-outer-color);
+    padding: var(--border-thickness);
+}
+
+.bandage-outer .corners li {
+    background-color: var(--border-outer-color);
+}
+
+.corners {
+    position: absolute;
+    width: calc(100% + var(--border-thickness) * 2);
+    height: calc(100% + var(--border-thickness) * 2);
+    top: calc(-1 * var(--border-thickness));
+    left: calc(-1 * var(--border-thickness));
+    list-style: none;
+}
+
+.corners li {
+    position: absolute;
+    width: var(--border-thickness);
+    height: var(--border-thickness);
+}
+
+.corners li:nth-child(1) {
+    top: var(--border-thickness);
+    left: var(--border-thickness);
+}
+
+.corners li:nth-child(2) {
+    top: var(--border-thickness);
+    right: var(--border-thickness);
+}
+
+.corners li:nth-child(3) {
+    bottom: var(--border-thickness);
+    left: var(--border-thickness);
+}
+
+.corners li:nth-child(4) {
+    bottom: var(--border-thickness);
+    right: var(--border-thickness);
+}
+
+/* Inner border */
+.bandage-inner {
+    position: relative;
+    padding: var(--spacing-m) var(--spacing-l);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-l);
+    box-shadow:
+        calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+        var(--border-thickness) 0 0 0 var(--border-inner-color),
+        0 calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+        0 var(--border-thickness) 0 0 var(--border-inner-color);
+    background-color: var(--border-background-color);
+}
+
+.bandage-inner .corners li {
+    background-color: var(--border-inner-color);
+}
+
+/* Logo */
+.bandage-inner .logo-container {
+    position: relative;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bandage-inner .logo {
+    height: 14rem;
+}
+
+/* Content */
+.bandage-inner .content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-s);
+    color: var(--secondary-color);
+}
+
+.bandages-container-right .content{
+    align-items: flex-end;
+}
+
+.bandage-inner .content h3,
+.bandage-inner .content p {
+    font-size: var(--font-size-l);
+    font-weight: 700;
+    color: var(--secondary-color);
+    line-height: 100%;
+}
+
+.bandage-inner .content h4 {
+    font-size: var(--font-size-m);
+    font-weight: 500;
+    color: var(--tertiary-color);
+    line-height: 100%;
+}
+
+
+
+
+
+
+/* .bandage-outer::after.alt {
+  bottom: 0;
+  right: 0;
+} */
+
+/* .bandages-inner {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -39,15 +217,15 @@ body {
     background-color: var(--primary-color);
     color: var(--secondary-color);
     padding: var(--spacing-l);
-    transform: translateX(-100%);
+    transform: translateX(100%);
     opacity: 0;
-    bottom: var(--spacing-xl);
-    left: var(--spacing-xl);
+    top: var(--spacing-xl);
+    right: var(--spacing-xl);
     border-radius: var(--border-radius);
     gap: var(--spacing-m);
-}
+} */
 
-.bandages-container div h3 {
+/* .bandages-container div h3 {
     font-size: var(--font-size-l);
     font-weight: 500;
     line-height: 100%;
@@ -65,7 +243,10 @@ body {
     font-weight: 500;
     color: var(--secondary-color);
     line-height: 100%;
-}
+} */
+
+
+/* Teams */
 
 .teams {
     position: absolute;
@@ -77,21 +258,71 @@ body {
     width: 100%;
     padding: var(--spacing-xl);
     transform: translateY(100%);
+    opacity: 0;
 }
 
-.teams div {
+.team-outer {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: fit-content;
+    bottom: var(--spacing-xxl);
+    gap: var(--spacing-m);
+    box-shadow:
+        calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+        var(--border-thickness) 0 0 0 var(--border-outer-color),
+        0 calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+        0 var(--border-thickness) 0 0 var(--border-outer-color);
+    padding: var(--border-thickness);
+}
+
+.team-outer .corners li {
+    background-color: var(--border-outer-color);
+}
+
+.team-outer:nth-child(1) {
+    left: var(--spacing-xxl);
+}
+
+.team-outer:nth-child(2) {
+    right: var(--spacing-xxl);
+}
+
+.team-inner {
+    position: relative;
+    width: 10rem;
+    padding: var(--spacing-m) var(--spacing-l);
+    box-shadow:
+        calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+        var(--border-thickness) 0 0 0 var(--border-inner-color),
+        0 calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+        0 var(--border-thickness) 0 0 var(--border-inner-color);
+    background-color: var(--border-background-color);
+}
+
+.team-inner .corners li {
+    background-color: var(--border-inner-color);
+}
+
+.team-inner .content {
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--spacing-m);
-    width: calc(4 * var(--spacing-xl));
-    background-color: var(--primary-color);
+    gap: var(--spacing-s);
     color: var(--secondary-color);
-    padding: var(--spacing-m);
-    border-radius: var(--border-radius);
 }
 
-.teams div h1 {
+.team-inner .content h1,
+.team-inner .content p {
+    font-size: var(--font-size-l);
+    font-weight: 700;
+    line-height: 100%;
+}
+
+
+/* .teams div h1 {
     font-size: var(--font-size-l);
     font-weight: 500;
 }
@@ -99,7 +330,7 @@ body {
 .teams div p {
     font-size: var(--font-size-xl);
     font-weight: 500;
-}
+} */
 
 /* Quiz */
 

@@ -12,16 +12,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Variables
         const TEAMS = document.querySelectorAll('section[id="teams"]');
+        const TEAMSCOONTENT = document.querySelectorAll('section[id="teams"] .content');
         let teamsVisible = false;
 
         // Points
         SOCKET.on('update-teams', (data) => {
-            TEAMS.forEach((team) => {
-                team.children[0].children[0].innerHTML = data.first.name;
-                team.children[1].children[0].innerHTML = data.second.name;
-
-                team.children[0].children[1].innerHTML = data.first.points;
-                team.children[1].children[1].innerHTML = data.second.points;
+            TEAMSCOONTENT.forEach((team) => {
+                team.children[0].textContent = data[team.dataset.value].name;
+                team.children[1].textContent = data[team.dataset.value].points;
             });
 
             teamsVisible = data.visible;
@@ -40,6 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 gsap.to(TEAMS, {
                     duration: 1,
                     y: 0,
+                    opacity: 1,
                     ease: "power3.inOut",
                     delay: (visibleBandage !== undefined) ? 1 : 0
                 });
@@ -48,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 gsap.to(TEAMS, {
                     duration: 1,
                     y: "100%",
+                    opacity: 0,
                     ease: "power3.inOut"
                 });
             }
@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Bandages
         SOCKET.on('show-bandage', async (data) => {
-            const ACTOR = document.querySelector(`#bandages-container div[data-value="${await data.actor}"]`);
+            const ACTOR = document.querySelector(`#bandages-container-${data.on} div[data-value="${await data.actor}"]`);
 
             ACTOR.classList.add('active');
 
@@ -64,22 +64,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 gsap.to(TEAMS, {
                     duration: 1,
                     y: "100%",
-                    ease: "power3.inOut"
+                    ease: "power4.inOut"
                 });
             }
 
             gsap.to(ACTOR, {
                 duration: 1,
                 x: 0,
-                ease: "power3.inOut",
+                ease: "power4.inOut",
                 opacity: 1,
                 delay: (teamsVisible) ? 0.5 : 0
             });
 
             gsap.to(ACTOR, {
-                duration: 0.5,
-                x: "-100%",
-                ease: "power3.inOut",
+                duration: 1,
+                x: (data.on == "left") ? "-100%" : "100%",
+                ease: "power4.inOut",
                 opacity: 0,
                 delay: 5
             });
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 gsap.to(TEAMS, {
                     duration: 1,
                     y: 0,
-                    ease: "power3.inOut",
+                    ease: "power4.inOut",
                     delay: 5
                 });
             }

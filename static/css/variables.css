@@ -33,4 +33,11 @@
 
     --image-height: 20rem;
     --image-width: 20rem;
+
+    /* Border */
+    --border-thickness: 0.625rem;
+
+    --border-outer-color: #624C80;
+    --border-inner-color: #493960;
+    --border-background-color: #312640;
 }

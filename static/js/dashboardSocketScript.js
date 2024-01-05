@@ -96,8 +96,11 @@ document.addEventListener('DOMContentLoaded', () => {
         BANDAGEFORM.addEventListener('submit', ($event) => {
             $event.preventDefault();
 
+            console.log($event.submitter.value);
+
             SOCKET.emit('show-bandage', {
-                "actor": BANDAGESELECT.value
+                "actor": BANDAGESELECT.value,
+                "on": $event.submitter.value
             });
 
             $event.submitter.classList.toggle('active');
