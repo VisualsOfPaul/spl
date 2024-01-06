@@ -11,112 +11,186 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`Connected with ${SOCKET.id}.`);
 
         // Variables
-        const TEAMS = document.querySelectorAll('section[id="teams"]');
-        const TEAMSCOONTENT = document.querySelectorAll('section[id="teams"] .content');
-        let teamsVisible = false;
+        const POINTS = document.querySelectorAll('section[id="teams"]');
+        const POINTSCONTENT = document.querySelectorAll('section[id="teams"] .content');
+        const COMPONENTVISIBILITY = {
+            "bandages": false,
+            "teams": false,
+            "quiz": false,
+            "lego-builds": false,
+            "memory": false
+        };
 
-        // Points
+
+        // HIDE AND SHOW COMPONENTS
+        function hideComponents(components, callback) {
+            const VISIBLECOMPONENTS = components.filter(component => COMPONENTVISIBILITY[component]);
+
+            console.log(components, VISIBLECOMPONENTS);
+
+            if(VISIBLECOMPONENTS.length === 0) {
+                callback();
+                return;
+            }
+
+            const TIMELINE = gsap.timeline({ onComplete: () => {
+                callback();
+            }});
+
+            VISIBLECOMPONENTS.forEach((component) => {
+                COMPONENTVISIBILITY[component] = false;
+
+                let tweenParams = {
+                    duration: 2,
+                    opacity: 0,
+                    ease: "power4.inOut"
+                };
+
+                console.log(component);
+
+                switch(component) {
+                    case "bandages":
+                        COMPONENTVISIBILITY["bandages"] = false;
+                        component = document.querySelector("#bandages-container-left div[data-visible='true']").getAttribute('id');
+                        tweenParams.x = "-100%";
+                        break;
+                    case "teams":
+                        COMPONENTVISIBILITY["teams"] = false;
+                        tweenParams.x = "-100%";
+                        SOCKET.emit('hide-teams');
+                        break;
+                    case "quiz":
+                        COMPONENTVISIBILITY["quiz"] = false;
+                        component = document.querySelector("#quiz-container article[data-visible='true']").getAttribute('id');
+                        SOCKET.emit('hide-questions');
+                        tweenParams.y = "100%";
+                        break;
+                }
+
+                TIMELINE.to(`#${component}`, tweenParams, 0);
+            });
+        }
+
+        // POINTS
         SOCKET.on('update-teams', (data) => {
-            TEAMSCOONTENT.forEach((team) => {
+            COMPONENTVISIBILITY.teams = data.visible;
+
+            POINTSCONTENT.forEach((team) => {
                 team.children[0].textContent = data[team.dataset.value].name;
                 team.children[1].textContent = data[team.dataset.value].points;
             });
 
-            teamsVisible = data.visible;
-            let visibleBandage = document.querySelector('#bandage.active');
-
             if(data.visible) {
-                if(visibleBandage !== undefined) {
-                    gsap.to(visibleBandage, {
-                        duration: 1,
-                        x: "-100%",
-                        opacity: 0,
-                        ease: "power3.inOut"
-                    });
-                }
+                hideComponents(["bandages", "quiz"], () => {
 
-                gsap.to(TEAMS, {
-                    duration: 1,
-                    y: 0,
-                    opacity: 1,
-                    ease: "power3.inOut",
-                    delay: (visibleBandage !== undefined) ? 1 : 0
+                    gsap.to(POINTS, {
+                        duration: 2,
+                        x: 0,
+                        opacity: 1,
+                        ease: "power4.inOut",
+                    });
+
                 });
             }
             else {
-                gsap.to(TEAMS, {
-                    duration: 1,
-                    y: "100%",
+                gsap.to(POINTS, {
+                    duration: 2,
+                    x: "-100%",
                     opacity: 0,
-                    ease: "power3.inOut"
+                    opacity: 0,
+                    ease: "power4.inOut",
                 });
             }
         });
 
 
-        // Bandages
+        // BANDAGES
         SOCKET.on('show-bandage', async (data) => {
-            const ACTOR = document.querySelector(`#bandages-container-${data.on} div[data-value="${await data.actor}"]`);
+            COMPONENTVISIBILITY.bandages = true;
 
-            ACTOR.classList.add('active');
+            const BANDAGE = document.querySelector(`#bandages-container-${data.on} div[data-value="${await data.actor}"]`);
 
-            if(teamsVisible) {
-                gsap.to(TEAMS, {
-                    duration: 1,
-                    y: "100%",
-                    ease: "power4.inOut"
+            if(data.on == "left") {
+                hideComponents(["teams", "quiz"], () => {
+
+                    BANDAGE.dataset.visible = true;
+
+                    // Show bandage
+                    gsap.to(BANDAGE, {
+                        duration: 2,
+                        x: 0,
+                        opacity: 1,
+                        ease: "power4.inOut"
+                    });
+
+                    gsap.to(BANDAGE, {
+                        duration: 2,
+                        x: (data.on == "left") ? "-100%" : "100%",
+                        opacity: 0,
+                        ease: "power4.inOut",
+                        delay: 5
+                    });
+
+                });
+            }
+            else {
+                hideComponents(["quiz"], () => {
+
+                    // Show bandage
+                    gsap.to(BANDAGE, {
+                        duration: 2,
+                        x: 0,
+                        opacity: 1,
+                        ease: "power4.inOut"
+                    });
+
+                    gsap.to(BANDAGE, {
+                        duration: 2,
+                        x: (data.on == "left") ? "-100%" : "100%",
+                        opacity: 0,
+                        ease: "power4.inOut",
+                        delay: 5
+                    });
+
                 });
             }
 
-            gsap.to(ACTOR, {
-                duration: 1,
-                x: 0,
-                ease: "power4.inOut",
-                opacity: 1,
-                delay: (teamsVisible) ? 0.5 : 0
-            });
-
-            gsap.to(ACTOR, {
-                duration: 1,
-                x: (data.on == "left") ? "-100%" : "100%",
-                ease: "power4.inOut",
-                opacity: 0,
-                delay: 5
-            });
-
-            if(teamsVisible) {
-                gsap.to(TEAMS, {
-                    duration: 1,
-                    y: 0,
-                    ease: "power4.inOut",
-                    delay: 5
-                });
-            }
-
+            
             setTimeout(() => {
-                ACTOR.classList.remove('active');
-            }, 5500);
-        })
+                COMPONENTVISIBILITY.bandages = false;
+                BANDAGE.dataset.visible = false;
+            }, 7000);
+        });
 
-        // Quiz
+
+        // QUIZ
+        // Show quiz
         SOCKET.on('send-question', async (data) => {
             const QUESTIONS = document.querySelectorAll("#quiz-container article");
 
+            COMPONENTVISIBILITY.quiz = Object.keys(data).some(key => data[key].visible);
+
             Object.keys(data).forEach((key, index) => {
                 if(data[key].visible) {
-                    gsap.to(QUESTIONS[index], {
-                        duration: 1,
-                        y: 0,
-                        opacity: 1,
-                        ease: "power3.inOut"
+                    hideComponents(["teams", "bandages"], () => {
+                        QUESTIONS[index].dataset.visible = true;
+
+                        gsap.to(QUESTIONS[index], {
+                            duration: 2,
+                            y: 0,
+                            opacity: 1,
+                            ease: "power4.inOut"
+                        });
                     });
                 }
                 else {
+                    QUESTIONS[index].dataset.visible = false;
+
                     gsap.to(QUESTIONS[index], {
-                        duration: 1,
+                        duration: 2,
                         y: "100%",
                         opacity: 0,
-                        ease: "power3.inOut"
+                        ease: "power4.inOut"
                     });
                 }
             });
@@ -152,11 +226,27 @@ document.addEventListener('DOMContentLoaded', () => {
             const QUESTIONS = document.querySelectorAll("#quiz-container article");
 
             gsap.to(QUESTIONS, {
-                duration: 1,
+                duration: 2,
                 y: "100%",
-                ease: "power3.inOut"
+                opacity: 0,
+                ease: "power4.inOut"
             })
         })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // Lego Builds
         SOCKET.on('send-lego-builds', async (data) => {

@@ -176,7 +176,12 @@ IO.on('connection', async (socket) => {
     socket.on('show-teams', async () => {
         teams.visible = !teams.visible;
         IO.emit('update-teams', (teams));
-    })
+    });
+
+    socket.on('hide-teams', async () => {
+        teams.visible = false;
+        IO.emit('update-teams', (teams));
+    });
 
     socket.on('set-team', async (data) => {
 
@@ -238,6 +243,14 @@ IO.on('connection', async (socket) => {
         });
 
         QUIZ[data.index].visible = !QUIZ[data.index].visible;
+
+        IO.emit('send-question', QUIZ);
+    });
+
+    socket.on('hide-questions', () => {
+        Object.keys(QUIZ).forEach(key => {
+            QUIZ[key].visible = false;
+        });
 
         IO.emit('send-question', QUIZ);
     });

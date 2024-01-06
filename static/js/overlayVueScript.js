@@ -1,4 +1,4 @@
-// Bandages
+// BANDAGES
 const bandagesLeft = Vue.createApp({
     data() {
         return {
@@ -93,7 +93,7 @@ const bandagesRight = Vue.createApp({
     }
 }).mount("#bandages-container-right");
 
-// Quiz
+// QUIZ
 const quiz = Vue.createApp({
     data() {
         return {
@@ -101,7 +101,7 @@ const quiz = Vue.createApp({
         };
     },
     template: `
-        <article v-for="(question, index) in quiz" class="question-outer">
+        <article v-for="(question, index) in quiz" class="question-outer" :id="'question-' + index">
             <ul class="corners">
                 <li>&nbsp;</li>
                 <li>&nbsp;</li>
@@ -143,6 +143,15 @@ const quiz = Vue.createApp({
         this.getQuiz();
     }
 }).mount("#quiz-container");
+
+
+
+
+
+
+
+
+
 
 // Lego builds
 const legoBuilds = Vue.createApp({

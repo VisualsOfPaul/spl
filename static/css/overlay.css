@@ -68,12 +68,12 @@ body {
 }
 
 .bandages-container-left .bandage-outer {
-    left: var(--spacing-xxl);
+    left: var(--spacing-xl);
     transform: translateX(-100%);
 }
 
 .bandages-container-right .bandage-outer {
-    right: var(--spacing-xxl);
+    right: var(--spacing-xl);
     transform: translateX(100%);
 }
 
@@ -85,7 +85,7 @@ body {
     justify-content: center;
     width: fit-content;
     opacity: 0;
-    bottom: var(--spacing-xxl);
+    bottom: var(--spacing-xl);
     gap: var(--spacing-m);
     box-shadow:
         calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
@@ -93,6 +93,7 @@ body {
         0 calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
         0 var(--border-thickness) 0 0 var(--border-outer-color);
     padding: var(--border-thickness);
+    background-color: var(--border-inner-color);
 }
 
 .bandage-outer .corners li {
@@ -200,24 +201,23 @@ body {
 .teams {
     position: absolute;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-end;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: calc(var(--border-thickness) * 3);
     bottom: 0;
-    width: 100%;
+    width: fit-content;
     padding: var(--spacing-xl);
-    transform: translateY(100%);
+    transform: translateX(-100%);
     opacity: 0;
 }
 
 /* Outer border */
 .team-outer {
-    position: absolute;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: fit-content;
-    bottom: var(--spacing-xxl);
     gap: var(--spacing-m);
     box-shadow:
         calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
@@ -225,18 +225,11 @@ body {
         0 calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
         0 var(--border-thickness) 0 0 var(--border-outer-color);
     padding: var(--border-thickness);
+    background-color: var(--border-inner-color);
 }
 
 .team-outer .corners li {
     background-color: var(--border-outer-color);
-}
-
-.team-outer:nth-child(1) {
-    left: var(--spacing-xxl);
-}
-
-.team-outer:nth-child(2) {
-    right: var(--spacing-xxl);
 }
 
 /* Inner border */
