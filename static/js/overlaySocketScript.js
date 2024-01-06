@@ -107,6 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     gsap.to(QUESTIONS[index], {
                         duration: 1,
                         y: 0,
+                        opacity: 1,
                         ease: "power3.inOut"
                     });
                 }
@@ -114,35 +115,36 @@ document.addEventListener('DOMContentLoaded', () => {
                     gsap.to(QUESTIONS[index], {
                         duration: 1,
                         y: "100%",
+                        opacity: 0,
                         ease: "power3.inOut"
                     });
                 }
             });
         });
 
+        // Log answer
         SOCKET.on('log-answer', async (data) => {
-            const QUESTIONS = document.querySelectorAll("#quiz-container article");
-            [...QUESTIONS[data.index].children[1].children].forEach((answer) => {
-                answer.classList.remove('selected');
+            const QUIZCONTAINER = document.querySelectorAll("#quiz-container article");
+            const CURRENTQUESTION = QUIZCONTAINER[data.index];
+            const ANSWERCONTAINER = CURRENTQUESTION.querySelector('.content ul');
+            const ANSWERS = ANSWERCONTAINER.children;
+        
+            [...ANSWERS].forEach((answer, index) => {
+                answer.classList.toggle('selected', index === data.id);
             });
-            QUESTIONS[data.index].children[1].children[data.id].classList.add('selected')
         });
-
+        
+        // Show answer
         SOCKET.on('show-answer', async (data) => {
-            const QUESTIONS = document.querySelectorAll("#quiz-container article");
-            const ANSWERS = [...QUESTIONS[data.index].children[1].children];
-            ANSWERS.forEach((answer) => {
-                if(answer.classList.contains('selected') && answer.innerHTML.includes(data.correctAnswer)) {
-                    answer.classList.add('correct');
-                }
+            const QUIZCONTAINER = document.querySelectorAll("#quiz-container article");
+            const CURRENTQUESTION = QUIZCONTAINER[data.index];
+            const ANSWERCONTAINER = CURRENTQUESTION.querySelector('.content ul');
+            const ANSWERS = ANSWERCONTAINER.children;
 
-                if(answer.classList.contains('selected') && !answer.innerHTML.includes(data.correctAnswer)) {
-                    answer.classList.add('wrong');
-                }
-
-                if(answer.innerHTML.includes(data.correctAnswer)) {
-                    answer.classList.add('correct');
-                }
+            [...ANSWERS].forEach((answer, index) => {
+                answer.classList.remove('selected');
+                answer.classList.toggle('wrong', index === data.id && answer.textContent !== data.correctAnswer);
+                answer.classList.toggle('correct', answer.textContent === data.correctAnswer);
             });
         });
 

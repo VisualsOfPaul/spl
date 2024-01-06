@@ -101,14 +101,35 @@ const quiz = Vue.createApp({
         };
     },
     template: `
-        <article v-for="question in quiz">
-            <header>
-                <h1>Frage</h1>
-                <h2>{{ question.question }}</h2>
-            </header>
-            <ul>
-                <li class="answer" v-for="answer in question.answers">{{ answer.answer }}</li>
+        <article v-for="(question, index) in quiz" class="question-outer">
+            <ul class="corners">
+                <li>&nbsp;</li>
+                <li>&nbsp;</li>
+                <li>&nbsp;</li>
+                <li>&nbsp;</li>
             </ul>
+            <div class="question-inner">
+                <ul class="corners">
+                    <li>&nbsp;</li>
+                    <li>&nbsp;</li>
+                    <li>&nbsp;</li>
+                    <li>&nbsp;</li>
+                </ul>
+
+                <div class="content">
+                    <header>
+                        <h1>Frage {{ index + 1 }}</h1>
+                        <h2>{{ question.question }}</h2>
+                    </header>
+                    <ul>
+                        <li class="answer" id="answer" v-for="answer in question.answers">
+                            <p id="content" class="content">
+                                {{ answer.answer }}
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </article>
     `,
     methods: {
