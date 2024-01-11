@@ -177,6 +177,33 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
+
+
+
+        // Toggle where is this
+        async function toggleWhereIsThis(index) {
+            SOCKET.emit('toggle-where-is-this', {
+                "index": index
+            });
+        }
+
+        window.toggleWhereIsThis = toggleWhereIsThis;
+
+        // Get where is this
+        SOCKET.on('send-where-is-this', async (data) => {
+            const TOGGLES = document.querySelectorAll('button[id^="toggle-where-is-this-"]');
+
+            Promise.resolve(data).then((data) => {
+                TOGGLES.forEach((toggle, index) => {
+                    toggle.textContent = data[index].visible ? "Bild verstecken" : "Bild anzeigen";
+                    toggle.classList.toggle('active', data[index].visible);
+                });
+            });
+        });
+
+
+
+
         // Toogle memory
         MEMORYFORM.addEventListener('submit', ($event) => {
             $event.preventDefault();
@@ -213,6 +240,15 @@ document.addEventListener('DOMContentLoaded', () => {
             TOGGLES.forEach((toggle, index) => {
                 toggle.classList.toggle('active', index === data);
             });
+        });
+
+        // Show Sponsors
+        const SPONSORFORM = document.querySelector('#show-sponsors-form');
+        const SPONSORBUTTON = document.querySelector('#show-sponsors-button');
+        SPONSORFORM.addEventListener('submit', ($event) => {
+            $event.preventDefault();
+            SPONSORBUTTON.classList.toggle('active');
+            SOCKET.emit('show-sponsors');
         });
     });
 });
