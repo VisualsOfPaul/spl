@@ -144,15 +144,6 @@ const quiz = Vue.createApp({
     }
 }).mount("#quiz-container");
 
-
-
-
-
-
-
-
-
-
 // Lego builds
 const legoBuilds = Vue.createApp({
     data() {
@@ -206,3 +197,70 @@ const memory = Vue.createApp({
         this.getTiles();
     }
 }).mount("#memory-container");
+
+
+// Timer
+const timer = Vue.createApp({
+    data() {
+        return {
+            time: {
+                hours: 0,
+                minutes: 0,
+                seconds: 0
+            }
+        };
+    },
+    template: `
+        <article>
+            <p>{{ this.formatTime(time.hours) }}:{{ this.formatTime(time.minutes) }}:{{ this.formatTime(time.seconds) }}</p>
+        </article>
+    `,
+    methods: {
+        formatTime(number) {
+            return number.toLocaleString('de-DE', {
+                minimumIntegerDigits: 2,
+                useGrouping: false
+              });
+        },
+
+        async countUp(end) {
+            setTimeout(() => {
+                if (this.time.seconds < 59) {
+                    this.time.seconds++;
+                } else {
+                    this.time.seconds = 0;
+                    if (this.time.minutes < 59) {
+                        this.time.minutes++;
+                    } else {
+                        this.time.minutes = 0;
+                        this.time.hours++;
+                    }
+                }
+                if (this.time.hours < max.hours || this.time.minutes < max.minutes || this.time.seconds < max.seconds) {
+                    this.countUp(end);
+                }
+            }, 1000);
+        },
+
+        async countDown(start) {
+            this.time = start;
+
+            setTimeout(() => {
+                if (this.time.seconds > 0) {
+                    this.time.seconds--;
+                } else {
+                    this.time.seconds = 59;
+                    if (this.time.minutes > 0) {
+                        this.time.minutes--;
+                    } else {
+                        this.time.minutes = 59;
+                        this.time.hours--;
+                    }
+                }
+                if (this.time.hours > 0 || this.time.minutes > 0 || this.time.seconds > 0) {
+                    this.countDown(this.time);
+                }
+            }, 1000);
+        }
+    }
+}).mount("#timer-container");
