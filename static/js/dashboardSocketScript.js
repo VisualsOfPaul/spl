@@ -190,12 +190,14 @@ document.addEventListener('DOMContentLoaded', () => {
         window.toggleWhereIsThis = toggleWhereIsThis;
 
         // Get where is this
-        SOCKET.on('send-where-is-this', (data) => {
+        SOCKET.on('send-where-is-this', async (data) => {
             const TOGGLES = document.querySelectorAll('button[id^="toggle-where-is-this-"]');
 
-            TOGGLES.forEach((toggle, index) => {
-                toggle.textContent = data[index].visible ? "Bild verstecken" : "Bild anzeigen";
-                toggle.classList.toggle('active', data[index].visible);
+            Promise.resolve(data).then((data) => {
+                TOGGLES.forEach((toggle, index) => {
+                    toggle.textContent = data[index].visible ? "Bild verstecken" : "Bild anzeigen";
+                    toggle.classList.toggle('active', data[index].visible);
+                });
             });
         });
 

@@ -186,7 +186,7 @@ IO.on('connection', async (socket) => {
 
     IO.emit('update-teams', teams);
     IO.emit('send-lego-builds', LEGOBUILDS);
-    IO.emit('send-where-is-this', LEGOBUILDS);
+    IO.emit('send-where-is-this', WHEREISTHIS);
     IO.emit('send-memory', MEMORY.visible);
     IO.emit('send-question', QUIZ);
     IO.emit('send-view', visibleViewIndex);

@@ -148,7 +148,7 @@ const whereIsThis = Vue.createApp({
         <ul>
             <li v-for="(image, index) in images">
                 <img :src="'/assets/where-is-this/' + image">
-                <button @click="toggleImage(index)" :id="'where-is-this-image-' + index">Bild anzeigen</button>
+                <button @click="toggleImage(index)" :id="'toggle-where-is-this-' + index">Bild anzeigen</button>
             </li>
         </ul>
     `,
