@@ -39,6 +39,13 @@ const LEGOBUILDS = Array.from(FS.readdirSync('./static/assets/lego-builds')).map
     };
 });
 
+const WHEREISTHIS = Array.from(FS.readdirSync('./static/assets/where-is-this')).map((file, index) => {
+    return {
+        "index": index,
+        "visible": false
+    };
+});
+
 const MEMORY = {
     "visible": false,
     "tiles" : [
@@ -96,6 +103,8 @@ const MEMORY = {
 const QUIZ = {};
 
 let visibleViewIndex = 0;
+
+var visibleSponsors = false;
 
 //Routing
 APP.get("/", (req, res) => {
@@ -158,6 +167,14 @@ APP.get("/api/memory", async (req, res) => {
     res.send(await MEMORY);
 })
 
+APP.get("/api/where-is-this", async (req, res) => {
+    let images = [];
+    FS.readdirSync('./static/assets/where-is-this').forEach(file => {
+        images.push(file);
+    });
+    res.send({images: images});
+});
+
 // Socket setup
 const IO = new SOCKETIO.Server(SERVER);
 
@@ -169,9 +186,11 @@ IO.on('connection', async (socket) => {
 
     IO.emit('update-teams', teams);
     IO.emit('send-lego-builds', LEGOBUILDS);
+    IO.emit('send-where-is-this', LEGOBUILDS);
     IO.emit('send-memory', MEMORY.visible);
     IO.emit('send-question', QUIZ);
     IO.emit('send-view', visibleViewIndex);
+    IO.emit('show-sponsors', visibleSponsors);
 
     socket.on('show-teams', async () => {
         teams.visible = !teams.visible;
@@ -289,6 +308,25 @@ IO.on('connection', async (socket) => {
         IO.emit('send-lego-builds', LEGOBUILDS);
     });
 
+
+
+    socket.on('toggle-where-is-this', (data) => {
+        WHEREISTHIS.forEach((image) => {
+            if(image.index !== data.index) image.visible = false;
+        });
+
+        const image = WHEREISTHIS.find((image) => {
+            return image.index === data.index;
+        });
+
+        image.visible = !image.visible;
+
+        IO.emit('send-where-is-this', WHEREISTHIS);
+    });
+
+
+
+
     socket.on('toggle-memory', () => {
         MEMORY.visible = !MEMORY.visible;
         
@@ -301,11 +339,19 @@ IO.on('connection', async (socket) => {
         IO.emit('send-view', visibleViewIndex);
     });
 
+    //Show sponsors
+    socket.on('show-sponsors', () => {
+        visibleSponsors = !visibleSponsors;
+        IO.emit('show-sponsors', visibleSponsors);
+    });
+
     socket.on('disconnect', () => {
         pointsModel.setPoints(teams.first.name, teams.first.points);
         pointsModel.setPoints(teams.second.name, teams.second.points);
         console.log(`Socket ${socket.id} disconnected.`);
     });
+
+    
 })
 
 // Host on port

@@ -206,3 +206,32 @@ const memory = Vue.createApp({
         this.getTiles();
     }
 }).mount("#memory-container");
+
+
+// Where is this?
+const whereIsThis = Vue.createApp({
+    data() {
+        return {
+            images: []
+        };
+    },
+    template: `
+        <ul>
+            <li v-for="(image, index) in images" :id="'where-is-this-image-' + index">
+                <figure>
+                    <img :src="'/assets/where-is-this/' + image">
+                </figure>
+            </li>
+        </ul>
+    `,
+    methods: {
+        async getImages() {
+            const response = await fetch('/api/where-is-this');
+            const data = await response.json();
+            this.images = await data.images;
+        }
+    },
+    mounted() {
+        this.getImages();
+    }
+}).mount("#where-is-this-container");

@@ -182,7 +182,7 @@ form {
 
 .lego-builds-container ul {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     gap: var(--spacing-l);
 }
 
@@ -196,4 +196,32 @@ form {
     height: calc(var(--image-height) / 2);
     width: calc(var(--image-width) / 2);
     border-radius: var(--border-radius);
+}
+
+.lego-builds-container ul li button {
+    width: fit-content;
+}
+
+/* Where is this? */
+
+.where-is-this-container ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-l);
+}
+
+.where-is-this-container ul li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-m);
+}
+
+.where-is-this-container ul li img {
+    height: calc(var(--image-height) / 2);
+    width: calc(var(--image-width) / 2);
+    border-radius: var(--border-radius);
+}
+
+.where-is-this-container ul li button {
+    width: fit-content;
 }

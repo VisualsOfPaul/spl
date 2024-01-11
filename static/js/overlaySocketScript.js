@@ -272,6 +272,36 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
+
+
+
+        // Lego Builds
+        SOCKET.on('send-where-is-this', async (data) => {
+            const IMAGES = document.querySelectorAll("li[id^='where-is-this-image-']");
+
+            data.forEach((images, index) => {
+                if(images.visible) {
+                    gsap.to(IMAGES[index], {
+                        duration: 1,
+                        y: 0,
+                        opacity: 1,
+                        ease: "power3.inOut"
+                    });
+                }
+                else {
+                    gsap.to(IMAGES[index], {
+                        duration: 1,
+                        y: "50%",
+                        opacity: 0,
+                        ease: "power3.inOut"
+                    });
+                }
+            });
+        });
+
+
+
+
         // Memory
         SOCKET.on('send-memory', (data) => {
             const MEMORY = document.querySelector("#memory-container ul");
@@ -292,6 +322,26 @@ document.addEventListener('DOMContentLoaded', () => {
                     ease: "power3.inOut"
                 });
             }
-        })
+        });
+
+
+        // Show sponsors
+        SOCKET.on('show-sponsors', (data) => {
+            if(data == true) {
+                gsap.to("#sponsors-container", {
+                    duration: 1,
+                    y: 0,
+                    opacity: 1,
+                    ease: "power3.inOut"
+                });
+            } else {
+                gsap.to("#sponsors-container", {
+                    duration: 1,
+                    y: "100%",
+                    opacity: 0,
+                    ease: "power3.inOut"
+                });
+            }
+        });
     });
 });

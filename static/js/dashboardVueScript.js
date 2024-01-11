@@ -133,3 +133,37 @@ const navigation = Vue.createApp({
         this.getGames();
     }
 }).mount("#navigation-container");
+
+
+
+
+// Where is this?
+const whereIsThis = Vue.createApp({
+    data() {
+        return {
+            images: []
+        };
+    },
+    template: `
+        <ul>
+            <li v-for="(image, index) in images">
+                <img :src="'/assets/where-is-this/' + image">
+                <button @click="toggleImage(index)" :id="'where-is-this-image-' + index">Bild anzeigen</button>
+            </li>
+        </ul>
+    `,
+    methods: {
+        async getBuilds() {
+            const response = await fetch('/api/where-is-this');
+            const data = await response.json();
+            this.images = await data.images;
+        },
+
+        async toggleImage(index) {
+            toggleWhereIsThis(index);
+        }
+    },
+    mounted() {
+        this.getBuilds();
+    }
+}).mount("#where-is-this-container");
