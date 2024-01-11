@@ -244,11 +244,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Show Sponsors
         const SPONSORFORM = document.querySelector('#show-sponsors-form');
-        const SPONSORBUTTON = document.querySelector('#show-sponsors-button');
         SPONSORFORM.addEventListener('submit', ($event) => {
             $event.preventDefault();
-            SPONSORBUTTON.classList.toggle('active');
-            SOCKET.emit('show-sponsors');
+            SOCKET.emit('toggle-sponsors');
+        });
+
+        // Get sponsors
+        SOCKET.on('show-sponsors', (data) => {
+            const TOGGLE = SPONSORFORM.children[0];
+            
+            TOGGLE.textContent = data ? "Sponsoren verstecken" : "Sponsoren anzeigen";
+            TOGGLE.classList.toggle('active',data);
         });
     });
 });

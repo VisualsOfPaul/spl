@@ -26,6 +26,7 @@
     --border-outer-color: #624C80;
     --border-inner-color: #493960;
     --border-background-color: #312640;
+    --border-background-color-transparent: rgba(49, 38, 64, 0.9);
 
     /* Answers */
     --selected-color: #CC66AE;
@@ -93,7 +94,7 @@ body {
         0 calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
         0 var(--border-thickness) 0 0 var(--border-outer-color);
     padding: var(--border-thickness);
-    background-color: var(--border-inner-color);
+    background-color: var(--border-background-color-transparent);
 }
 
 .bandage-outer .corners li {
@@ -148,7 +149,7 @@ body {
         var(--border-thickness) 0 0 0 var(--border-inner-color),
         0 calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
         0 var(--border-thickness) 0 0 var(--border-inner-color);
-    background-color: var(--border-background-color);
+    background-color: var(--border-background-color-transparent);
 }
 
 .bandage-inner .corners li {
@@ -225,7 +226,7 @@ body {
         0 calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
         0 var(--border-thickness) 0 0 var(--border-outer-color);
     padding: var(--border-thickness);
-    background-color: var(--border-inner-color);
+    background-color: var(--border-background-color-transparent);
 }
 
 .team-outer .corners li {
@@ -242,7 +243,7 @@ body {
         var(--border-thickness) 0 0 0 var(--border-inner-color),
         0 calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
         0 var(--border-thickness) 0 0 var(--border-inner-color);
-    background-color: var(--border-background-color);
+    background-color: var(--border-background-color-transparent);
 }
 
 .team-inner .corners li {
@@ -290,7 +291,7 @@ body {
     padding: var(--spacing-l);
     transform: translate(-50%, 100%);
     opacity: 0;
-    background-color: var(--border-inner-color);
+    background-color: var(--border-background-color-transparent);
     z-index: -1;
     box-shadow:
         calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
@@ -314,7 +315,7 @@ body {
         var(--border-thickness) 0 0 0 var(--border-inner-color),
         0 calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
         0 var(--border-thickness) 0 0 var(--border-inner-color);
-    background-color: var(--border-background-color);
+    background-color: var(--border-background-color-transparent);
 }
 
 .question-inner > .corners li {

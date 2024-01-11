@@ -340,7 +340,7 @@ IO.on('connection', async (socket) => {
     });
 
     //Show sponsors
-    socket.on('show-sponsors', () => {
+    socket.on('toggle-sponsors', () => {
         visibleSponsors = !visibleSponsors;
         IO.emit('show-sponsors', visibleSponsors);
     });

@@ -211,7 +211,7 @@ const timer = Vue.createApp({
         };
     },
     template: `
-        <article>
+        <article style="display: none">
             <p>{{ this.formatTime(time.hours) }}:{{ this.formatTime(time.minutes) }}:{{ this.formatTime(time.seconds) }}</p>
         </article>
     `,

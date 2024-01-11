@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-        // Lego Builds
+        // Where is this?
         SOCKET.on('send-where-is-this', async (data) => {
             const IMAGES = document.querySelectorAll("li[id^='where-is-this-image-']");
 
