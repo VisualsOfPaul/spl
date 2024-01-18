@@ -266,6 +266,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
 
+        // SPONSORS
+        // Todo: Eventuell Animation ändern
+        SOCKET.on('show-sponsors', (data) => {
+            if(data == true) {
+                gsap.to("#sponsors-container", {
+                    duration: 0.5,
+                    opacity: 1,
+                    ease: "power3.inOut"
+                });
+            } else {
+                gsap.to("#sponsors-container", {
+                    duration: 0.5,
+                    opacity: 0,
+                    ease: "power3.inOut"
+                });
+            }
+        });
+
+
 
 
 
@@ -353,23 +372,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
 
-        // Show sponsors
-        SOCKET.on('show-sponsors', (data) => {
-            if(data == true) {
-                gsap.to("#sponsors-container", {
-                    duration: 1,
-                    y: 0,
-                    opacity: 1,
-                    ease: "power3.inOut"
-                });
-            } else {
-                gsap.to("#sponsors-container", {
-                    duration: 1,
-                    y: "100%",
-                    opacity: 0,
-                    ease: "power3.inOut"
-                });
-            }
-        });
+
     });
 });

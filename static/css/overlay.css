@@ -23,6 +23,7 @@
 
     /* Border */
     --border-thickness: 0.625rem;
+    --border-outest-color: #7A5FA0;
     --border-outer-color: #624C80;
     --border-inner-color: #493960;
     --border-background-color: #312640;
@@ -585,7 +586,7 @@ body {
 
 /* Sponsors
 ************************************************************************/
-.sponsors-container {
+/* .sponsors-container {
     position: absolute;
     height: 100vh;
     width: 100vw;
@@ -603,4 +604,101 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+} */
+
+/* SPONSORS */
+.sponsors {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.sponsors-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0;
+}
+
+.sponsors-container .corners li {
+    background-color: var(--border-outest-color);
+}
+
+.sponsors-outer {
+    position: relative;
+    width: calc(100vw - var(--border-thickness) * 2);
+    height: calc(100vh - var(--border-thickness) * 2);
+    box-shadow:
+        calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+        var(--border-thickness) 0 0 0 var(--border-outer-color),
+        0 calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+        0 var(--border-thickness) 0 0 var(--border-outer-color);
+    padding: var(--border-thickness);
+    background-color: var(--border-background-color-transparent);
+}
+
+.sponsors-outer .corners li {
+    background-color: var(--border-outer-color);
+}
+
+.sponsors-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-shadow:
+        calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+        var(--border-thickness) 0 0 0 var(--border-inner-color),
+        0 calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+        0 var(--border-thickness) 0 0 var(--border-inner-color);
+    background-color: var(--border-background-color-transparent);
+}
+
+.sponsors-inner .corners li {
+    background-color: var(--border-inner-color);
+}
+
+.sponsors-inner .content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xxl);
+    color: var(--primary-color);
+    padding: var(--spacing-xl);
+}
+
+.sponsors-inner .content figure {
+    height: 12rem;
+    width: 12rem;
+}
+
+.sponsors-inner .content figure img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.sponsors-inner .content h1 {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    line-height: 100%;
+}
+
+.sponsors-inner .content > ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xl);
+    width: 100%;
+    list-style: none;
 }
