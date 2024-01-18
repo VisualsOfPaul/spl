@@ -252,6 +252,42 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+        // COUNT LETTERS
+        function toggleWord(index) {
+            SOCKET.emit('toggle-word', index);
+        }
+
+        window.toggleWord = toggleWord;
+
+        // Show solution
+        function showSolution(index) {
+            SOCKET.emit('show-solution', index);
+        }
+
+        window.showSolution = showSolution;
+
+        // Get words
+        SOCKET.on('send-count-letters', (data) => {
+            const TOGGLES = document.querySelectorAll('button[id^="toggle-word-"]');
+            const SOLUTIONS = document.querySelectorAll('button[id^="show-solution-"]');
+            
+            TOGGLES.forEach((toggle, index) => {
+                toggle.textContent = data[index].visible ? "Wort verstecken" : "Wort anzeigen";
+                toggle.classList.toggle('active', data[index].visible);
+            });
+
+            SOLUTIONS.forEach((solution, index) => {
+                solution.classList.toggle('active', data[index].solutionVisible);
+            });
+        });
+
+
+
+
+
+
+
+
 
         // Toogle memory
         MEMORYFORM.addEventListener('submit', ($event) => {

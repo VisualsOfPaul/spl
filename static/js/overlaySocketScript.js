@@ -144,8 +144,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-
-
         // POINTS
         SOCKET.on('update-teams', (data) => {
             COMPONENTVISIBILITY.teams = data.visible;

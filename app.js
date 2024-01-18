@@ -114,6 +114,38 @@ const STARTINGSCREEN = {
     "visible": true
 };
 
+
+
+
+// COUNT LETTERS
+const COUNTLETTERS = [
+    {
+        "word": "Hexadezimalsystem",
+        "letters": 17,
+        "visible": false,
+        "solutionVisible": false
+    },
+    {
+        "word": "Fresnellinse",
+        "letters": 12,
+        "visible": false,
+        "solutionVisible": false
+    },
+    {
+        "word": "Trauma",
+        "letters": 6,
+        "visible": false,
+        "solutionVisible": false
+    },
+    {
+        "word": "Deadline",
+        "letters": 8,
+        "visible": false,
+        "solutionVisible": false
+    }
+];
+
+
 //Routing
 APP.get("/", (req, res) => {
     res.redirect('/overlay');
@@ -182,6 +214,15 @@ APP.get("/api/where-is-this", async (req, res) => {
     });
     res.send({images: images});
 });
+
+
+// COUNT LETTERS
+APP.get("/api/count-letters", async (req, res) => {
+    res.send(await COUNTLETTERS);
+});
+
+
+
 
 // Socket setup
 const IO = new SOCKETIO.Server(SERVER);
@@ -385,6 +426,20 @@ IO.on('connection', async (socket) => {
         TIMER.visible = !TIMER.visible;
         IO.emit('got-toggle-timer', TIMER.visible);
     });
+
+
+
+    // COUNT LETTERS
+    socket.on('toggle-word', (index) => {
+        COUNTLETTERS[index].visible = !COUNTLETTERS[index].visible;
+        IO.emit('send-count-letters', COUNTLETTERS);
+    });
+
+    socket.on('show-solution', (index) => {
+        COUNTLETTERS[index].solutionVisible = !COUNTLETTERS[index].solutionVisible;
+        IO.emit('send-count-letters', COUNTLETTERS);
+    });
+
 
 
 

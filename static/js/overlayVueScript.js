@@ -345,3 +345,51 @@ const whereIsThis = Vue.createApp({
         this.getImages();
     }
 }).mount("#where-is-this-container");
+
+
+
+
+
+// COUNT LETTERS
+const COUNTLETTERS = Vue.createApp({
+    data() {
+        return {
+            words: []
+        };
+    },
+    template: `
+        <ul>
+            <li v-for="(word, index) in words">
+                <article id="count-letters-item" class="count-letters-item-outer">
+                    <ul class="corners">
+                        <li>&nbsp;</li>
+                        <li>&nbsp;</li>
+                        <li>&nbsp;</li>
+                        <li>&nbsp;</li>
+                    </ul>
+
+                    <div class="count-letters-item-inner">
+                        <ul class="corners">
+                            <li>&nbsp;</li>
+                            <li>&nbsp;</li>
+                            <li>&nbsp;</li>
+                            <li>&nbsp;</li>
+                        </ul>
+
+                        <p class="content">{{ word.word }} -&nbsp;<span>{{ word.letters }}</span></p>
+                    </div>
+                </article>
+            </li>
+        </ul>
+    `,
+    methods: {
+        async getWords() {
+            const response = await fetch('/api/count-letters');
+            const data = await response.json();
+            this.words = await data;
+        },
+    },
+    mounted() {
+        this.getWords();
+    }
+}).mount("#count-letters-container");

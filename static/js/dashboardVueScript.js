@@ -167,3 +167,43 @@ const whereIsThis = Vue.createApp({
         this.getBuilds();
     }
 }).mount("#where-is-this-container");
+
+
+
+
+
+// COUNT LETTERS
+const COUNTLETTERS = Vue.createApp({
+    data() {
+        return {
+            words: []
+        };
+    },
+    template: `
+        <ul>
+            <li v-for="(word, index) in words">
+                <p>{{ word.word }} ({{ word.letters }} Buchstaben)</p>
+                <button @click="toggleWord(index)" :id="'toggle-word-' + index">Wort anzeigen</button>
+                <button @click="showSolution(index)" :id="'show-solution-' + index">Lösung anzeigen</button>
+            </li>
+        </ul>
+    `,
+    methods: {
+        async getWords() {
+            const response = await fetch('/api/count-letters');
+            const data = await response.json();
+            this.words = await data;
+        },
+
+        async toggleWord(index) {
+            toggleWord(index);
+        },
+
+        async showSolution(index) {
+            showSolution(index);
+        }
+    },
+    mounted() {
+        this.getWords();
+    }
+}).mount("#count-letters-container");
