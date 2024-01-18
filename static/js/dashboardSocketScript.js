@@ -201,9 +201,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-
-
-
         // Toogle memory
         MEMORYFORM.addEventListener('submit', ($event) => {
             $event.preventDefault();
@@ -254,6 +251,28 @@ document.addEventListener('DOMContentLoaded', () => {
             const TOGGLE = SPONSORFORM.children[0];
             
             TOGGLE.textContent = data ? "Sponsoren verstecken" : "Sponsoren anzeigen";
+            TOGGLE.classList.toggle('active',data);
+        });
+
+        // Toggle Poll
+        document.querySelector('#toggle-poll-form').addEventListener('submit', ($event) => {
+            $event.preventDefault();
+            SOCKET.emit('toggle-poll');
+        });
+       
+        SOCKET.on('update-counter', (data) => {
+            const COUNTER = document.querySelector('.poll-counter');
+            const ONES = COUNTER.querySelector('#ones-points');
+            const TWOS = COUNTER.querySelector('#twos-points');
+
+            ONES.textContent = data.ones;
+            TWOS.textContent = data.twos;
+        });
+
+        SOCKET.on('toggle-poll', (data) => {
+            const TOGGLE = document.querySelector('#toggle-poll-form').children[0];
+            
+            TOGGLE.textContent = data ? "Umfrage stoppen" : "Umfrage starten";
             TOGGLE.classList.toggle('active',data);
         });
     });

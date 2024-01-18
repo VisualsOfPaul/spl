@@ -20,6 +20,9 @@ const bandageModel = require('./models/bandageModel.js');
 const pointsModel = require('./models/pointsModel.js');
 const quizModel = require('./models/quizModel.js');
 
+//Integrations
+const twitchIntegration = require('./bot.js');
+
 let teams = {
     "first" : {
         "name": "-",
@@ -106,6 +109,8 @@ let visibleViewIndex = 0;
 
 var visibleSponsors = false;
 
+var pollActive = false;
+
 //Routing
 APP.get("/", (req, res) => {
     res.redirect('/overlay');
@@ -191,6 +196,7 @@ IO.on('connection', async (socket) => {
     IO.emit('send-question', QUIZ);
     IO.emit('send-view', visibleViewIndex);
     IO.emit('show-sponsors', visibleSponsors);
+    IO.emit('toggle-poll', pollActive);
 
     socket.on('show-teams', async () => {
         teams.visible = !teams.visible;
@@ -343,6 +349,17 @@ IO.on('connection', async (socket) => {
     socket.on('toggle-sponsors', () => {
         visibleSponsors = !visibleSponsors;
         IO.emit('show-sponsors', visibleSponsors);
+    });
+
+    //Toggle poll
+    socket.on('toggle-poll', () => {
+        pollActive = !pollActive;
+        (pollActive) ? twitchIntegration.startPoll() : twitchIntegration.stopPoll();
+        IO.emit('toggle-poll', pollActive);
+    });
+
+    socket.on('update-counter', (data) => {
+        IO.emit('update-counter', data);
     });
 
     socket.on('disconnect', () => {
