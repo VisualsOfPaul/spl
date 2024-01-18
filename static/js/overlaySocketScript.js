@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     SOCKET.on('connect', () => {
         console.log(`Connected with ${SOCKET.id}.`);
 
-        // Variables
+        // VARIABLES
         const POINTS = document.querySelectorAll('section[id="teams"]');
         const POINTSCONTENT = document.querySelectorAll('section[id="teams"] .content');
         const COMPONENTVISIBILITY = {
@@ -70,6 +70,81 @@ document.addEventListener('DOMContentLoaded', () => {
                 TIMELINE.to(`#${component}`, tweenParams, 0);
             });
         }
+
+
+        // STARTING SCREEN
+        SOCKET.on('send-starting-screen', (data) => {
+            const STARTINGSCREEN = document.querySelector("#starting-screen-container");
+
+            if(data) {
+                gsap.to(STARTINGSCREEN, {
+                    duration: 0.5,
+                    opacity: 1,
+                    ease: "power4.inOut"
+                });
+
+                startingScreenCountDown({
+                    minutes: 5,
+                    seconds: 0
+                });
+            }
+            else {
+                gsap.to(STARTINGSCREEN, {
+                    duration: 0.5,
+                    opacity: 0,
+                    ease: "power4.inOut"
+                });
+
+                clearInterval(window.STARTINGSCREENCOUNTDOWN);
+            }
+        });
+
+        function startingScreenCountDown(time) {
+            const TIMER = document.querySelector("#starting-screen-countdown");
+            const TIME = {
+                minutes: time.minutes,
+                seconds: time.seconds
+            }
+
+            const STARTINGSCREENCOUNTDOWN = setInterval(() => {
+                if(TIME.seconds > 0) {
+                    TIME.seconds--;
+                }
+                else {
+                    TIME.seconds = 59;
+                    TIME.minutes--;
+                }
+
+                TIMER.textContent = `in ${
+                    TIME.minutes.toLocaleString('de-DE', {
+                        minimumIntegerDigits: 2,
+                        useGrouping: false
+                    })}:${
+                        TIME.seconds.toLocaleString('de-DE', {
+                            minimumIntegerDigits: 2,
+                            useGrouping: false
+                        })
+                    }`;
+
+                if(TIME.minutes === 0 && TIME.seconds === 0) {
+                    clearInterval(STARTINGSCREENCOUNTDOWN);
+
+                    TIMER.textContent = "bald...";
+                }
+            }, 1000);
+
+            window.STARTINGSCREENCOUNTDOWN = STARTINGSCREENCOUNTDOWN;
+        }
+
+
+
+
+
+
+
+
+
+
 
         // POINTS
         SOCKET.on('update-teams', (data) => {

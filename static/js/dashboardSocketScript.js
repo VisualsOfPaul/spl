@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`Connected with ${SOCKET.id}.`);
 
 
-        // Variables
+        // VARIABLES
+        const STARTINGSCREENFORM = document.querySelector('#starting-screen-form');
         const BANDAGEFORM = document.querySelector('#bandage');
         const BANDAGESELECT = BANDAGEFORM.children[0];
         const TEAMS = document.querySelectorAll('article[id^="team"]');
@@ -19,6 +20,29 @@ document.addEventListener('DOMContentLoaded', () => {
         const TEAMPOINTS = document.querySelectorAll('p[id^="points-team-"]');
         const RESETTEAMSFORM = document.querySelector('#reset-teams-form');
         const MEMORYFORM = document.querySelector('#toggle-memory');
+
+
+        // STARTING SCREEN
+        STARTINGSCREENFORM.addEventListener('submit', ($event) => {
+            $event.preventDefault();
+
+            SOCKET.emit('toggle-starting-screen');
+        });
+
+        SOCKET.on('send-starting-screen', (data) => {
+            const TOGGLE = STARTINGSCREENFORM.children[0];
+            
+            TOGGLE.textContent = data ? "Startbildschirm verstecken" : "Startbildschirm anzeigen";
+            TOGGLE.classList.toggle('active',data);
+        });
+
+
+
+
+
+
+
+
 
         // Get current stats
         SOCKET.on('update-teams', (data) => {

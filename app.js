@@ -110,6 +110,10 @@ let visibleViewIndex = 0;
 
 var visibleSponsors = false;
 
+const STARTINGSCREEN = {
+    "visible": true
+};
+
 //Routing
 APP.get("/", (req, res) => {
     res.redirect('/overlay');
@@ -195,6 +199,18 @@ IO.on('connection', async (socket) => {
     IO.emit('send-question', QUIZ);
     IO.emit('send-view', visibleViewIndex);
     IO.emit('show-sponsors', visibleSponsors);
+
+
+    // STARTING SCREEN
+    socket.on('toggle-starting-screen', () => {
+        STARTINGSCREEN.visible = !STARTINGSCREEN.visible;
+        IO.emit('send-starting-screen', STARTINGSCREEN.visible);
+    });
+
+
+
+
+
 
     socket.on('show-teams', async () => {
         teams.visible = !teams.visible;
