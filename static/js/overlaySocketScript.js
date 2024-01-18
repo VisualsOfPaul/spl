@@ -447,4 +447,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     });
+
+
+    // COUNT LETTERS
+    SOCKET.on('send-count-letters', (data) => {
+        const WORDS = document.querySelectorAll("#count-letters-container > ul > li[id*='word']");
+        const SOLUTIONS = document.querySelectorAll("#count-letters-container > ul > li[id*='solution']");
+
+        data.forEach((word, index) => {
+            if(word.visible && !word.solutionVisible) {
+                gsap.to(WORDS[index], {
+                    duration: 1,
+                    y: 0,
+                    opacity: 1,
+                    ease: "power3.inOut"
+                });
+            }
+            else {
+                gsap.to(WORDS[index], {
+                    duration: 1,
+                    y: "100%",
+                    opacity: 0,
+                    ease: "power3.inOut"
+                });
+            }
+
+            if(word.solutionVisible) {
+                gsap.to(SOLUTIONS[index], {
+                    duration: 1,
+                    y: 0,
+                    opacity: 1,
+                    ease: "power3.inOut"
+                });
+            }
+            else {
+                gsap.to(SOLUTIONS[index], {
+                    duration: 1,
+                    y: "100%",
+                    opacity: 0,
+                    ease: "power3.inOut"
+                });
+            }
+        });
+    });
 });

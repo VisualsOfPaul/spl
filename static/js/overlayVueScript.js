@@ -359,7 +359,7 @@ const COUNTLETTERS = Vue.createApp({
     },
     template: `
         <ul>
-            <li v-for="(word, index) in words">
+            <li v-for="(content, index) in words" :id="'count-letters-' + type(index)">
                 <article id="count-letters-item" class="count-letters-item-outer">
                     <ul class="corners">
                         <li>&nbsp;</li>
@@ -376,7 +376,7 @@ const COUNTLETTERS = Vue.createApp({
                             <li>&nbsp;</li>
                         </ul>
 
-                        <p class="content">{{ word.word }} -&nbsp;<span>{{ word.letters }}</span></p>
+                        <p class="content">{{ content }}</p>
                     </div>
                 </article>
             </li>
@@ -384,10 +384,25 @@ const COUNTLETTERS = Vue.createApp({
     `,
     methods: {
         async getWords() {
-            const response = await fetch('/api/count-letters');
-            const data = await response.json();
-            this.words = await data;
+            await fetch('/api/count-letters').then((RESPONSE) => {
+                return RESPONSE.json();
+            }).then((DATA) => {
+                const MODIFIEDARRAY = [];
+
+                for(const WORD of DATA) {
+                    MODIFIEDARRAY.push(WORD.word);
+                    MODIFIEDARRAY.push(WORD.letters);
+                }
+
+                return MODIFIEDARRAY;
+            }).then((MODIFIEDARRAY) => {
+                this.words = MODIFIEDARRAY;
+            });
         },
+
+        type(index) {
+            return (index % 2 === 0 ? "word" : "solution")
+        }
     },
     mounted() {
         this.getWords();

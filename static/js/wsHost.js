@@ -6,5 +6,4 @@ export function getHost(location) {
     } else {
         return 'wss://spl-e931.onrender.com/';
     }
-  
 }

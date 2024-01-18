@@ -432,6 +432,8 @@ IO.on('connection', async (socket) => {
     // COUNT LETTERS
     socket.on('toggle-word', (index) => {
         COUNTLETTERS[index].visible = !COUNTLETTERS[index].visible;
+        COUNTLETTERS[index].solutionVisible = false;
+
         IO.emit('send-count-letters', COUNTLETTERS);
     });
 

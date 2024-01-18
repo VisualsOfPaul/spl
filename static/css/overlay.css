@@ -829,6 +829,20 @@ body {
     padding: var(--spacing-xl);
 }
 
+.count-letters-container > ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--spacing-xl);
+}
+
+.count-letters-container > ul > li {
+    position: absolute;
+    transform: translateY(100%);
+    opacity: 0;
+}
+
 .count-letters-item-outer {
     position: relative;
     display: flex;
@@ -843,8 +857,6 @@ body {
         0 var(--border-thickness) 0 0 var(--border-outer-color);
     padding: var(--border-thickness);
     background-color: var(--border-background-color-transparent);
-    /* transform: translateY(-100%);
-    opacity: 0; */
 }
 
 .count-letters-item-outer .corners li {
