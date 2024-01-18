@@ -705,6 +705,17 @@ body {
     list-style: none;
 }
 
+.sponsors-inner .content > ul > li > figure {
+    height: fit-content;
+    width: 12rem;
+}
+
+.sponsors-inner .content > ul > li > figure > img {
+    height: auto;
+    width: 100%;
+    object-fit: cover;
+}
+
 
 
 
