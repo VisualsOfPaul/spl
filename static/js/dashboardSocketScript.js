@@ -202,6 +202,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
 
+        // TIMER
+        const TIMERFORM = document.querySelector('#timer-form');
+
+        TIMERFORM.addEventListener('submit', ($event) => {
+            $event.preventDefault();
+
+            const ACTION = $event.submitter.value;
+            const TIME = {
+                hours: $event.target[0].value,
+                minutes: $event.target[1].value,
+                seconds: $event.target[2].value
+            }
+
+            SOCKET.emit(ACTION, TIME);
+        });
+
+        // Toggle timer
+        SOCKET.on('got-toggle-timer', (data) => {
+            const TOGGLE = document.querySelector('#toggle-timer');
+            
+            TOGGLE.textContent = data ? "Timer ausblenden" : "Timer anzeigen";
+            TOGGLE.classList.toggle('active',data);
+        });
+
+
 
 
         // Toogle memory

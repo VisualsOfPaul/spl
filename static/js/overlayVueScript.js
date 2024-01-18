@@ -207,12 +207,29 @@ const timer = Vue.createApp({
                 hours: 0,
                 minutes: 0,
                 seconds: 0
-            }
+            },
+            timeoutID: null
         };
     },
     template: `
-        <article style="display: none">
-            <p>{{ this.formatTime(time.hours) }}:{{ this.formatTime(time.minutes) }}:{{ this.formatTime(time.seconds) }}</p>
+        <article id="timer" class="timer-outer">
+            <ul class="corners">
+                <li>&nbsp;</li>
+                <li>&nbsp;</li>
+                <li>&nbsp;</li>
+                <li>&nbsp;</li>
+            </ul>
+
+            <div class="timer-inner">
+                <ul class="corners">
+                    <li>&nbsp;</li>
+                    <li>&nbsp;</li>
+                    <li>&nbsp;</li>
+                    <li>&nbsp;</li>
+                </ul>
+
+                <p class="content">{{ this.formatTime(time.minutes) }}:{{ this.formatTime(time.seconds) }}</p>
+            </div>
         </article>
     `,
     methods: {
@@ -224,7 +241,7 @@ const timer = Vue.createApp({
         },
 
         async countUp(end) {
-            setTimeout(() => {
+            this.timeoutID = setTimeout(() => {
                 if (this.time.seconds < 59) {
                     this.time.seconds++;
                 } else {
@@ -236,7 +253,7 @@ const timer = Vue.createApp({
                         this.time.hours++;
                     }
                 }
-                if (this.time.hours < max.hours || this.time.minutes < max.minutes || this.time.seconds < max.seconds) {
+                if (this.time.hours < end.hours || this.time.minutes < end.minutes || this.time.seconds < end.seconds) {
                     this.countUp(end);
                 }
             }, 1000);
@@ -245,7 +262,7 @@ const timer = Vue.createApp({
         async countDown(start) {
             this.time = start;
 
-            setTimeout(() => {
+            this.timeoutID = setTimeout(() => {
                 if (this.time.seconds > 0) {
                     this.time.seconds--;
                 } else {
@@ -261,9 +278,45 @@ const timer = Vue.createApp({
                     this.countDown(this.time);
                 }
             }, 1000);
+        },
+
+        async stop() {
+            // Stop timer
+            clearTimeout(this.timeoutID);            
+
+            // Reset timer
+            this.time = {
+                hours: 0,
+                minutes: 0,
+                seconds: 0
+            }
+
+            // Clear timeoutID
+            this.timeoutID = null;
         }
     }
 }).mount("#timer-container");
+
+
+// Functions to manage the timer
+function countDown(data) {
+    timer.countDown(data);
+}
+
+function countUp(data) {
+    timer.countUp(data);
+}
+
+function stopTimer() {
+    timer.stop();
+}
+
+window.countDown = countDown;
+window.countUp = countUp;
+window.stopTimer = stopTimer;
+
+
+
 
 // Where is this?
 const whereIsThis = Vue.createApp({

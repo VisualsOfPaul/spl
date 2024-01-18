@@ -32,6 +32,10 @@ let teams = {
     "visible": false
 }
 
+const TIMER = {
+    "visible": false
+}
+
 const LEGOBUILDS = Array.from(FS.readdirSync('./static/assets/lego-builds')).map((file, index) => {
     return {
         "index": index,
@@ -344,6 +348,32 @@ IO.on('connection', async (socket) => {
         visibleSponsors = !visibleSponsors;
         IO.emit('show-sponsors', visibleSponsors);
     });
+
+
+
+
+    // TIMER
+    socket.on('count-down', (data) => {
+        IO.emit('got-count-down', data);
+    });
+
+    socket.on('count-up', (data) => {
+        IO.emit('got-count-up', data);
+    });
+
+    socket.on('stop-timer', () => {
+        IO.emit('got-stop-timer');
+    });
+
+    socket.on('toggle-timer', () => {
+        TIMER.visible = !TIMER.visible;
+        IO.emit('got-toggle-timer', TIMER.visible);
+    });
+
+
+
+
+
 
     socket.on('disconnect', () => {
         pointsModel.setPoints(teams.first.name, teams.first.points);

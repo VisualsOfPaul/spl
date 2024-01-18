@@ -24,20 +24,24 @@
                     <div>
                         <div>
                             <label for="hours">Stunden</label>
-                            <input type="text" name="hours" placeholder="00" id="hours">
+                            <input type="text" name="hours" placeholder="00" id="hours" value="00">
                         </div>
                         <div>
                             <label for="minutes">Minuten</label>
-                            <input type="text" name="minutes" placeholder="00" id="minutes">
+                            <input type="text" name="minutes" placeholder="00" id="minutes" value="05">
                         </div>
                         <div>
                             <label for="seconds">Sekunden</label>
-                            <input type="text" name="seconds" placeholder="00" id="seconds">
+                            <input type="text" name="seconds" placeholder="00" id="seconds" value="00">
                         </div>
                     </div>
                     <div>
-                        <button type="submit" name="countDown">Runterzählen</button>
-                        <button type="submit" name="countUp">Hochzählen</button>
+                        <button type="submit" name="countDown" value="count-down">Runterzählen</button>
+                        <button type="submit" name="countUp" value="count-up">Hochzählen</button>
+                        <button type="submit" name="stop" value="stop-timer">Abbrechen</button>
+                    </div>
+                    <div>
+                        <button type="submit" name="toggleTimer" value="toggle-timer" id="toggle-timer">Timer anzeigen</button>
                     </div>
                 </form>
             </section>

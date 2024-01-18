@@ -7,7 +7,7 @@ const bandages = Vue.createApp({
     },
     template: `
         <option v-for="bandage in bandages" :value="bandage.id">
-            {{ bandage.forename }} {{ bandage.surname }} ({{ bandage.course }})
+            {{ bandage.forename }} {{ bandage.surname }} ({{ bandage.info }})
         </option>
     `,
     methods: {

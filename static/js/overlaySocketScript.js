@@ -234,8 +234,36 @@ document.addEventListener('DOMContentLoaded', () => {
         })
 
 
+        // TIMER
+        SOCKET.on('got-count-down', (data) => {
+            countDown(data);
+        });
 
+        SOCKET.on('got-count-up', (data) => {
+            countUp(data);
+        });
 
+        SOCKET.on('got-stop-timer', () => {
+            stopTimer();
+        });
+
+        SOCKET.on('got-toggle-timer', (data) => {
+            if(data) {
+                gsap.to("#timer", {
+                    duration: 1,
+                    y: 0,
+                    opacity: 1,
+                    ease: "power3.inOut"
+                });
+            } else {
+                gsap.to("#timer", {
+                    duration: 1,
+                    y: "-100%",
+                    opacity: 0,
+                    ease: "power3.inOut"
+                });
+            }
+        });
 
 
 
