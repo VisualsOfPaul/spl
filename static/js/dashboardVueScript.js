@@ -1,37 +1,67 @@
+// Naviagtion
+const NAVIGATION = Vue.createApp({
+	data() {
+		return {
+			games: [],
+		};
+	},
+	template: `
+        <ul>
+            <li v-for="(game, index) in games">
+                <button @click="switchView(index)" :id="'switch-view-' + index">{{ game.name }}</button>
+            </li>
+        </ul>
+    `,
+	methods: {
+		async getGames() {
+			const allGames = document.querySelectorAll("section[data-navigation]");
+			allGames.forEach((game) => {
+				this.games.push({
+					name: game.dataset.navigation,
+				});
+			});
+		},
+		async switchView(index) {
+			switchView(index);
+		},
+	},
+	mounted() {
+		this.getGames();
+	},
+}).mount("#navigation-container");
+
 // Bandages
 const bandages = Vue.createApp({
-    data() {
-        return {
-            bandages: []
-        };
-    },
-    template: `
-        <option v-for="bandage in bandages" :value="bandage.id">
-            {{ bandage.forename }} {{ bandage.surname }} ({{ bandage.info }})
+	data() {
+		return {
+			bandages: [],
+		};
+	},
+	template: `
+        <option v-for="(bandage, index) in bandages" :value="index">
+            {{ bandage.name }} {{ bandage.surname }} ({{ bandage.info }})
         </option>
     `,
-    methods: {
-        async getBandages() {
-            const response = await fetch('/api/bandages');
-            const data = await response.json();
-            this.bandages = await data.rows;
-        }
-    },
-    mounted() {
-        this.getBandages();
-    }
+	methods: {
+		async getBandages() {
+			const RESPONSE = await fetch("/api/bandages");
+			this.bandages = await RESPONSE.json();
+		},
+	},
+	mounted() {
+		this.getBandages();
+	},
 }).mount("#bandage-select");
 
-
 // Quiz
-const quiz = Vue.createApp({
-    data() {
-        return {
-            quiz: [],
-            selectedAnswers: []
-        };
-    },
-    template: `
+const QUIZ = Vue.createApp({
+	data() {
+		return {
+			quiz: [],
+			selectedAnswers: [],
+		};
+	},
+	template: `
         <ol>
             <li v-for="(question, index) in quiz" :id="'question-' + Number(index + 1)">
                 <p>{{ question.question }}</p>
@@ -40,45 +70,45 @@ const quiz = Vue.createApp({
                     <option :value="null" disabled>Antwort auswählen...</option>
                     <option v-for="(answer, index) in question.answers" :value="index">{{ answer.answer }}</option>
                 </select>
-                <button @click="sendAnswer(index)">Antwort festlegen</button>
+                <button @click="logAnswer(index)">Antwort festlegen</button>
                 <button @click="showAnswer(index)" id="show answer">Antwort auflösen</button>
             </li>
         </ol>
     `,
-    methods: {
-        async getQuiz() {
-            const response = await fetch('/api/quiz');
-            const data = await response.json();
-            this.quiz = await data;
+	methods: {
+		async getQuiz() {
+			const response = await fetch("/api/quiz");
+			const data = await response.json();
+			this.quiz = await data;
 
-            this.selectedAnswers = Array(this.quiz.length).fill(null);
-        },
+			this.selectedAnswers = Array(this.quiz.length).fill(null);
+		},
 
-        async showQuestion(index) {
-            showQuestion(index)
-        },
+		async showQuestion(index) {
+			showQuestion(index);
+		},
 
-        async sendAnswer(index) {
-            sendAnswer(index, this.selectedAnswers[index]);
-        },
+		async logAnswer(index) {
+			logAnswer(index, this.selectedAnswers[index]);
+		},
 
-        async showAnswer(index) {
-            showAnswer(index, this.selectedAnswers[index]);
-        }
-    },
-    mounted() {
-        this.getQuiz();
-    }
+		async showAnswer(index) {
+			showAnswer(index, this.selectedAnswers[index]);
+		},
+	},
+	mounted() {
+		this.getQuiz();
+	},
 }).mount("#quiz-container");
 
 // Lego builds
 const legoBuilds = Vue.createApp({
-    data() {
-        return {
-            images: []
-        };
-    },
-    template: `
+	data() {
+		return {
+			images: [],
+		};
+	},
+	template: `
         <ul>
             <li v-for="(image, index) in images">
                 <img :src="'/assets/lego-builds/' + image">
@@ -86,65 +116,30 @@ const legoBuilds = Vue.createApp({
             </li>
         </ul>
     `,
-    methods: {
-        async getBuilds() {
-            const response = await fetch('/api/lego-builds');
-            const data = await response.json();
-            this.images = await data.images;
-        },
+	methods: {
+		async getBuilds() {
+			const response = await fetch("/api/lego-builds");
+			const data = await response.json();
+			this.images = await data.images;
+		},
 
-        async toggleImage(index) {
-            toggleLegoBuild(index);
-        }
-    },
-    mounted() {
-        this.getBuilds();
-    }
+		async toggleImage(index) {
+			toggleLegoBuild(index);
+		},
+	},
+	mounted() {
+		this.getBuilds();
+	},
 }).mount("#lego-builds-container");
-
-// Lego builds
-const navigation = Vue.createApp({
-    data() {
-        return {
-            games: []
-        };
-    },
-    template: `
-        <ul>
-            <li v-for="(game, index) in games">
-                <button @click="switchView(index)" :id="'switch-view-' + index">{{ game.name }}</button>
-            </li>
-        </ul>
-    `,
-    methods: {
-        async getGames() {
-            const allGames = document.querySelectorAll("section[data-navigation]");
-            allGames.forEach(game => {
-                this.games.push({
-                    name: game.dataset.navigation
-                });
-            });
-        },
-        async switchView(index) {
-            switchView(index);
-        }
-    },
-    mounted() {
-        this.getGames();
-    }
-}).mount("#navigation-container");
-
-
-
 
 // Where is this?
 const whereIsThis = Vue.createApp({
-    data() {
-        return {
-            images: []
-        };
-    },
-    template: `
+	data() {
+		return {
+			images: [],
+		};
+	},
+	template: `
         <ul>
             <li v-for="(image, index) in images">
                 <img :src="'/assets/where-is-this/' + image">
@@ -152,34 +147,30 @@ const whereIsThis = Vue.createApp({
             </li>
         </ul>
     `,
-    methods: {
-        async getBuilds() {
-            const response = await fetch('/api/where-is-this');
-            const data = await response.json();
-            this.images = await data.images;
-        },
+	methods: {
+		async getBuilds() {
+			const response = await fetch("/api/where-is-this");
+			const data = await response.json();
+			this.images = await data.images;
+		},
 
-        async toggleImage(index) {
-            toggleWhereIsThis(index);
-        }
-    },
-    mounted() {
-        this.getBuilds();
-    }
+		async toggleImage(index) {
+			toggleWhereIsThis(index);
+		},
+	},
+	mounted() {
+		this.getBuilds();
+	},
 }).mount("#where-is-this-container");
-
-
-
-
 
 // COUNT LETTERS
 const COUNTLETTERS = Vue.createApp({
-    data() {
-        return {
-            words: []
-        };
-    },
-    template: `
+	data() {
+		return {
+			words: [],
+		};
+	},
+	template: `
         <ul>
             <li v-for="(word, index) in words">
                 <p>{{ word.word }} ({{ word.letters }} Buchstaben)</p>
@@ -188,22 +179,22 @@ const COUNTLETTERS = Vue.createApp({
             </li>
         </ul>
     `,
-    methods: {
-        async getWords() {
-            const response = await fetch('/api/count-letters');
-            const data = await response.json();
-            this.words = await data;
-        },
+	methods: {
+		async getWords() {
+			const response = await fetch("/api/count-letters");
+			const data = await response.json();
+			this.words = await data;
+		},
 
-        async toggleWord(index) {
-            toggleWord(index);
-        },
+		async toggleWord(index) {
+			toggleWord(index);
+		},
 
-        async showSolution(index) {
-            showSolution(index);
-        }
-    },
-    mounted() {
-        this.getWords();
-    }
+		async showSolution(index) {
+			showSolution(index);
+		},
+	},
+	mounted() {
+		this.getWords();
+	},
 }).mount("#count-letters-container");

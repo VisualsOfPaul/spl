@@ -1,496 +1,239 @@
-// Imports
-const COOKIEPARSER = require('cookie-parser')
-const HTTP = require('http');
-const EXPRESS = require('express');
-const SOCKETIO = require('socket.io');
-const DOTENV = require('dotenv');
-const FS = require('fs');
+// IMPORTS
+const COOKIEPARSER = require("cookie-parser");
+const HTTP = require("http");
+const EXPRESS = require("express");
+const SOCKETIO = require("socket.io");
+const DOTENV = require("dotenv");
+const FS = require("fs");
 
-// App setup
+// ROUTES
+const VIEWSROUTE = require("./routes/views.js");
+const APIROUTE = require("./routes/api.js");
+
+// SERVER SETUP
 const APP = EXPRESS();
 const SERVER = HTTP.createServer(APP);
 
-//Middleware
-APP.use(EXPRESS.static(__dirname + '/static'));
+// MIDDLEWARE
+APP.use(EXPRESS.static(__dirname + "/static"));
 APP.use(COOKIEPARSER());
 DOTENV.config();
 
-//Modells
-const bandageModel = require('./models/bandageModel.js');
-const pointsModel = require('./models/pointsModel.js');
-const quizModel = require('./models/quizModel.js');
+//ROUTING
+APP.use("/", VIEWSROUTE);
+APP.use("/api", APIROUTE);
 
-let teams = {
-    "first" : {
-        "name": "-",
-        "points": 0
-    },
-    "second" : {
-        "name": "-",
-        "points": 0
-    },
-    "visible": false
-}
+// CONTROLLERS
+const STARTINGSCREENCONTROLLER = require("./controllers/startingScreenController.js");
+const SPONSORSCONTROLLER = require("./controllers/sponsorsController.js");
+const TIMERCONTROLLER = require("./controllers/timerController.js");
+const POINTSCONTROLLER = require("./controllers/pointsController.js");
+const QUIZCONTROLLER = require("./controllers/quizController.js");
 
-const TIMER = {
-    "visible": false
-}
-
-const LEGOBUILDS = Array.from(FS.readdirSync('./static/assets/lego-builds')).map((file, index) => {
-    return {
-        "index": index,
-        "visible": false
-    };
-});
-
-const WHEREISTHIS = Array.from(FS.readdirSync('./static/assets/where-is-this')).map((file, index) => {
-    return {
-        "index": index,
-        "visible": false
-    };
-});
-
-const MEMORY = {
-    "visible": false,
-    "tiles" : [
-        {
-            "calculation": "Wurzel aus 25",
-            "solution": 1
-        },
-        {
-            "calculation": "(100 - 96) / 2",
-            "solution": 2
-        },
-        {
-            "calculation": "3 * 2 + 3",
-            "solution": 4
-        },
-        {
-            "calculation": "5 * 2 - 9",
-            "solution": 1
-        },
-        {
-            "calculation": "80 / 10",
-            "solution": 5
-        },
-        {
-            "calculation": "(Wurzel aus 9) + (2 * 6) - 12",
-            "solution": 3
-        },
-        {
-            "calculation": "(5 * 2 - 9) * 0 + 6",
-            "solution": 2
-        },
-        {
-            "calculation": "Wurzel aus 49",
-            "solution": 3
-        },
-        {
-            "calculation": "(76 - 36) / 40",
-            "solution": 4
-        },
-        {
-            "calculation": "",
-            "solution": 6
-        },
-        {
-            "calculation": "",
-            "solution": 5
-        },
-        {
-            "calculation": "",
-            "solution": 6
-        }
-    ]
-};
-
-const QUIZ = {};
-
-let visibleViewIndex = 0;
-
-var visibleSponsors = false;
-
-const STARTINGSCREEN = {
-    "visible": true
-};
-
-
-
-
-// COUNT LETTERS
-const COUNTLETTERS = [
-    {
-        "word": "Hexadezimalsystem",
-        "letters": 17,
-        "visible": false,
-        "solutionVisible": false
-    },
-    {
-        "word": "Fresnellinse",
-        "letters": 12,
-        "visible": false,
-        "solutionVisible": false
-    },
-    {
-        "word": "Trauma",
-        "letters": 6,
-        "visible": false,
-        "solutionVisible": false
-    },
-    {
-        "word": "Deadline",
-        "letters": 8,
-        "visible": false,
-        "solutionVisible": false
-    }
-];
-
-
-
-const CLIENTS = [];
-
-APP.get("/connect", (req, res) => {
-    res.setHeader('Content-Type', 'text/event-stream');
-    res.setHeader('Cache-Control', 'no-cache');
-    res.setHeader('Connection', 'keep-alive');
-
-    CLIENTS.push(res);
-
-    res.write(`data: ${
-        JSON.stringify({
-            "event": "connected",
-            "message": "Connected to server."
-        })}\n\n`);
-    
-
-    console.log("Client connected.");
-});
-
-APP.post("/send-count-letters", (req, res) => {
-    CLIENTS.forEach((client) => {
-        client.write(`data: ${
-            JSON.stringify({
-                "event": "send-count-letters",
-                "message": COUNTLETTERS
-            })}\n\n`);
-    });
-
-    console.log("Sent count letters.");
-});
-
-
-//Routing
-APP.get("/", (req, res) => {
-    res.redirect('/overlay');
-});
-
-APP.get("/unauthorized", (req, res) => { //login
-    res.sendFile(__dirname + "/views/unauthorized.html");
-});
-
-//Whats the tech-department sees
-APP.get("/dashboard", (req, res) => {
-    if(
-        req.cookies.password === process.env.PASSWORD ||
-        req.query.password === process.env.PASSWORD
-    ) {
-        res.sendFile(__dirname + "/views/dashboard.html");
-    } else {
-        res.redirect('/unauthorized')
-    }
-});
-
-//Whats shown in the stream
-APP.get("/overlay", (req, res) => {
-    res.sendFile(__dirname + "/views/overlay.html");
-});
-
-//What the actors see
-APP.get("/view", (req, res) => {
-
-});
-
-
-APP.get("/api/bandages", async (req, res) => {
-    res.send(await bandageModel.getEntries());
-})
-
-APP.get("/api/quiz", async (req, res) => {
-    const quizes = await quizModel.getQuizes();
-    res.send(await quizes.rows);
-
-    quizes.rows.forEach((quiz, index) => {
-        QUIZ[index] = {
-            "visible": false
-        }
-    });
-})
-
-APP.get("/api/lego-builds", async (req, res) => {
-    let images = [];
-
-    FS.readdirSync('./static/assets/lego-builds').forEach(file => {
-        images.push(file);
-    });
-
-    res.send({images: images});
-})
-
-APP.get("/api/memory", async (req, res) => {
-    res.send(await MEMORY);
-})
-
-APP.get("/api/where-is-this", async (req, res) => {
-    let images = [];
-    FS.readdirSync('./static/assets/where-is-this').forEach(file => {
-        images.push(file);
-    });
-    res.send({images: images});
-});
-
-
-// COUNT LETTERS
-APP.get("/api/count-letters", async (req, res) => {
-    res.send(await COUNTLETTERS);
-});
-
-
-
-
-// Socket setup
+// SOCKET SETUP
 const IO = new SOCKETIO.Server(SERVER);
 
-IO.on('connection', async (socket) => {
-    console.log(`Connected with ${socket.id}.`);
+IO.on("connection", async (socket) => {
+	console.log(`Connected with ${socket.id}.`);
 
-    teams.first.points = Number((await pointsModel.getPoints(teams.first.name)).rows[0].points);
-    teams.second.points = Number((await pointsModel.getPoints(teams.second.name)).rows[0].points);
+	// IO.emit("update-teams", teams);
+	// IO.emit("send-lego-builds", LEGOBUILDS);
+	// IO.emit("send-where-is-this", WHEREISTHIS);
+	// IO.emit("send-memory", MEMORY.visible);
+	// IO.emit("send-question", QUIZ);
+	// IO.emit("send-view", visibleViewIndex);
+	// IO.emit("show-sponsors", visibleSponsors);
 
-    IO.emit('update-teams', teams);
-    IO.emit('send-lego-builds', LEGOBUILDS);
-    IO.emit('send-where-is-this', WHEREISTHIS);
-    IO.emit('send-memory', MEMORY.visible);
-    IO.emit('send-question', QUIZ);
-    IO.emit('send-view', visibleViewIndex);
-    IO.emit('show-sponsors', visibleSponsors);
+	// FUNCTIONS TO BE CALLED AT CONNECTION
+	IO.emit("toggle-points-done", await POINTSCONTROLLER.getVisibility());
+	IO.emit("update-points-done", await POINTSCONTROLLER.getCurrentPoints());
 
+	// ORDER
+	// // STARTING SCREEN
+	// // SPONSORS
+	// // BANDAGES
+	// // TIMER
+	// // TEAMS
+	// // QUIZ
+	// LEGO
+	// MEMORY
+	// WHERE IS THIS
+	// COUNT LETTERS
 
-    // STARTING SCREEN
-    socket.on('toggle-starting-screen', () => {
-        STARTINGSCREEN.visible = !STARTINGSCREEN.visible;
-        IO.emit('send-starting-screen', STARTINGSCREEN.visible);
-    });
+	// SWITCH VIEW
+	socket.on("switch-view", (data) => {
+		IO.emit("switch-view-done", data);
+	});
 
+	// STARTING SCREEN
+	socket.on("toggle-starting-screen", async () => {
+		IO.emit(
+			"toggle-starting-screen-done",
+			await (
+				await STARTINGSCREENCONTROLLER.toggle()
+			).visible
+		);
+	});
 
+	// SPONSORS
+	socket.on("toggle-sponsors", async () => {
+		IO.emit(
+			"toggle-sponsors-done",
+			await (
+				await SPONSORSCONTROLLER.toggle()
+			).visible
+		);
+	});
 
+	// BANDAGES
+	socket.on("show-bandage", (data) => {
+		IO.emit("show-bandage-done", data);
+	});
 
+	// TIMER
+	socket.on("change-timer-action", (data) => {
+		IO.emit("change-timer-action-done", data);
+	});
 
+	socket.on("toggle-timer", async () => {
+		IO.emit(
+			"toggle-timer-done",
+			await (
+				await TIMERCONTROLLER.toggle()
+			).visible
+		);
+	});
 
-    socket.on('show-teams', async () => {
-        teams.visible = !teams.visible;
-        IO.emit('update-teams', (teams));
-    });
+	socket.on("start-timer", (data) => {
+		IO.emit("start-timer-done", data);
+	});
 
-    socket.on('hide-teams', async () => {
-        teams.visible = false;
-        IO.emit('update-teams', (teams));
-    });
+	socket.on("stop-timer", () => {
+		IO.emit("stop-timer-done");
+	});
 
-    socket.on('set-team', async (data) => {
+	// POINTS
+	socket.on("toggle-points", async () => {
+		IO.emit(
+			"toggle-points-done",
+			await (
+				await POINTSCONTROLLER.toggle()
+			).visible
+		);
+	});
 
-        await pointsModel.setPoints(teams.first.name, teams.first.points);
-        await pointsModel.setPoints(teams.second.name, teams.second.points);
-        
-        switch(data.team) {
-            case "1": teams.first.name = data.value; break;
-            case "2": teams.second.name = data.value; break;
-        }
+	socket.on("update-points", async (data) => {
+		let updatedPoints = null;
 
-        teams.first.points = Number((await pointsModel.getPoints(teams.first.name)).rows[0].points);
-        teams.second.points = Number((await pointsModel.getPoints(teams.second.name)).rows[0].points);
+		switch (data.type) {
+			case "points":
+				updatedPoints = await POINTSCONTROLLER.updateTeamPoints(
+					data.team,
+					data.operation
+				);
+				break;
+			case "name":
+				updatedPoints = await POINTSCONTROLLER.updateTeamName(
+					data.team,
+					data.name
+				);
+				break;
+		}
 
-        IO.emit('update-teams', teams);
-    });
+		IO.emit("update-points-done", await updatedPoints);
+	});
 
-    socket.on('set-point', async (data) => {
-        if(data.team === "1") {
-            switch(data.operation) {
-                case "add" : teams.first.points += 1; break;
-                case "minus" : teams.first.points -= 1; break;
-            }
-        } else if(data.team === "2") {
-            switch(data.operation) {
-                case "add" : teams.second.points += 1; break;
-                case "minus" : teams.second.points -= 1; break;
-            }
-        }
+	socket.on("reset-points", async () => {
+		IO.emit("update-points-done", await POINTSCONTROLLER.resetPoints());
+	});
 
-        IO.emit('update-teams', teams);
-    })
+	// QUIZ
+	socket.on("toggle-question", async (data) => {
+		IO.emit("toggle-question-done", await QUIZCONTROLLER.toggle(data.index));
+	});
 
-    socket.on('reset-teams', () => {
-        teams = {
-            "first" : {
-                "name": "-",
-                "points": 0
-            },
-            "second" : {
-                "name": "-",
-                "points": 0
-            },
-            "visible": false
-        }
-        pointsModel.resetPoints();
-        IO.emit('update-teams', teams);
-    })
+	socket.on("log-answer", async (data) => {
+		IO.emit(
+			"log-answer-done",
+			await QUIZCONTROLLER.logAnswer(data.index, data.id)
+		);
+	});
 
-    socket.on('show-bandage', (data) => {
-        IO.emit('show-bandage', data);
-    })
+	socket.on("show-answer", async (data) => {
+		IO.emit("show-answer-done", await QUIZCONTROLLER.showAnswer(data.index));
+	});
 
-    socket.on('toggle-question', (data) => {
-        Object.keys(QUIZ).forEach(key => {
-            if (key !== data.index.toString()) {
-                QUIZ[key].visible = false;
-            }
-        });
+	socket.on("reset-quiz", async () => {
+		IO.emit("reset-quiz-done", await QUIZCONTROLLER.resetQuiz());
+	});
 
-        QUIZ[data.index].visible = !QUIZ[data.index].visible;
+	// socket.on("toggle-lego-build", (data) => {
+	// 	LEGOBUILDS.forEach((build) => {
+	// 		if (build.index !== data.index) build.visible = false;
+	// 	});
 
-        IO.emit('send-question', QUIZ);
-    });
+	// 	const build = LEGOBUILDS.find((build) => {
+	// 		return build.index === data.index;
+	// 	});
 
-    socket.on('hide-questions', () => {
-        Object.keys(QUIZ).forEach(key => {
-            QUIZ[key].visible = false;
-        });
+	// 	build.visible = !build.visible;
 
-        IO.emit('send-question', QUIZ);
-    });
+	// 	IO.emit("send-lego-builds", LEGOBUILDS);
+	// });
 
-    socket.on('log-answer', (data) => {
-        IO.emit('log-answer', data);
-    })
+	// socket.on("toggle-where-is-this", (data) => {
+	// 	WHEREISTHIS.forEach((image) => {
+	// 		if (image.index !== data.index) image.visible = false;
+	// 	});
 
-    socket.on('show-answer', async (data) => {
-        const quiz = await quizModel.getQuiz(data.index + 1);
-        var correctAnswer = null;
-        quiz.rows[0].answers.forEach((answer) => {
-            if(answer.correct == true) {
-                correctAnswer = answer.answer;
-            }
-        });
-        data.correctAnswer = correctAnswer;
-        IO.emit('show-answer', data);
-    });
+	// 	const image = WHEREISTHIS.find((image) => {
+	// 		return image.index === data.index;
+	// 	});
 
-    socket.on('reset-quiz', () => {
-        IO.emit('reset-quiz');
-    });
+	// 	image.visible = !image.visible;
 
-    socket.on('toggle-lego-build', (data) => {
-        LEGOBUILDS.forEach((build) => {
-            if(build.index !== data.index) build.visible = false;
-        });
+	// 	IO.emit("send-where-is-this", WHEREISTHIS);
+	// });
 
-        const build = LEGOBUILDS.find((build) => {
-            return build.index === data.index;
-        });
+	// socket.on("toggle-memory", () => {
+	// 	MEMORY.visible = !MEMORY.visible;
 
-        build.visible = !build.visible;
+	// 	IO.emit("send-memory", MEMORY.visible);
+	// });
 
-        IO.emit('send-lego-builds', LEGOBUILDS);
-    });
+	// socket.on("switch-view", (data) => {
+	// 	visibleViewIndex = data.index;
 
+	// 	IO.emit("send-view", visibleViewIndex);
+	// });
 
+	// //Show sponsors
+	// socket.on("toggle-sponsors", () => {
+	// 	visibleSponsors = !visibleSponsors;
+	// 	IO.emit("show-sponsors", visibleSponsors);
+	// });
 
-    socket.on('toggle-where-is-this', (data) => {
-        WHEREISTHIS.forEach((image) => {
-            if(image.index !== data.index) image.visible = false;
-        });
+	// // COUNT LETTERS
+	// socket.on("toggle-word", (index) => {
+	// 	COUNTLETTERS[index].visible = !COUNTLETTERS[index].visible;
+	// 	COUNTLETTERS[index].solutionVisible = false;
 
-        const image = WHEREISTHIS.find((image) => {
-            return image.index === data.index;
-        });
+	// 	IO.emit("send-count-letters", COUNTLETTERS);
+	// });
 
-        image.visible = !image.visible;
+	// socket.on("show-solution", (index) => {
+	// 	COUNTLETTERS[index].solutionVisible = !COUNTLETTERS[index].solutionVisible;
+	// 	IO.emit("send-count-letters", COUNTLETTERS);
+	// });
 
-        IO.emit('send-where-is-this', WHEREISTHIS);
-    });
-
-
-
-
-    socket.on('toggle-memory', () => {
-        MEMORY.visible = !MEMORY.visible;
-        
-        IO.emit('send-memory', MEMORY.visible);
-    });
-
-    socket.on('switch-view', (data) => {
-        visibleViewIndex = data.index;
-        
-        IO.emit('send-view', visibleViewIndex);
-    });
-
-    //Show sponsors
-    socket.on('toggle-sponsors', () => {
-        visibleSponsors = !visibleSponsors;
-        IO.emit('show-sponsors', visibleSponsors);
-    });
-
-
-
-
-    // TIMER
-    socket.on('count-down', (data) => {
-        IO.emit('got-count-down', data);
-    });
-
-    socket.on('count-up', (data) => {
-        IO.emit('got-count-up', data);
-    });
-
-    socket.on('stop-timer', () => {
-        IO.emit('got-stop-timer');
-    });
-
-    socket.on('toggle-timer', () => {
-        TIMER.visible = !TIMER.visible;
-        IO.emit('got-toggle-timer', TIMER.visible);
-    });
-
-
-
-    // COUNT LETTERS
-    socket.on('toggle-word', (index) => {
-        COUNTLETTERS[index].visible = !COUNTLETTERS[index].visible;
-        COUNTLETTERS[index].solutionVisible = false;
-
-        IO.emit('send-count-letters', COUNTLETTERS);
-    });
-
-    socket.on('show-solution', (index) => {
-        COUNTLETTERS[index].solutionVisible = !COUNTLETTERS[index].solutionVisible;
-        IO.emit('send-count-letters', COUNTLETTERS);
-    });
-
-
-
-
-
-
-
-    socket.on('disconnect', () => {
-        pointsModel.setPoints(teams.first.name, teams.first.points);
-        pointsModel.setPoints(teams.second.name, teams.second.points);
-        console.log(`Socket ${socket.id} disconnected.`);
-    });
-
-    
-})
+	socket.on("disconnect", () => {
+		// pointsModel.setPoints(teams.first.name, teams.first.points);
+		// pointsModel.setPoints(teams.second.name, teams.second.points);
+		console.log(`Socket ${socket.id} disconnected.`);
+	});
+});
 
 // Host on port
 SERVER.listen(process.env.PORT, () => {
-    console.log(`Listening on port ${process.env.PORT}.`);
+	console.log(`Listening on port ${process.env.PORT}.`);
 });

@@ -1,186 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="/css/variables.css"> -->
-    <link rel="stylesheet" href="/css/overlay.css">
-    <title>Overlay</title>
-</head>
-<body>
-    <main>
-        <!-- STARTING SCREEN -->
-        <section class="starting-screen" aria-label="starting-screen">
-            <div class="starting-screen-container" id="starting-screen-container">
-                <ul class="corners">
-                    <li>&nbsp;</li>
-                    <li>&nbsp;</li>
-                    <li>&nbsp;</li>
-                    <li>&nbsp;</li>
-                </ul>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- <link rel="stylesheet" href="/css/variables.css"> -->
+		<link rel="stylesheet" href="/css/overlay.css" />
+		<title>Overlay</title>
+	</head>
+	<body>
+		<main>
+			<!-- STARTING SCREEN -->
+			<section class="starting-screen" aria-label="starting-screen">
+				<div class="starting-screen-container" id="starting-screen-container">
+					<ul class="corners">
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+					</ul>
 
-                <div class="starting-screen-outer">
-                    <ul class="corners">
-                        <li>&nbsp;</li>
-                        <li>&nbsp;</li>
-                        <li>&nbsp;</li>
-                        <li>&nbsp;</li>
-                    </ul>
+					<div class="starting-screen-outer">
+						<ul class="corners">
+							<li>&nbsp;</li>
+							<li>&nbsp;</li>
+							<li>&nbsp;</li>
+							<li>&nbsp;</li>
+						</ul>
 
-                    <div class="starting-screen-inner">
-                        <ul class="corners">
-                            <li>&nbsp;</li>
-                            <li>&nbsp;</li>
-                            <li>&nbsp;</li>
-                            <li>&nbsp;</li>
-                        </ul>
+						<div class="starting-screen-inner">
+							<ul class="corners">
+								<li>&nbsp;</li>
+								<li>&nbsp;</li>
+								<li>&nbsp;</li>
+								<li>&nbsp;</li>
+							</ul>
 
-                        <div class="content" data-value="first">
-                            <figure>
-                                <img src="/assets/img/logo-color.png">
-                            </figure>
-                            <h1>Die Show startet</h1>
-                            <h2 id="starting-screen-countdown">00:00</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+							<div class="content" data-value="first">
+								<figure>
+									<img src="/assets/img/logo-color.png" />
+								</figure>
+								<h1>Die Show startet</h1>
+								<h2 id="starting-screen-countdown">00:00</h2>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
 
-        <!-- BANDAGES -->
-        <section class="bandages" id="bandages" aria-label="bandages">
-            <div id="bandages-container-left" class="bandages-container-left"></div>
-            <div id="bandages-container-right" class="bandages-container-right"></div>
-        </section>
-        <section class="teams" id="teams" aria-label="points">
-            <div class="team-outer">
-                <ul class="corners">
-                    <li>&nbsp;</li>
-                    <li>&nbsp;</li>
-                    <li>&nbsp;</li>
-                    <li>&nbsp;</li>
-                </ul>
-                <div class="team-inner">
-                    <ul class="corners">
-                        <li>&nbsp;</li>
-                        <li>&nbsp;</li>
-                        <li>&nbsp;</li>
-                        <li>&nbsp;</li>
-                    </ul>
+			<!-- BANDAGES -->
+			<section class="bandages" id="bandages" aria-label="bandages">
+				<div id="bandages-container-left" class="bandages-container-left"></div>
+				<div
+					id="bandages-container-right"
+					class="bandages-container-right"></div>
+			</section>
+			<section class="teams" id="points" aria-label="points">
+				<div class="team-outer">
+					<ul class="corners">
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+					</ul>
+					<div class="team-inner">
+						<ul class="corners">
+							<li>&nbsp;</li>
+							<li>&nbsp;</li>
+							<li>&nbsp;</li>
+							<li>&nbsp;</li>
+						</ul>
 
-                    <div class="content" data-value="first">
-                        <h1>Team 1</h1>
-                        <p>0</p>
-                    </div>
-                </div>
-            </div>
-            <div class="team-outer">
-                <ul class="corners">
-                    <li>&nbsp;</li>
-                    <li>&nbsp;</li>
-                    <li>&nbsp;</li>
-                    <li>&nbsp;</li>
-                </ul>
-                <div class="team-inner">
-                    <ul class="corners">
-                        <li>&nbsp;</li>
-                        <li>&nbsp;</li>
-                        <li>&nbsp;</li>
-                        <li>&nbsp;</li>
-                    </ul>
+						<div class="content" id="team-points">
+							<h1>Team 1</h1>
+							<p>0</p>
+						</div>
+					</div>
+				</div>
+				<div class="team-outer">
+					<ul class="corners">
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+					</ul>
+					<div class="team-inner">
+						<ul class="corners">
+							<li>&nbsp;</li>
+							<li>&nbsp;</li>
+							<li>&nbsp;</li>
+							<li>&nbsp;</li>
+						</ul>
 
-                    <div class="content" data-value="second">
-                        <h1>Team 2</h1>
-                        <p>0</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="quiz" id="quiz" aria-label="quiz">
-            <div class="quiz-container" id="quiz-container">
+						<div class="content" id="team-points">
+							<h1>Team 2</h1>
+							<p>0</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="quiz" id="quiz" aria-label="quiz">
+				<div class="quiz-container" id="quiz-container"> </div>
+			</section>
+			<section class="lego-builds" id="lego-builds" aria-label="lego-builds">
+				<div class="lego-builds-container" id="lego-builds-container"> </div>
+			</section>
+			<section class="memory" id="memory" aria-label="memory">
+				<div class="memory-container" id="memory-container"> </div>
+			</section>
 
-            </div>
-        </section>
-        <section class="lego-builds" id="lego-builds" aria-label="lego-builds">
-            <div class="lego-builds-container" id="lego-builds-container">
+			<section class="timer">
+				<div id="timer-container" class="timer-container"></div>
+			</section>
 
-            </div>
-        </section>
-        <section class="memory" id="memory" aria-label="memory">
-            <div class="memory-container" id="memory-container">
+			<section
+				class="where-is-this"
+				id="where-is-this"
+				aria-label="where-is-this">
+				<div class="where-is-this-container" id="where-is-this-container">
+				</div>
+			</section>
 
-            </div>
-        </section>
+			<section class="sponsors" aria-label="sponsors">
+				<div class="sponsors-container" id="sponsors-container">
+					<ul class="corners">
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+					</ul>
 
-        <section class="timer">
-            <div id="timer-container" class="timer-container"></div>
-        </section>
+					<div class="sponsors-outer">
+						<ul class="corners">
+							<li>&nbsp;</li>
+							<li>&nbsp;</li>
+							<li>&nbsp;</li>
+							<li>&nbsp;</li>
+						</ul>
 
-        <section class="where-is-this" id="where-is-this" aria-label="where-is-this">
-            <div class="where-is-this-container" id="where-is-this-container">
+						<div class="sponsors-inner">
+							<ul class="corners">
+								<li>&nbsp;</li>
+								<li>&nbsp;</li>
+								<li>&nbsp;</li>
+								<li>&nbsp;</li>
+							</ul>
 
-            </div>
-        </section>
+							<div class="content" data-value="first">
+								<figure>
+									<img src="/assets/img/logo-color.png" />
+								</figure>
+								<h1>Die Show wird präsentiert von</h1>
+								<ul>
+									<li>
+										<figure>
+											<img src="/assets/img/able-group.png" />
+										</figure>
+									</li>
+									<li>
+										<figure>
+											<img src="/assets/img/keravonos.png" />
+										</figure>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
 
-        <section class="sponsors" aria-label="sponsors">
-            <div class="sponsors-container" id="sponsors-container">
-                <ul class="corners">
-                    <li>&nbsp;</li>
-                    <li>&nbsp;</li>
-                    <li>&nbsp;</li>
-                    <li>&nbsp;</li>
-                </ul>
+			<!-- COUNT LETTERS -->
+			<section
+				class="count-letters"
+				id="count-letters"
+				aria-label="count-letters">
+				<div class="count-letters-container" id="count-letters-container">
+				</div>
+			</section>
+		</main>
 
-                <div class="sponsors-outer">
-                    <ul class="corners">
-                        <li>&nbsp;</li>
-                        <li>&nbsp;</li>
-                        <li>&nbsp;</li>
-                        <li>&nbsp;</li>
-                    </ul>
-
-                    <div class="sponsors-inner">
-                        <ul class="corners">
-                            <li>&nbsp;</li>
-                            <li>&nbsp;</li>
-                            <li>&nbsp;</li>
-                            <li>&nbsp;</li>
-                        </ul>
-
-                        <div class="content" data-value="first">
-                            <figure>
-                                <img src="/assets/img/logo-color.png">
-                            </figure>
-                            <h1>Die Show wird präsentiert von</h1>
-                            <ul>
-                                <li>
-                                    <figure>
-                                        <img src="/assets/img/able-group.png">
-                                    </figure>
-                                </li>
-                                <li>
-                                    <figure>
-                                        <img src="/assets/img/keravonos.png">
-                                    </figure>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- COUNT LETTERS -->
-        <section class="count-letters" id="count-letters" aria-label="count-letters">
-            <div class="count-letters-container" id="count-letters-container">
-
-            </div>
-        </section>
-    </main>
-
-    <!-- Imports -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-    <script src="/js/overlaySocketScript.js" type="module"></script>
-    <script src="/js/overlayVueScript.js" type="module"></script>
-</body>
+		<!-- Imports -->
+		<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+		<script src="/js/overlaySocketScript.js" type="module"></script>
+		<script src="/js/overlayVueScript.js" type="module"></script>
+	</body>
 </html>

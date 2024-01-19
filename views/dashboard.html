@@ -29,25 +29,24 @@
                 <form id="timer-form" class="timer-form">
                     <div>
                         <div>
-                            <label for="hours">Stunden</label>
-                            <input type="text" name="hours" placeholder="00" id="hours" value="00">
-                        </div>
-                        <div>
                             <label for="minutes">Minuten</label>
-                            <input type="text" name="minutes" placeholder="00" id="minutes" value="05">
+                            <input type="text" name="minutes" placeholder="0" id="minutes" value="5">
                         </div>
                         <div>
                             <label for="seconds">Sekunden</label>
-                            <input type="text" name="seconds" placeholder="00" id="seconds" value="00">
+                            <input type="text" name="seconds" placeholder="0" id="seconds" value="0">
                         </div>
                     </div>
                     <div>
-                        <button type="submit" name="countDown" value="count-down">Runterzählen</button>
-                        <button type="submit" name="countUp" value="count-up">Hochzählen</button>
-                        <button type="submit" name="stop" value="stop-timer">Abbrechen</button>
+                        <button type="submit" name="toggleTimer" value="toggle" id="toggle-timer">Timer anzeigen</button>
                     </div>
                     <div>
-                        <button type="submit" name="toggleTimer" value="toggle-timer" id="toggle-timer">Timer anzeigen</button>
+                        <select name="action" id="action">
+                            <option value="count-up">Hochzählen</option>
+                            <option value="count-down">Runterzählen</option>
+                        </select>
+                        <button type="submit" name="start" value="start">Start</button>
+                        <button type="submit" name="stop" value="stop">Stopp</button>
                     </div>
                 </form>
             </section>
@@ -62,39 +61,39 @@
                 <div class="teams-container">
                     <article class="team-container" id="team-1">
                         <h2>Team 1</h2>
-                        <select name="team-1-name" id="team-1-name">
-                            <option value="-" disabled selected>Bitte einen Studiengang auswählen...</option>
-                            <option value="AI">Allegmeine Informatik</option>
-                            <option value="WI">Wirtschaftsinformatik</option>
-                            <option value="MI">Medieninformatik</option>
-                            <option value="ITM">IT-Management</option>
-                        </select>
-                        <p class="points-team" id="points-team-1">0 Punkte</p>
-                        <form>
+                        <p class="points-team" id="team-points">0 Punkte</p>
+                        <form id="team-points-form" data-team="0">
+                            <select name="team-1-name" id="team-select">
+                                <option value="-" disabled selected>Bitte einen Studiengang auswählen...</option>
+                                <option value="AI">Allegmeine Informatik</option>
+                                <option value="WI">Wirtschaftsinformatik</option>
+                                <option value="MI">Medieninformatik</option>
+                                <option value="ITM">IT-Management</option>
+                            </select>
                             <button value="minus">- 1 Punkt</button>
                             <button value="add">+ 1 Punkt</button>
                         </form>
                     </article>
                     <article class="team-container" id="team-2">
                         <h2>Team 2</h2>
-                        <select name="team-2-name" id="team-2-name">
-                            <option value="-" disabled selected>Bitte einen Studiengang auswählen...</option>
-                            <option value="AI">Allegmeine Informatik</option>
-                            <option value="WI">Wirtschaftsinformatik</option>
-                            <option value="MI">Medieninformatik</option>
-                            <option value="ITM">IT-Management</option>
-                        </select>
-                        <p class="points-team" id="points-team-1">0 Punkte</p>
-                        <form>
+                        <p class="points-team" id="team-points">0 Punkte</p>
+                        <form id="team-points-form" data-team="1">
+                            <select name="team-2-name" id="team-select">
+                                <option value="-" disabled selected>Bitte einen Studiengang auswählen...</option>
+                                <option value="AI">Allegmeine Informatik</option>
+                                <option value="WI">Wirtschaftsinformatik</option>
+                                <option value="MI">Medieninformatik</option>
+                                <option value="ITM">IT-Management</option>
+                            </select>
                             <button value="minus">- 1 Punkt</button>
                             <button value="add">+ 1 Punkt</button>
                         </form>
                     </article>
                 </div>
-                <form id="show-teams-form">
+                <form id="points-form">
                     <button type="submit">Punkte anzeigen</button>
                 </form>
-                <form id="reset-teams-form">
+                <form id="reset-points-form">
                     <button type="submit">Teams zurücksetzen</button>
                 </form>
             </section>

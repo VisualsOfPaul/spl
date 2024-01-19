@@ -1,0 +1,20 @@
+{
+	"teams": [
+		{
+			"name": "AI",
+			"points": 0
+		},
+		{
+			"name": "WI",
+			"points": 0
+		},
+		{
+			"name": "MI",
+			"points": 0
+		},
+		{
+			"name": "ITM",
+			"points": 0
+		}
+	]
+}

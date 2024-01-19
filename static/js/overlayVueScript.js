@@ -1,12 +1,12 @@
 // BANDAGES
 const bandagesLeft = Vue.createApp({
-    data() {
-        return {
-            bandages: []
-        };
-    },
-    template: `
-        <div v-for="bandage in bandages" :data-value="bandage.id" id="bandage" class="bandage-outer">
+	data() {
+		return {
+			bandages: [],
+		};
+	},
+	template: `
+        <div v-for="bandage in bandages" id="bandage" class="bandage-outer">
             <ul class="corners">
                 <li>&nbsp;</li>
                 <li>&nbsp;</li>
@@ -27,33 +27,32 @@ const bandagesLeft = Vue.createApp({
                     </figure>
                 </aside>
                 <aside class="content">
-                    <h3>{{ bandage.forename }} {{ bandage.surname }}</h3>
+                    <h3>{{ bandage.name }} {{ bandage.surname }}</h3>
                     <h4>{{ bandage.pronouns }}</h4>
                     <p>{{ bandage.info }}</p>
                 </aside>
             </div>
         </div>
     `,
-    methods: {
-        async getBandages() {
-            const response = await fetch('/api/bandages');
-            const data = await response.json();
-            this.bandages = await data.rows;
-        }
-    },
-    mounted() {
-        this.getBandages();
-    }
+	methods: {
+		async getBandages() {
+			const RESPONSE = await fetch("/api/bandages");
+			this.bandages = await RESPONSE.json();
+		},
+	},
+	mounted() {
+		this.getBandages();
+	},
 }).mount("#bandages-container-left");
 
 const bandagesRight = Vue.createApp({
-    data() {
-        return {
-            bandages: []
-        };
-    },
-    template: `
-        <div v-for="bandage in bandages" :data-value="bandage.id" id="bandage" class="bandage-outer">
+	data() {
+		return {
+			bandages: [],
+		};
+	},
+	template: `
+        <div v-for="bandage in bandages" id="bandage" class="bandage-outer">
             <ul class="corners">
                 <li>&nbsp;</li>
                 <li>&nbsp;</li>
@@ -69,7 +68,7 @@ const bandagesRight = Vue.createApp({
                 </ul>
 
                 <aside class="content">
-                    <h3>{{ bandage.forename }} {{ bandage.surname }}</h3>
+                    <h3>{{ bandage.name }} {{ bandage.surname }}</h3>
                     <h4>{{ bandage.pronouns }}</h4>
                     <p>{{ bandage.info }}</p>
                 </aside>
@@ -81,26 +80,25 @@ const bandagesRight = Vue.createApp({
             </div>
         </div>
     `,
-    methods: {
-        async getBandages() {
-            const response = await fetch('/api/bandages');
-            const data = await response.json();
-            this.bandages = await data.rows;
-        }
-    },
-    mounted() {
-        this.getBandages();
-    }
+	methods: {
+		async getBandages() {
+			const RESPONSE = await fetch("/api/bandages");
+			this.bandages = await RESPONSE.json();
+		},
+	},
+	mounted() {
+		this.getBandages();
+	},
 }).mount("#bandages-container-right");
 
 // QUIZ
 const quiz = Vue.createApp({
-    data() {
-        return {
-            quiz: []
-        };
-    },
-    template: `
+	data() {
+		return {
+			quiz: [],
+		};
+	},
+	template: `
         <article v-for="(question, index) in quiz" class="question-outer" :id="'question-' + index">
             <ul class="corners">
                 <li>&nbsp;</li>
@@ -132,26 +130,26 @@ const quiz = Vue.createApp({
             </div>
         </article>
     `,
-    methods: {
-        async getQuiz() {
-            const response = await fetch('/api/quiz');
-            const data = await response.json();
-            this.quiz = await data;
-        },
-    },
-    mounted() {
-        this.getQuiz();
-    }
+	methods: {
+		async getQuiz() {
+			const response = await fetch("/api/quiz");
+			const data = await response.json();
+			this.quiz = await data;
+		},
+	},
+	mounted() {
+		this.getQuiz();
+	},
 }).mount("#quiz-container");
 
 // Lego builds
 const legoBuilds = Vue.createApp({
-    data() {
-        return {
-            legoBuilds: []
-        };
-    },
-    template: `
+	data() {
+		return {
+			legoBuilds: [],
+		};
+	},
+	template: `
         <ul>
             <li v-for="(build, index) in legoBuilds" :id="'lego-build-image-' + index">
                 <figure>
@@ -160,58 +158,57 @@ const legoBuilds = Vue.createApp({
             </li>
         </ul>
     `,
-    methods: {
-        async getLegoBuilds() {
-            const response = await fetch('/api/lego-builds');
-            const data = await response.json();
-            this.legoBuilds = await data.images;
-        }
-    },
-    mounted() {
-        this.getLegoBuilds();
-    }
+	methods: {
+		async getLegoBuilds() {
+			const response = await fetch("/api/lego-builds");
+			const data = await response.json();
+			this.legoBuilds = await data.images;
+		},
+	},
+	mounted() {
+		this.getLegoBuilds();
+	},
 }).mount("#lego-builds-container");
 
 // Memory
 const memory = Vue.createApp({
-    data() {
-        return {
-            tiles: {}
-        };
-    },
-    template: `
+	data() {
+		return {
+			tiles: {},
+		};
+	},
+	template: `
         <ul>
             <li v-for="(tile, index) in tiles" :id="'tile-' + index">
                 {{ tile.solution }}
             </li>
         </ul>
     `,
-    methods: {
-        async getTiles() {
-            const response = await fetch('/api/memory');
-            const data = await response.json();
-            this.tiles = await data.tiles;
-        }
-    },
-    mounted() {
-        this.getTiles();
-    }
+	methods: {
+		async getTiles() {
+			const response = await fetch("/api/memory");
+			const data = await response.json();
+			this.tiles = await data.tiles;
+		},
+	},
+	mounted() {
+		this.getTiles();
+	},
 }).mount("#memory-container");
 
-
-// Timer
+// TIMER
 const timer = Vue.createApp({
-    data() {
-        return {
-            time: {
-                hours: 0,
-                minutes: 0,
-                seconds: 0
-            },
-            timeoutID: null
-        };
-    },
-    template: `
+	data() {
+		return {
+			time: {
+				minutes: "00",
+				seconds: "00",
+			},
+			action: "count-up",
+			timeoutID: null,
+		};
+	},
+	template: `
         <article id="timer" class="timer-outer">
             <ul class="corners">
                 <li>&nbsp;</li>
@@ -232,100 +229,127 @@ const timer = Vue.createApp({
             </div>
         </article>
     `,
-    methods: {
-        formatTime(number) {
-            return number.toLocaleString('de-DE', {
-                minimumIntegerDigits: 2,
-                useGrouping: false
-              });
-        },
+	methods: {
+		formatTime(number) {
+			return number.toLocaleString("de-DE", {
+				minimumIntegerDigits: 2,
+				useGrouping: false,
+			});
+		},
 
-        async countUp(end) {
-            this.timeoutID = setTimeout(() => {
-                if (this.time.seconds < 59) {
-                    this.time.seconds++;
-                } else {
-                    this.time.seconds = 0;
-                    if (this.time.minutes < 59) {
-                        this.time.minutes++;
-                    } else {
-                        this.time.minutes = 0;
-                        this.time.hours++;
-                    }
-                }
-                if (this.time.hours < end.hours || this.time.minutes < end.minutes || this.time.seconds < end.seconds) {
-                    this.countUp(end);
-                }
-            }, 1000);
-        },
+		showTime(data) {
+			this.action = data.action;
 
-        async countDown(start) {
-            this.time = start;
+			switch (this.action) {
+				case "count-down":
+					this.time = {
+						minutes: this.formatTime(Number(data.time.minutes)),
+						seconds: this.formatTime(Number(data.time.seconds)),
+					};
+					break;
+				case "count-up":
+					this.time = {
+						minutes: "00",
+						seconds: "00",
+					};
+					break;
+			}
+		},
 
-            this.timeoutID = setTimeout(() => {
-                if (this.time.seconds > 0) {
-                    this.time.seconds--;
-                } else {
-                    this.time.seconds = 59;
-                    if (this.time.minutes > 0) {
-                        this.time.minutes--;
-                    } else {
-                        this.time.minutes = 59;
-                        this.time.hours--;
-                    }
-                }
-                if (this.time.hours > 0 || this.time.minutes > 0 || this.time.seconds > 0) {
-                    this.countDown(this.time);
-                }
-            }, 1000);
-        },
+		start(data) {
+			switch (this.action) {
+				case "count-down":
+					this.countDown(data);
+					break;
+				case "count-up":
+					this.countUp(data);
+					break;
+			}
+		},
 
-        async stop() {
-            // Stop timer
-            clearTimeout(this.timeoutID);            
+		countDown(data) {
+			this.timeoutID = setTimeout(() => {
+				if (this.formatTime(Number(this.time.seconds)) === this.formatTime(0)) {
+					if (
+						this.formatTime(Number(this.time.minutes)) === this.formatTime(0)
+					) {
+						this.time = {
+							minutes: this.formatTime(Number(data.time.minutes)),
+							seconds: this.formatTime(Number(data.time.seconds)),
+						};
+						clearTimeout(this.timeoutID);
+						return;
+					} else {
+						this.time.minutes = this.formatTime(Number(this.time.minutes) - 1);
+						this.time.seconds = 59;
+					}
+				} else {
+					this.time.seconds = this.formatTime(Number(this.time.seconds) - 1);
+				}
 
-            // Reset timer
-            this.time = {
-                hours: 0,
-                minutes: 0,
-                seconds: 0
-            }
+				this.countDown(data);
+			}, 1000);
+		},
 
-            // Clear timeoutID
-            this.timeoutID = null;
-        }
-    }
+		countUp(data) {
+			this.timeoutID = setTimeout(() => {
+				if (
+					this.formatTime(Number(this.time.minutes)) ===
+						this.formatTime(Number(data.time.minutes)) &&
+					this.formatTime(Number(this.time.seconds)) ===
+						this.formatTime(Number(data.time.seconds))
+				) {
+					this.time = {
+						minutes: "00",
+						seconds: "00",
+					};
+					clearTimeout(this.timeoutID);
+					return;
+				}
+
+				if (this.time.seconds === 59) {
+					this.time.minutes = this.formatTime(Number(this.time.minutes) + 1);
+					this.time.seconds = this.formatTime(0);
+				} else {
+					this.time.seconds = this.formatTime(Number(this.time.seconds) + 1);
+				}
+
+				this.countUp(data);
+			}, 1000);
+		},
+
+		stop() {
+			clearTimeout(this.timeoutID);
+		},
+	},
 }).mount("#timer-container");
 
-
-// Functions to manage the timer
-function countDown(data) {
-    timer.countDown(data);
+function showTime(data) {
+	timer.showTime(data);
 }
 
-function countUp(data) {
-    timer.countUp(data);
+window.showTime = showTime;
+
+function startTimer(data) {
+	timer.start(data);
 }
+
+window.startTimer = startTimer;
 
 function stopTimer() {
-    timer.stop();
+	timer.stop();
 }
 
-window.countDown = countDown;
-window.countUp = countUp;
 window.stopTimer = stopTimer;
-
-
-
 
 // Where is this?
 const whereIsThis = Vue.createApp({
-    data() {
-        return {
-            images: []
-        };
-    },
-    template: `
+	data() {
+		return {
+			images: [],
+		};
+	},
+	template: `
         <ul>
             <li v-for="(image, index) in images" :id="'where-is-this-image-' + index">
                 <figure>
@@ -334,30 +358,26 @@ const whereIsThis = Vue.createApp({
             </li>
         </ul>
     `,
-    methods: {
-        async getImages() {
-            const response = await fetch('/api/where-is-this');
-            const data = await response.json();
-            this.images = await data.images;
-        }
-    },
-    mounted() {
-        this.getImages();
-    }
+	methods: {
+		async getImages() {
+			const response = await fetch("/api/where-is-this");
+			const data = await response.json();
+			this.images = await data.images;
+		},
+	},
+	mounted() {
+		this.getImages();
+	},
 }).mount("#where-is-this-container");
-
-
-
-
 
 // COUNT LETTERS
 const COUNTLETTERS = Vue.createApp({
-    data() {
-        return {
-            words: []
-        };
-    },
-    template: `
+	data() {
+		return {
+			words: [],
+		};
+	},
+	template: `
         <ul>
             <li v-for="(content, index) in words" :id="'count-letters-' + type(index)">
                 <article id="count-letters-item" class="count-letters-item-outer">
@@ -382,29 +402,32 @@ const COUNTLETTERS = Vue.createApp({
             </li>
         </ul>
     `,
-    methods: {
-        async getWords() {
-            await fetch('/api/count-letters').then((RESPONSE) => {
-                return RESPONSE.json();
-            }).then((DATA) => {
-                const MODIFIEDARRAY = [];
+	methods: {
+		async getWords() {
+			await fetch("/api/count-letters")
+				.then((RESPONSE) => {
+					return RESPONSE.json();
+				})
+				.then((DATA) => {
+					const MODIFIEDARRAY = [];
 
-                for(const WORD of DATA) {
-                    MODIFIEDARRAY.push(WORD.word);
-                    MODIFIEDARRAY.push(WORD.letters);
-                }
+					for (const WORD of DATA) {
+						MODIFIEDARRAY.push(WORD.word);
+						MODIFIEDARRAY.push(WORD.letters);
+					}
 
-                return MODIFIEDARRAY;
-            }).then((MODIFIEDARRAY) => {
-                this.words = MODIFIEDARRAY;
-            });
-        },
+					return MODIFIEDARRAY;
+				})
+				.then((MODIFIEDARRAY) => {
+					this.words = MODIFIEDARRAY;
+				});
+		},
 
-        type(index) {
-            return (index % 2 === 0 ? "word" : "solution")
-        }
-    },
-    mounted() {
-        this.getWords();
-    }
+		type(index) {
+			return index % 2 === 0 ? "word" : "solution";
+		},
+	},
+	mounted() {
+		this.getWords();
+	},
 }).mount("#count-letters-container");
