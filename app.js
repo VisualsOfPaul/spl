@@ -2,7 +2,7 @@
 const COOKIEPARSER = require('cookie-parser')
 const HTTP = require('http');
 const EXPRESS = require('express');
-const SOCKETIO = require('socket.io');
+// const SOCKETIO = require('socket.io');
 const DOTENV = require('dotenv');
 const FS = require('fs');
 
@@ -146,6 +146,49 @@ const COUNTLETTERS = [
 ];
 
 
+
+const CLIENTS = [];
+
+APP.get("/connect", (req, res) => {
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+
+    CLIENTS.push(res);
+
+    res.write(`data: ${
+        JSON.stringify({
+            "event": "connected",
+            "message": "Connected to server."
+        })}\n\n`);
+    
+
+    console.log("Client connected.");
+});
+
+APP.post("/send-count-letters", (req, res) => {
+    CLIENTS.forEach((client) => {
+        client.write(`data: ${
+            JSON.stringify({
+                "event": "send-count-letters",
+                "message": COUNTLETTERS
+            })}\n\n`);
+    });
+
+    console.log("Sent count letters.");
+});
+
+
+
+
+
+
+
+
+
+
+
+
 //Routing
 APP.get("/", (req, res) => {
     res.redirect('/overlay');
@@ -225,237 +268,237 @@ APP.get("/api/count-letters", async (req, res) => {
 
 
 // Socket setup
-const IO = new SOCKETIO.Server(SERVER);
+// const IO = new SOCKETIO.Server(SERVER);
 
-IO.on('connection', async (socket) => {
-    console.log(`Connected with ${socket.id}.`);
+// IO.on('connection', async (socket) => {
+//     console.log(`Connected with ${socket.id}.`);
 
-    teams.first.points = Number((await pointsModel.getPoints(teams.first.name)).rows[0].points);
-    teams.second.points = Number((await pointsModel.getPoints(teams.second.name)).rows[0].points);
+//     teams.first.points = Number((await pointsModel.getPoints(teams.first.name)).rows[0].points);
+//     teams.second.points = Number((await pointsModel.getPoints(teams.second.name)).rows[0].points);
 
-    IO.emit('update-teams', teams);
-    IO.emit('send-lego-builds', LEGOBUILDS);
-    IO.emit('send-where-is-this', WHEREISTHIS);
-    IO.emit('send-memory', MEMORY.visible);
-    IO.emit('send-question', QUIZ);
-    IO.emit('send-view', visibleViewIndex);
-    IO.emit('show-sponsors', visibleSponsors);
-
-
-    // STARTING SCREEN
-    socket.on('toggle-starting-screen', () => {
-        STARTINGSCREEN.visible = !STARTINGSCREEN.visible;
-        IO.emit('send-starting-screen', STARTINGSCREEN.visible);
-    });
+//     IO.emit('update-teams', teams);
+//     IO.emit('send-lego-builds', LEGOBUILDS);
+//     IO.emit('send-where-is-this', WHEREISTHIS);
+//     IO.emit('send-memory', MEMORY.visible);
+//     IO.emit('send-question', QUIZ);
+//     IO.emit('send-view', visibleViewIndex);
+//     IO.emit('show-sponsors', visibleSponsors);
 
 
+//     // STARTING SCREEN
+//     socket.on('toggle-starting-screen', () => {
+//         STARTINGSCREEN.visible = !STARTINGSCREEN.visible;
+//         IO.emit('send-starting-screen', STARTINGSCREEN.visible);
+//     });
 
 
 
 
-    socket.on('show-teams', async () => {
-        teams.visible = !teams.visible;
-        IO.emit('update-teams', (teams));
-    });
 
-    socket.on('hide-teams', async () => {
-        teams.visible = false;
-        IO.emit('update-teams', (teams));
-    });
 
-    socket.on('set-team', async (data) => {
+//     socket.on('show-teams', async () => {
+//         teams.visible = !teams.visible;
+//         IO.emit('update-teams', (teams));
+//     });
 
-        await pointsModel.setPoints(teams.first.name, teams.first.points);
-        await pointsModel.setPoints(teams.second.name, teams.second.points);
+//     socket.on('hide-teams', async () => {
+//         teams.visible = false;
+//         IO.emit('update-teams', (teams));
+//     });
+
+//     socket.on('set-team', async (data) => {
+
+//         await pointsModel.setPoints(teams.first.name, teams.first.points);
+//         await pointsModel.setPoints(teams.second.name, teams.second.points);
         
-        switch(data.team) {
-            case "1": teams.first.name = data.value; break;
-            case "2": teams.second.name = data.value; break;
-        }
+//         switch(data.team) {
+//             case "1": teams.first.name = data.value; break;
+//             case "2": teams.second.name = data.value; break;
+//         }
 
-        teams.first.points = Number((await pointsModel.getPoints(teams.first.name)).rows[0].points);
-        teams.second.points = Number((await pointsModel.getPoints(teams.second.name)).rows[0].points);
+//         teams.first.points = Number((await pointsModel.getPoints(teams.first.name)).rows[0].points);
+//         teams.second.points = Number((await pointsModel.getPoints(teams.second.name)).rows[0].points);
 
-        IO.emit('update-teams', teams);
-    });
+//         IO.emit('update-teams', teams);
+//     });
 
-    socket.on('set-point', async (data) => {
-        if(data.team === "1") {
-            switch(data.operation) {
-                case "add" : teams.first.points += 1; break;
-                case "minus" : teams.first.points -= 1; break;
-            }
-        } else if(data.team === "2") {
-            switch(data.operation) {
-                case "add" : teams.second.points += 1; break;
-                case "minus" : teams.second.points -= 1; break;
-            }
-        }
+//     socket.on('set-point', async (data) => {
+//         if(data.team === "1") {
+//             switch(data.operation) {
+//                 case "add" : teams.first.points += 1; break;
+//                 case "minus" : teams.first.points -= 1; break;
+//             }
+//         } else if(data.team === "2") {
+//             switch(data.operation) {
+//                 case "add" : teams.second.points += 1; break;
+//                 case "minus" : teams.second.points -= 1; break;
+//             }
+//         }
 
-        IO.emit('update-teams', teams);
-    })
+//         IO.emit('update-teams', teams);
+//     })
 
-    socket.on('reset-teams', () => {
-        teams = {
-            "first" : {
-                "name": "-",
-                "points": 0
-            },
-            "second" : {
-                "name": "-",
-                "points": 0
-            },
-            "visible": false
-        }
-        pointsModel.resetPoints();
-        IO.emit('update-teams', teams);
-    })
+//     socket.on('reset-teams', () => {
+//         teams = {
+//             "first" : {
+//                 "name": "-",
+//                 "points": 0
+//             },
+//             "second" : {
+//                 "name": "-",
+//                 "points": 0
+//             },
+//             "visible": false
+//         }
+//         pointsModel.resetPoints();
+//         IO.emit('update-teams', teams);
+//     })
 
-    socket.on('show-bandage', (data) => {
-        IO.emit('show-bandage', data);
-    })
+//     socket.on('show-bandage', (data) => {
+//         IO.emit('show-bandage', data);
+//     })
 
-    socket.on('toggle-question', (data) => {
-        Object.keys(QUIZ).forEach(key => {
-            if (key !== data.index.toString()) {
-                QUIZ[key].visible = false;
-            }
-        });
+//     socket.on('toggle-question', (data) => {
+//         Object.keys(QUIZ).forEach(key => {
+//             if (key !== data.index.toString()) {
+//                 QUIZ[key].visible = false;
+//             }
+//         });
 
-        QUIZ[data.index].visible = !QUIZ[data.index].visible;
+//         QUIZ[data.index].visible = !QUIZ[data.index].visible;
 
-        IO.emit('send-question', QUIZ);
-    });
+//         IO.emit('send-question', QUIZ);
+//     });
 
-    socket.on('hide-questions', () => {
-        Object.keys(QUIZ).forEach(key => {
-            QUIZ[key].visible = false;
-        });
+//     socket.on('hide-questions', () => {
+//         Object.keys(QUIZ).forEach(key => {
+//             QUIZ[key].visible = false;
+//         });
 
-        IO.emit('send-question', QUIZ);
-    });
+//         IO.emit('send-question', QUIZ);
+//     });
 
-    socket.on('log-answer', (data) => {
-        IO.emit('log-answer', data);
-    })
+//     socket.on('log-answer', (data) => {
+//         IO.emit('log-answer', data);
+//     })
 
-    socket.on('show-answer', async (data) => {
-        const quiz = await quizModel.getQuiz(data.index + 1);
-        var correctAnswer = null;
-        quiz.rows[0].answers.forEach((answer) => {
-            if(answer.correct == true) {
-                correctAnswer = answer.answer;
-            }
-        });
-        data.correctAnswer = correctAnswer;
-        IO.emit('show-answer', data);
-    });
+//     socket.on('show-answer', async (data) => {
+//         const quiz = await quizModel.getQuiz(data.index + 1);
+//         var correctAnswer = null;
+//         quiz.rows[0].answers.forEach((answer) => {
+//             if(answer.correct == true) {
+//                 correctAnswer = answer.answer;
+//             }
+//         });
+//         data.correctAnswer = correctAnswer;
+//         IO.emit('show-answer', data);
+//     });
 
-    socket.on('reset-quiz', () => {
-        IO.emit('reset-quiz');
-    });
+//     socket.on('reset-quiz', () => {
+//         IO.emit('reset-quiz');
+//     });
 
-    socket.on('toggle-lego-build', (data) => {
-        LEGOBUILDS.forEach((build) => {
-            if(build.index !== data.index) build.visible = false;
-        });
+//     socket.on('toggle-lego-build', (data) => {
+//         LEGOBUILDS.forEach((build) => {
+//             if(build.index !== data.index) build.visible = false;
+//         });
 
-        const build = LEGOBUILDS.find((build) => {
-            return build.index === data.index;
-        });
+//         const build = LEGOBUILDS.find((build) => {
+//             return build.index === data.index;
+//         });
 
-        build.visible = !build.visible;
+//         build.visible = !build.visible;
 
-        IO.emit('send-lego-builds', LEGOBUILDS);
-    });
-
-
-
-    socket.on('toggle-where-is-this', (data) => {
-        WHEREISTHIS.forEach((image) => {
-            if(image.index !== data.index) image.visible = false;
-        });
-
-        const image = WHEREISTHIS.find((image) => {
-            return image.index === data.index;
-        });
-
-        image.visible = !image.visible;
-
-        IO.emit('send-where-is-this', WHEREISTHIS);
-    });
+//         IO.emit('send-lego-builds', LEGOBUILDS);
+//     });
 
 
 
+//     socket.on('toggle-where-is-this', (data) => {
+//         WHEREISTHIS.forEach((image) => {
+//             if(image.index !== data.index) image.visible = false;
+//         });
 
-    socket.on('toggle-memory', () => {
-        MEMORY.visible = !MEMORY.visible;
+//         const image = WHEREISTHIS.find((image) => {
+//             return image.index === data.index;
+//         });
+
+//         image.visible = !image.visible;
+
+//         IO.emit('send-where-is-this', WHEREISTHIS);
+//     });
+
+
+
+
+//     socket.on('toggle-memory', () => {
+//         MEMORY.visible = !MEMORY.visible;
         
-        IO.emit('send-memory', MEMORY.visible);
-    });
+//         IO.emit('send-memory', MEMORY.visible);
+//     });
 
-    socket.on('switch-view', (data) => {
-        visibleViewIndex = data.index;
+//     socket.on('switch-view', (data) => {
+//         visibleViewIndex = data.index;
         
-        IO.emit('send-view', visibleViewIndex);
-    });
+//         IO.emit('send-view', visibleViewIndex);
+//     });
 
-    //Show sponsors
-    socket.on('toggle-sponsors', () => {
-        visibleSponsors = !visibleSponsors;
-        IO.emit('show-sponsors', visibleSponsors);
-    });
-
-
-
-
-    // TIMER
-    socket.on('count-down', (data) => {
-        IO.emit('got-count-down', data);
-    });
-
-    socket.on('count-up', (data) => {
-        IO.emit('got-count-up', data);
-    });
-
-    socket.on('stop-timer', () => {
-        IO.emit('got-stop-timer');
-    });
-
-    socket.on('toggle-timer', () => {
-        TIMER.visible = !TIMER.visible;
-        IO.emit('got-toggle-timer', TIMER.visible);
-    });
+//     //Show sponsors
+//     socket.on('toggle-sponsors', () => {
+//         visibleSponsors = !visibleSponsors;
+//         IO.emit('show-sponsors', visibleSponsors);
+//     });
 
 
 
-    // COUNT LETTERS
-    socket.on('toggle-word', (index) => {
-        COUNTLETTERS[index].visible = !COUNTLETTERS[index].visible;
-        COUNTLETTERS[index].solutionVisible = false;
 
-        IO.emit('send-count-letters', COUNTLETTERS);
-    });
+//     // TIMER
+//     socket.on('count-down', (data) => {
+//         IO.emit('got-count-down', data);
+//     });
 
-    socket.on('show-solution', (index) => {
-        COUNTLETTERS[index].solutionVisible = !COUNTLETTERS[index].solutionVisible;
-        IO.emit('send-count-letters', COUNTLETTERS);
-    });
+//     socket.on('count-up', (data) => {
+//         IO.emit('got-count-up', data);
+//     });
+
+//     socket.on('stop-timer', () => {
+//         IO.emit('got-stop-timer');
+//     });
+
+//     socket.on('toggle-timer', () => {
+//         TIMER.visible = !TIMER.visible;
+//         IO.emit('got-toggle-timer', TIMER.visible);
+//     });
 
 
+
+//     // COUNT LETTERS
+//     socket.on('toggle-word', (index) => {
+//         COUNTLETTERS[index].visible = !COUNTLETTERS[index].visible;
+//         COUNTLETTERS[index].solutionVisible = false;
+
+//         IO.emit('send-count-letters', COUNTLETTERS);
+//     });
+
+//     socket.on('show-solution', (index) => {
+//         COUNTLETTERS[index].solutionVisible = !COUNTLETTERS[index].solutionVisible;
+//         IO.emit('send-count-letters', COUNTLETTERS);
+//     });
 
 
 
 
 
-    socket.on('disconnect', () => {
-        pointsModel.setPoints(teams.first.name, teams.first.points);
-        pointsModel.setPoints(teams.second.name, teams.second.points);
-        console.log(`Socket ${socket.id} disconnected.`);
-    });
+
+
+//     socket.on('disconnect', () => {
+//         pointsModel.setPoints(teams.first.name, teams.first.points);
+//         pointsModel.setPoints(teams.second.name, teams.second.points);
+//         console.log(`Socket ${socket.id} disconnected.`);
+//     });
 
     
-})
+// })
 
 // Host on port
 SERVER.listen(process.env.PORT, () => {
