@@ -1,19 +1,19 @@
 {
 	"teams": [
 		{
-			"name": "AI",
+			"name": "Allgemeine Informatik",
 			"points": 0
 		},
 		{
-			"name": "WI",
+			"name": "Wirtschaftsinformatik",
 			"points": 0
 		},
 		{
-			"name": "MI",
+			"name": "Medieninformatik",
 			"points": 0
 		},
 		{
-			"name": "ITM",
+			"name": "IT-Management",
 			"points": 0
 		}
 	]

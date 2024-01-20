@@ -10,71 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	SOCKET.on("connect", () => {
 		console.log(`Connected with ${SOCKET.id}.`);
 
-		// VARIABLES
-		// const POINTS = document.querySelectorAll('section[id="teams"]');
-		// const POINTSCONTENT = document.querySelectorAll(
-		// 	'section[id="teams"] .content'
-		// );
-
-		// HIDE AND SHOW COMPONENTS
-		// function hideComponents(components, callback) {
-		// 	const VISIBLECOMPONENTS = components.filter(
-		// 		(component) => COMPONENTVISIBILITY[component]
-		// 	);
-
-		// 	console.log(components, VISIBLECOMPONENTS);
-
-		// 	if (VISIBLECOMPONENTS.length === 0) {
-		// 		callback();
-		// 		return;
-		// 	}
-
-		// 	const TIMELINE = gsap.timeline({
-		// 		onComplete: () => {
-		// 			callback();
-		// 		},
-		// 	});
-
-		// 	VISIBLECOMPONENTS.forEach((component) => {
-		// 		COMPONENTVISIBILITY[component] = false;
-
-		// 		let tweenParams = {
-		// 			duration: 2,
-		// 			opacity: 0,
-		// 			ease: "power4.inOut",
-		// 		};
-
-		// 		console.log(component);
-
-		// 		switch (component) {
-		// 			case "bandages":
-		// 				COMPONENTVISIBILITY["bandages"] = false;
-		// 				component = document
-		// 					.querySelector(
-		// 						"#bandages-container-left div[data-visible='true']"
-		// 					)
-		// 					.getAttribute("id");
-		// 				tweenParams.x = "-100%";
-		// 				break;
-		// 			case "teams":
-		// 				COMPONENTVISIBILITY["teams"] = false;
-		// 				tweenParams.x = "-100%";
-		// 				SOCKET.emit("hide-teams");
-		// 				break;
-		// 			case "quiz":
-		// 				COMPONENTVISIBILITY["quiz"] = false;
-		// 				component = document
-		// 					.querySelector("#quiz-container article[data-visible='true']")
-		// 					.getAttribute("id");
-		// 				SOCKET.emit("hide-questions");
-		// 				tweenParams.y = "100%";
-		// 				break;
-		// 		}
-
-		// 		TIMELINE.to(`#${component}`, tweenParams, 0);
-		// 	});
-		// }
-
 		// STARTING SCREEN
 		SOCKET.on("toggle-starting-screen-done", (data) => {
 			const STARTINGSCREEN = document.querySelector(
@@ -233,33 +168,66 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 
 	// POINTS
-	const POINTS = document.querySelector("#points");
+	const POINTS = document.querySelectorAll("div[id^='team-points-']");
 
 	SOCKET.on("toggle-points-done", (data) => {
-		if (data) {
-			gsap.to(POINTS, {
-				duration: 2,
-				x: 0,
-				opacity: 1,
-				ease: "power4.inOut",
-			});
-		} else {
-			gsap.to(POINTS, {
-				duration: 2,
-				x: "-100%",
-				opacity: 0,
-				ease: "power4.inOut",
-			});
-		}
+		POINTS.forEach((point, index) => {
+			if (data) {
+				gsap.to(point, {
+					duration: 1,
+					x: 0,
+					opacity: 1,
+					ease: "power3.inOut",
+				});
+			} else {
+				gsap.to(point, {
+					duration: 1,
+					x: index % 2 === 0 ? "-100%" : "100%",
+					opacity: 0,
+					ease: "power3.inOut",
+				});
+			}
+		});
 	});
 
-	SOCKET.on("update-points-done", (data) => {
-		const TEAMS = document.querySelectorAll("#team-points");
+	SOCKET.on("update-points-done", async (data) => {
+		const IMAGES = await document.querySelectorAll("#team-points-image");
+		const TEAMSINFORMATION = await document.querySelectorAll(
+			"#team-points > div"
+		);
+		const TEAMS = await document.querySelectorAll(
+			"div[id^='team-points-outer-']"
+		);
 
-		[...TEAMS].forEach((team, index) => {
-			team.children[0].textContent = data.teams[index].name;
-			team.children[1].textContent = data.teams[index].points;
-		});
+		for (let index = 0; index < TEAMS.length; index++) {
+			IMAGES[index].querySelectorAll("img").forEach((image) => {
+				image.classList.remove("active");
+			});
+
+			if (
+				IMAGES[index].querySelector(
+					`img[data-course='${data.teams[index].name}']`
+				)
+			)
+				IMAGES[index]
+					.querySelector(`img[data-course='${data.teams[index].name}']`)
+					.classList.add("active");
+
+			TEAMSINFORMATION[index].children[0].textContent = data.teams[index].name;
+			TEAMSINFORMATION[index].children[1].textContent = `${
+				data.teams[index].points
+			} ${data.teams[index].points === 1 ? "Punkt" : "Punkte"}`;
+
+			TEAMS[index].classList.remove(
+				"allgemeine-informatik",
+				"it-management",
+				"medieninformatik",
+				"wirtschaftsinformatik"
+			);
+			TEAMS[index].classList.add(
+				await data.teams[index].name.toLowerCase().replaceAll(" ", "-")
+			);
+		}
 	});
 
 	// QUIZ

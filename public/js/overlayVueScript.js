@@ -73,10 +73,10 @@ const bandagesRight = Vue.createApp({
                     <p>{{ bandage.info }}</p>
                 </aside>
                 <aside>
-                <figure class="logo-container">
-                    <img src="/assets/img/logo-color.png" class="logo">
-                </figure>
-            </aside>
+					<figure class="logo-container">
+						<img src="/assets/img/logo-color.png" class="logo">
+					</figure>
+				</aside>
             </div>
         </div>
     `,

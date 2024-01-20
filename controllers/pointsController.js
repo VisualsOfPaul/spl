@@ -10,6 +10,7 @@ async function toggle() {
 
 async function updateTeamName(index, name) {
 	CURRENTPOINTS.teams[index].name = name;
+
 	CURRENTPOINTS.teams[index].points = POINTS.teams.find(
 		(team) => team.name === name
 	).points;
