@@ -574,26 +574,47 @@ body {
 	width: 100vw;
 	display: flex;
 	align-items: flex-end;
-	justify-content: flex-end;
+	justify-content: center;
 	padding: var(--spacing-xl);
 }
 
-.lego-builds-container ul {
-	height: var(--image-height);
-	width: var(--image-width);
+.lego-outer {
+	position: relative;
+	width: fit-content;
+	height: fit-content;
+	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+		var(--border-thickness) 0 0 0 var(--border-outer-color),
+		0 calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+		0 var(--border-thickness) 0 0 var(--border-outer-color);
+	padding: var(--border-thickness);
+	background-color: var(--border-background-color-transparent);
+	list-style: none;
+	opacity: 0;
+	transform: translateY(100%);
 }
 
-.lego-builds-container ul li {
-	position: absolute;
-	border-radius: var(--border-radius);
-	overflow: hidden;
-	opacity: 0;
-	transform: translateY(50%);
+.lego-outer .corners li {
+	background-color: var(--border-outer-color);
+}
+
+.lego-inner {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+		var(--border-thickness) 0 0 0 var(--border-inner-color),
+		0 calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+		0 var(--border-thickness) 0 0 var(--border-inner-color);
+	background-color: var(--border-background-color-transparent);
+}
+
+.lego-inner .corners li {
+	background-color: var(--border-inner-color);
 }
 
 .lego-builds-container ul li figure {
 	height: var(--image-height);
-	width: var(--image-width);
+	aspect-ratio: 16/9;
 }
 
 .lego-builds-container ul li figure img {
@@ -609,32 +630,81 @@ body {
 	width: 100vw;
 	display: flex;
 	align-items: flex-end;
-	justify-content: flex-end;
+	justify-content: center;
 	padding: var(--spacing-xl);
 }
 
-.where-is-this-container ul {
-	height: var(--image-height);
-	width: var(--image-width);
+.where-is-this-container > ul {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-end;
+	list-style: none;
 }
 
-.where-is-this-container ul li {
+.where-is-this-outer {
 	position: absolute;
-	border-radius: var(--border-radius);
-	overflow: hidden;
+	width: fit-content;
+	height: fit-content;
+	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+		var(--border-thickness) 0 0 0 var(--border-outer-color),
+		0 calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+		0 var(--border-thickness) 0 0 var(--border-outer-color);
+	padding: var(--border-thickness);
+	background-color: var(--border-background-color-transparent);
 	opacity: 0;
-	transform: translateY(50%);
+	transform: translateY(100%);
+}
+
+.where-is-this-outer .corners li {
+	background-color: var(--border-outer-color);
+}
+
+.where-is-this-inner {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+		var(--border-thickness) 0 0 0 var(--border-inner-color),
+		0 calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+		0 var(--border-thickness) 0 0 var(--border-inner-color);
+	background-color: var(--border-background-color-transparent);
+}
+
+.where-is-this-inner .corners li {
+	background-color: var(--border-inner-color);
+	z-index: 1;
 }
 
 .where-is-this-container ul li figure {
 	height: var(--image-height);
-	width: var(--image-width);
+	aspect-ratio: 16/9;
+	overflow: hidden;
+	display: flex;
 }
 
 .where-is-this-container ul li figure img {
 	height: 100%;
 	width: 100%;
 	object-fit: cover;
+	transform: scale(2);
+}
+
+.where-is-this-container ul li figure figcaption {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: flex-end;
+	justify-content: flex-start;
+	padding: calc(var(--border-thickness) * 2);
+}
+
+.where-is-this-container ul li figure .scale {
+	position: relative;
+	height: var(--border-thickness);
+	width: 0%;
+	background-color: var(--primary-color);
 }
 
 /* Memory */

@@ -150,10 +150,26 @@ const legoBuilds = Vue.createApp({
 	},
 	template: `
         <ul>
-            <li v-for="(build, index) in legoBuilds" :id="'lego-build-image-' + index">
-                <figure>
-                    <img :src="'/assets/lego-builds/' + build">
-                </figure>
+            <li v-for="(build, index) in legoBuilds" :id="'lego-build-image-' + index" class="lego-outer">
+				<ul class="corners">
+					<li>&nbsp;</li>
+					<li>&nbsp;</li>
+					<li>&nbsp;</li>
+					<li>&nbsp;</li>
+				</ul>
+
+				<div class="lego-inner">
+					<ul class="corners">
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+					</ul>
+
+					<figure class="image">
+						<img :src="'/assets/lego-builds/' + build">
+					</figure>
+				</div>
             </li>
         </ul>
     `,
@@ -348,10 +364,29 @@ const WHEREISTHIS = Vue.createApp({
 	},
 	template: `
         <ul>
-            <li v-for="(image, index) in images" :id="'where-is-this-image-' + index">
-                <figure>
-                    <img :src="'/assets/where-is-this/' + image">
-                </figure>
+            <li v-for="(image, index) in images" :id="'where-is-this-image-' + index" class="where-is-this-outer">
+				<ul class="corners">
+					<li>&nbsp;</li>
+					<li>&nbsp;</li>
+					<li>&nbsp;</li>
+					<li>&nbsp;</li>
+				</ul>
+
+				<div class="where-is-this-inner">
+					<ul class="corners">
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+					</ul>
+
+					<figure class="image">
+						<img :src="'/assets/where-is-this/' + image">
+						<figcaption>
+							<div id="scale" class="scale"></div>
+						</figcaption>
+					</figure>
+				</div>
             </li>
         </ul>
     `,

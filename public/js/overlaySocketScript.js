@@ -390,6 +390,20 @@ document.addEventListener("DOMContentLoaded", () => {
 						opacity: 1,
 						ease: "power3.inOut",
 					});
+
+					gsap.to(IMAGES[index].querySelector("img"), {
+						duration: 20,
+						scale: 1,
+						ease: "linear",
+						delay: 2,
+					});
+
+					gsap.to(IMAGES[index].querySelector("#scale"), {
+						duration: 20,
+						width: "100%",
+						ease: "linear",
+						delay: 2,
+					});
 				} else {
 					gsap.to(IMAGES[index], {
 						duration: 1,
@@ -397,6 +411,9 @@ document.addEventListener("DOMContentLoaded", () => {
 						opacity: 0,
 						ease: "power3.inOut",
 					});
+
+					IMAGES[index].querySelector("img").style.transform = "scale(2)";
+					IMAGES[index].querySelector("#scale").style.width = "0%";
 				}
 			});
 		});
