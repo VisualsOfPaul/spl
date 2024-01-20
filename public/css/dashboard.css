@@ -1,0 +1,297 @@
+/* Base */
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+::selection {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: var(--font-size-m);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    height: 100vh;
+    overflow: hidden;
+}
+
+main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: var(--spacing-m);
+}
+
+aside {
+    height: 100vh;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-l);
+    padding: var(--spacing-l);
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    background-color: var(--background-color);
+    padding: var(--spacing-m) 0;
+    width: calc(50vw - var(--spacing-m) * 2);
+}
+
+nav ul {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: var(--spacing-s) 0;
+    list-style: none;
+    gap: var(--spacing-m);
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-l);
+}
+
+section[data-navigation] {
+    display: none;
+}
+
+section[data-navigation].active {
+    display: flex;
+}
+
+h1 {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+}
+
+h2 {
+    font-size: var(--font-size-l);
+    font-weight: 700;
+}
+
+button {
+    padding: var(--spacing-m);
+    border: none;
+    border-radius: var(--border-radius);
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    font-weight: 500;
+    cursor: pointer;
+    transition: 100ms ease-in-out;
+}
+
+button:hover {
+    background-color: var(--primary-color-lighter);
+}
+
+button:focus-visible {
+    outline: var(--border-width) solid var(--primary-color-lightest);
+}
+
+button:active {
+    scale: 0.95;
+}
+
+button.active,
+button:hover.active {
+    background-color: var(--correct-color);
+}
+
+select {
+    border: var(--border-width) solid var(--primary-color);
+    border-radius: var(--border-radius);
+    background-color: transparent;
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: var(--font-size-m);
+    cursor: pointer;
+    transition: 100ms ease-in-out;
+    height: calc(var(--font-size-m) + 2 * var(--spacing-m));
+    padding: 0 var(--spacing-m);
+}
+
+select:focus-visible {
+    outline: var(--border-width) solid var(--primary-color-lightest);
+}
+
+/* Bandages */
+
+form {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-m);
+}
+
+
+/* Timer */
+
+.timer-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-m);
+}
+
+.timer-form div {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-m);
+}
+
+.timer-form div input {
+    border: var(--border-width) solid var(--primary-color);
+    border-radius: var(--border-radius);
+    background-color: transparent;
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: var(--font-size-m);
+    transition: 100ms ease-in-out;
+    height: calc(var(--font-size-m) + 2 * var(--spacing-m));
+    padding: 0 var(--spacing-m);
+    width: 6rem;
+}
+
+.timer-form div input:focus-visible {
+    outline: var(--border-width) solid var(--primary-color-lightest);
+}
+
+.timer-form > div > div > label {
+    font-weight: 500;
+    font-size: var(--font-size-m);
+}
+
+.timer-form > div > div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-s);
+}
+
+/* Teams */
+
+.teams-container {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-l);
+}
+
+.teams-container article {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-m);
+}
+
+.points-team {
+    display: flex;
+    padding: var(--spacing-m);
+    border: var(--border-width) solid var(--primary-color);
+    width: fit-content;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+}
+
+.points-player {
+    display: flex;
+    padding: var(--spacing-m);
+    border: var(--border-width) solid var(--primary-color);
+    width: fit-content;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+}
+
+
+/* Quiz */
+
+.quiz ol {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xxl);
+}
+
+.quiz ol li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-m);
+    width: max-content;
+}
+
+.quiz ol li p {
+    font-weight: 500;
+    border: var(--border-width) solid var(--primary-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-m);
+    font-size: var(--font-size-m);
+}
+
+/* Lego builds */
+
+.lego-builds-container ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-l);
+}
+
+.lego-builds-container ul li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-m);
+}
+
+.lego-builds-container ul li img {
+    height: calc(var(--image-height) / 2);
+    width: calc(var(--image-width) / 2);
+    border-radius: var(--border-radius);
+}
+
+.lego-builds-container ul li button {
+    width: fit-content;
+}
+
+/* Where is this? */
+
+.where-is-this-container ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-l);
+}
+
+.where-is-this-container ul li {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-m);
+}
+
+.where-is-this-container ul li img {
+    height: calc(var(--image-height) / 2);
+    width: calc(var(--image-width) / 2);
+    border-radius: var(--border-radius);
+}
+
+.where-is-this-container ul li button {
+    width: fit-content;
+}
+
+/* Input */
+input {
+    border: var(--border-width) solid var(--primary-color);
+    border-radius: var(--border-radius);
+    background-color: transparent;
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: var(--font-size-m);
+    cursor: pointer;
+    transition: 100ms ease-in-out;
+    height: calc(var(--font-size-m) + 2 * var(--spacing-m));
+    padding: 0 var(--spacing-m);
+}
+
+input:focus-visible {
+    outline: var(--border-width) solid var(--primary-color-lightest);
+}
