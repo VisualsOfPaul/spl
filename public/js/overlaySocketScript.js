@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				gsap.to(STARTINGSCREEN, {
 					duration: 0.5,
 					opacity: 1,
-					ease: "power4.inOut",
+					ease: "power3.inOut",
 				});
 
 				startingScreenCountDown({
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				gsap.to(STARTINGSCREEN, {
 					duration: 0.5,
 					opacity: 0,
-					ease: "power4.inOut",
+					ease: "power3.inOut",
 				});
 
 				clearInterval(window.STARTINGSCREENCOUNTDOWN);
@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					TIME.minutes--;
 				}
 
-				TIMER.textContent = `in ${TIME.minutes.toLocaleString("de-DE", {
+				TIMER.textContent = `${TIME.minutes.toLocaleString("de-DE", {
 					minimumIntegerDigits: 2,
 					useGrouping: false,
 				})}:${TIME.seconds.toLocaleString("de-DE", {
@@ -63,362 +63,309 @@ document.addEventListener("DOMContentLoaded", () => {
 
 				if (TIME.minutes === 0 && TIME.seconds === 0) {
 					clearInterval(STARTINGSCREENCOUNTDOWN);
-
-					TIMER.textContent = "bald...";
 				}
 			}, 1000);
 
 			window.STARTINGSCREENCOUNTDOWN = STARTINGSCREENCOUNTDOWN;
 		}
 
-		SOCKET.on("disconnect", () => {
-			console.log(`Disconnected from ${SOCKET.id}.`);
+		// PIXELS
+		function createPixelArt(pixelsContainer) {
+			let grid = 100,
+				colors = ["a", "b", "c", "d"];
+
+			pixelsContainer.innerHTML = "";
+
+			for (let i = grid; i > 0; i--) {
+				for (let j = 0; j < grid; j++) {
+					var colorIndex = (i + j) % colors.length;
+					var colorClass = colors[colorIndex];
+
+					var pixel = document.createElement("div");
+					pixel.classList.add("pixel", colorClass);
+					pixelsContainer.appendChild(pixel);
+				}
+			}
+		}
+
+		document.querySelectorAll("#pixels").forEach((pixelsContainer) => {
+			createPixelArt(pixelsContainer);
 		});
-	});
 
-	// SPONSORS
-	// Todo: Eventuell Animation ändern
-	SOCKET.on("toggle-sponsors-done", (data) => {
-		if (data == true) {
-			gsap.to("#sponsors-container", {
-				duration: 0.5,
-				opacity: 1,
-				ease: "power3.inOut",
-			});
-		} else {
-			gsap.to("#sponsors-container", {
-				duration: 0.5,
-				opacity: 0,
-				ease: "power3.inOut",
-			});
-		}
-	});
-
-	// BANDAGES
-	SOCKET.on("show-bandage-done", async (data) => {
-		const BANDAGE = document.querySelectorAll(
-			`#bandages-container-${data.on} > div`
-		)[data.index];
-
-		switch (data.on) {
-			case "left":
-				gsap.to(BANDAGE, {
-					duration: 2,
-					x: 0,
-					opacity: 1,
-					ease: "power4.inOut",
-				});
-
-				gsap.to(BANDAGE, {
-					duration: 2,
-					x: "-100%",
-					opacity: 0,
-					ease: "power4.inOut",
-					delay: 5,
-				});
-				break;
-			case "right":
-				gsap.to(BANDAGE, {
-					duration: 2,
-					x: 0,
-					opacity: 1,
-					ease: "power4.inOut",
-				});
-
-				gsap.to(BANDAGE, {
-					duration: 2,
-					x: "100%",
-					opacity: 0,
-					ease: "power4.inOut",
-					delay: 5,
-				});
-				break;
-		}
-	});
-
-	// TIMER
-	SOCKET.on("change-timer-action-done", (data) => {
-		window.showTime(data);
-	});
-
-	SOCKET.on("toggle-timer-done", (data) => {
-		if (data) {
-			gsap.to("#timer", {
-				duration: 1,
-				y: 0,
-				opacity: 1,
-				ease: "power3.inOut",
-			});
-		} else {
-			gsap.to("#timer", {
-				duration: 1,
-				y: "-100%",
-				opacity: 0,
-				ease: "power3.inOut",
-			});
-		}
-	});
-
-	SOCKET.on("start-timer-done", (data) => {
-		window.startTimer(data);
-	});
-
-	SOCKET.on("stop-timer-done", () => {
-		window.stopTimer();
-	});
-
-	// POINTS
-	const POINTS = document.querySelectorAll("div[id^='team-points-']");
-
-	SOCKET.on("toggle-points-done", (data) => {
-		POINTS.forEach((point, index) => {
-			if (data) {
-				gsap.to(point, {
-					duration: 1,
-					x: 0,
+		// SPONSORS
+		// Todo: Eventuell Animation ändern
+		SOCKET.on("toggle-sponsors-done", (data) => {
+			if (data == true) {
+				gsap.to("#sponsors-container", {
+					duration: 0.5,
 					opacity: 1,
 					ease: "power3.inOut",
 				});
 			} else {
-				gsap.to(point, {
-					duration: 1,
-					x: index % 2 === 0 ? "-100%" : "100%",
+				gsap.to("#sponsors-container", {
+					duration: 0.5,
 					opacity: 0,
 					ease: "power3.inOut",
 				});
 			}
 		});
-	});
 
-	SOCKET.on("update-points-done", async (data) => {
-		const IMAGES = await document.querySelectorAll("#team-points-image");
-		const TEAMSINFORMATION = await document.querySelectorAll(
-			"#team-points > div"
-		);
-		const TEAMS = await document.querySelectorAll(
-			"div[id^='team-points-outer-']"
-		);
+		// BANDAGES
+		SOCKET.on("show-bandage-done", async (data) => {
+			const BANDAGE = document.querySelectorAll(
+				`#bandages-container-${data.on} > div`
+			)[data.index];
 
-		for (let index = 0; index < TEAMS.length; index++) {
-			IMAGES[index].querySelectorAll("img").forEach((image) => {
-				image.classList.remove("active");
-			});
+			switch (data.on) {
+				case "left":
+					gsap.to(BANDAGE, {
+						duration: 2,
+						x: 0,
+						opacity: 1,
+						ease: "power3.inOut",
+					});
 
-			if (
-				IMAGES[index].querySelector(
-					`img[data-course='${data.teams[index].name}']`
-				)
-			)
-				IMAGES[index]
-					.querySelector(`img[data-course='${data.teams[index].name}']`)
-					.classList.add("active");
+					gsap.to(BANDAGE, {
+						duration: 2,
+						x: "-100%",
+						opacity: 0,
+						ease: "power3.inOut",
+						delay: 5,
+					});
+					break;
+				case "right":
+					gsap.to(BANDAGE, {
+						duration: 2,
+						x: 0,
+						opacity: 1,
+						ease: "power3.inOut",
+					});
 
-			TEAMSINFORMATION[index].children[0].textContent = data.teams[index].name;
-			TEAMSINFORMATION[index].children[1].textContent = `${
-				data.teams[index].points
-			} ${data.teams[index].points === 1 ? "Punkt" : "Punkte"}`;
+					gsap.to(BANDAGE, {
+						duration: 2,
+						x: "100%",
+						opacity: 0,
+						ease: "power3.inOut",
+						delay: 5,
+					});
+					break;
+			}
+		});
 
-			TEAMS[index].classList.remove(
-				"allgemeine-informatik",
-				"it-management",
-				"medieninformatik",
-				"wirtschaftsinformatik"
-			);
-			TEAMS[index].classList.add(
-				await data.teams[index].name.toLowerCase().replaceAll(" ", "-")
-			);
-		}
-	});
+		// TIMER
+		SOCKET.on("change-timer-action-done", (data) => {
+			window.showTime(data);
+		});
 
-	// QUIZ
-	SOCKET.on("toggle-question-done", (data) => {
-		const QUESTIONS = document.querySelectorAll("#quiz-container article");
-
-		Object.keys(data).forEach((key, index) => {
-			if (data[key].visible) {
-				QUESTIONS[index].dataset.visible = true;
-
-				gsap.to(QUESTIONS[index], {
-					duration: 2,
+		SOCKET.on("toggle-timer-done", (data) => {
+			if (data) {
+				gsap.to("#timer", {
+					duration: 1,
 					y: 0,
 					opacity: 1,
-					ease: "power4.inOut",
+					ease: "power3.inOut",
 				});
 			} else {
-				QUESTIONS[index].dataset.visible = false;
-
-				gsap.to(QUESTIONS[index], {
-					duration: 2,
-					y: "100%",
+				gsap.to("#timer", {
+					duration: 1,
+					y: "-100%",
 					opacity: 0,
-					ease: "power4.inOut",
+					ease: "power3.inOut",
 				});
 			}
 		});
-	});
 
-	SOCKET.on("log-answer-done", (data) => {
-		const QUESTIONS = document.querySelectorAll("#quiz-container article");
+		SOCKET.on("start-timer-done", (data) => {
+			window.startTimer(data);
+		});
 
-		Object.keys(data).forEach((key, index) => {
-			const ANSWERS = QUESTIONS[index].querySelectorAll(".content ul li");
+		SOCKET.on("stop-timer-done", () => {
+			window.stopTimer();
+		});
 
-			[...ANSWERS].forEach((answer, index) => {
-				answer.classList.toggle(
-					"selected",
-					index === data[key].selectedAnswerIndex
-				);
+		// POINTS
+		const POINTS = document.querySelectorAll("div[id^='team-points-']");
+
+		SOCKET.on("toggle-points-done", (data) => {
+			POINTS.forEach((point, index) => {
+				if (data) {
+					gsap.to(point, {
+						duration: 1,
+						x: 0,
+						opacity: 1,
+						ease: "power3.inOut",
+					});
+				} else {
+					gsap.to(point, {
+						duration: 1,
+						x: index % 2 === 0 ? "-100%" : "100%",
+						opacity: 0,
+						ease: "power3.inOut",
+					});
+				}
 			});
 		});
-	});
 
-	SOCKET.on("show-answer-done", async (data) => {
-		const VISIBLEQUESTION = await data.findIndex(
-			(question) => question.visible
-		);
-		const QUESTION = await document.querySelectorAll("#quiz-container article")[
-			VISIBLEQUESTION
-		];
-		const ALLANSWERS = await QUESTION.querySelectorAll(".content > ul > li");
-		const SELECTEDANSWER = await ALLANSWERS[
-			data[VISIBLEQUESTION].selectedAnswerIndex
-		];
-		const CORRECTANSWER = await ALLANSWERS[
-			data[VISIBLEQUESTION].answers.findIndex((answer) => {
-				return answer.correct;
-			})
-		];
+		SOCKET.on("update-points-done", async (data) => {
+			const IMAGES = await document.querySelectorAll("#team-points-image");
+			const TEAMSINFORMATION = await document.querySelectorAll(
+				"#team-points > div"
+			);
+			const TEAMS = await document.querySelectorAll(
+				"div[id^='team-points-outer-']"
+			);
 
-		SELECTEDANSWER.classList.remove("selected");
+			for (let index = 0; index < TEAMS.length; index++) {
+				IMAGES[index].querySelectorAll("img").forEach((image) => {
+					image.classList.remove("active");
+				});
 
-		SELECTEDANSWER.classList.toggle(
-			"wrong",
-			data[VISIBLEQUESTION].selectedAnswerIndex !==
+				if (
+					IMAGES[index].querySelector(
+						`img[data-course='${data.teams[index].name}']`
+					)
+				)
+					IMAGES[index]
+						.querySelector(`img[data-course='${data.teams[index].name}']`)
+						.classList.add("active");
+
+				TEAMSINFORMATION[index].children[0].textContent =
+					data.teams[index].name;
+				TEAMSINFORMATION[index].children[1].textContent = `${
+					data.teams[index].points
+				} ${data.teams[index].points === 1 ? "Punkt" : "Punkte"}`;
+
+				TEAMS[index].classList.remove(
+					"allgemeine-informatik",
+					"it-management",
+					"medieninformatik",
+					"wirtschaftsinformatik"
+				);
+				TEAMS[index].classList.add(
+					await data.teams[index].name.toLowerCase().replaceAll(" ", "-")
+				);
+			}
+		});
+
+		// QUIZ
+		SOCKET.on("toggle-question-done", (data) => {
+			const QUESTIONS = document.querySelectorAll("#quiz-container article");
+
+			Object.keys(data).forEach((key, index) => {
+				if (data[key].visible) {
+					QUESTIONS[index].dataset.visible = true;
+
+					gsap.to(QUESTIONS[index], {
+						duration: 2,
+						y: 0,
+						opacity: 1,
+						ease: "power3.inOut",
+					});
+				} else {
+					QUESTIONS[index].dataset.visible = false;
+
+					gsap.to(QUESTIONS[index], {
+						duration: 2,
+						y: "100%",
+						opacity: 0,
+						ease: "power3.inOut",
+					});
+				}
+			});
+		});
+
+		SOCKET.on("log-answer-done", (data) => {
+			const QUESTIONS = document.querySelectorAll("#quiz-container article");
+
+			Object.keys(data).forEach((key, index) => {
+				const ANSWERS = QUESTIONS[index].querySelectorAll(".content ul li");
+
+				[...ANSWERS].forEach((answer, index) => {
+					answer.classList.toggle(
+						"selected",
+						index === data[key].selectedAnswerIndex
+					);
+				});
+			});
+		});
+
+		SOCKET.on("show-answer-done", async (data) => {
+			const VISIBLEQUESTION = await data.findIndex(
+				(question) => question.visible
+			);
+			const QUESTION = await document.querySelectorAll(
+				"#quiz-container article"
+			)[VISIBLEQUESTION];
+			const ALLANSWERS = await QUESTION.querySelectorAll(".content > ul > li");
+			const SELECTEDANSWER = await ALLANSWERS[
+				data[VISIBLEQUESTION].selectedAnswerIndex
+			];
+			const CORRECTANSWER = await ALLANSWERS[
 				data[VISIBLEQUESTION].answers.findIndex((answer) => {
 					return answer.correct;
 				})
-		);
+			];
 
-		CORRECTANSWER.classList.toggle("correct");
-	});
+			SELECTEDANSWER.classList.remove("selected");
 
-	SOCKET.on("reset-quiz-done", () => {
-		const QUESTIONS = document.querySelectorAll("#quiz-container article");
+			SELECTEDANSWER.classList.toggle(
+				"wrong",
+				data[VISIBLEQUESTION].selectedAnswerIndex !==
+					data[VISIBLEQUESTION].answers.findIndex((answer) => {
+						return answer.correct;
+					})
+			);
 
-		gsap.to(QUESTIONS, {
-			duration: 2,
-			y: "100%",
-			opacity: 0,
-			ease: "power4.inOut",
+			CORRECTANSWER.classList.toggle("correct");
 		});
-	});
 
-	// LEGO
-	SOCKET.on("toggle-lego-build-done", (data) => {
-		const BUILDS = document.querySelectorAll("li[id^='lego-build-image-']");
+		SOCKET.on("reset-quiz-done", () => {
+			const QUESTIONS = document.querySelectorAll("#quiz-container article");
 
-		data.forEach((build, index) => {
-			if (build.visible) {
-				gsap.to(BUILDS[index], {
-					duration: 1,
-					y: 0,
-					opacity: 1,
-					ease: "power3.inOut",
-				});
-			} else {
-				gsap.to(BUILDS[index], {
-					duration: 1,
-					y: "50%",
-					opacity: 0,
-					ease: "power3.inOut",
-				});
-			}
-		});
-	});
-
-	// MEMORY
-	SOCKET.on("toggle-memory-done", (data) => {
-		const MEMORY = document.querySelector("#memory-container ul");
-
-		if (data.visible) {
-			gsap.to(MEMORY, {
-				duration: 1,
-				y: 0,
-				opacity: 1,
-				ease: "power3.inOut",
-			});
-		} else {
-			gsap.to(MEMORY, {
-				duration: 1,
+			gsap.to(QUESTIONS, {
+				duration: 2,
 				y: "100%",
 				opacity: 0,
 				ease: "power3.inOut",
 			});
-		}
-	});
-
-	// WIT
-
-	// !!! Warum gibt es von GSAP eine Warnung, obwohl es funktioniert? !!!
-	SOCKET.on("toggle-where-is-this-done", async (data) => {
-		const IMAGES = await document.querySelectorAll(
-			"li[id^='where-is-this-image-']"
-		);
-
-		data.forEach(async (image, index) => {
-			if (image.visible) {
-				gsap.to(IMAGES[index], {
-					duration: 1,
-					y: 0,
-					opacity: 1,
-					ease: "power3.inOut",
-				});
-			} else {
-				gsap.to(IMAGES[index], {
-					duration: 1,
-					y: "50%",
-					opacity: 0,
-					ease: "power3.inOut",
-				});
-			}
 		});
-	});
 
-	// COUNT LETTERS
-	SOCKET.on("update-count-letters-done", (data) => {
-		const WORDS = document.querySelectorAll(
-			"#count-letters-container > ul > li[id*='word']"
-		);
-		const SOLUTIONS = document.querySelectorAll(
-			"#count-letters-container > ul > li[id*='solution']"
-		);
+		// LEGO
+		SOCKET.on("toggle-lego-build-done", (data) => {
+			const BUILDS = document.querySelectorAll("li[id^='lego-build-image-']");
 
-		data.forEach((word, index) => {
-			if (word.visible && !word.solutionVisible) {
-				gsap.to(WORDS[index], {
+			data.forEach((build, index) => {
+				if (build.visible) {
+					gsap.to(BUILDS[index], {
+						duration: 1,
+						y: 0,
+						opacity: 1,
+						ease: "power3.inOut",
+					});
+				} else {
+					gsap.to(BUILDS[index], {
+						duration: 1,
+						y: "50%",
+						opacity: 0,
+						ease: "power3.inOut",
+					});
+				}
+			});
+		});
+
+		// MEMORY
+		SOCKET.on("toggle-memory-done", (data) => {
+			const MEMORY = document.querySelector("#memory-container ul");
+
+			if (data.visible) {
+				gsap.to(MEMORY, {
 					duration: 1,
 					y: 0,
 					opacity: 1,
 					ease: "power3.inOut",
 				});
 			} else {
-				gsap.to(WORDS[index], {
-					duration: 1,
-					y: "100%",
-					opacity: 0,
-					ease: "power3.inOut",
-				});
-			}
-
-			if (word.solutionVisible) {
-				gsap.to(SOLUTIONS[index], {
-					duration: 1,
-					y: 0,
-					opacity: 1,
-					ease: "power3.inOut",
-				});
-			} else {
-				gsap.to(SOLUTIONS[index], {
+				gsap.to(MEMORY, {
 					duration: 1,
 					y: "100%",
 					opacity: 0,
@@ -426,5 +373,81 @@ document.addEventListener("DOMContentLoaded", () => {
 				});
 			}
 		});
+
+		// WIT
+
+		// !!! Warum gibt es von GSAP eine Warnung, obwohl es funktioniert? !!!
+		SOCKET.on("toggle-where-is-this-done", async (data) => {
+			const IMAGES = await document.querySelectorAll(
+				"li[id^='where-is-this-image-']"
+			);
+
+			data.forEach(async (image, index) => {
+				if (image.visible) {
+					gsap.to(IMAGES[index], {
+						duration: 1,
+						y: 0,
+						opacity: 1,
+						ease: "power3.inOut",
+					});
+				} else {
+					gsap.to(IMAGES[index], {
+						duration: 1,
+						y: "50%",
+						opacity: 0,
+						ease: "power3.inOut",
+					});
+				}
+			});
+		});
+
+		// COUNT LETTERS
+		SOCKET.on("update-count-letters-done", (data) => {
+			const WORDS = document.querySelectorAll(
+				"#count-letters-container > ul > li[id*='word']"
+			);
+			const SOLUTIONS = document.querySelectorAll(
+				"#count-letters-container > ul > li[id*='solution']"
+			);
+
+			data.forEach((word, index) => {
+				if (word.visible && !word.solutionVisible) {
+					gsap.to(WORDS[index], {
+						duration: 1,
+						y: 0,
+						opacity: 1,
+						ease: "power3.inOut",
+					});
+				} else {
+					gsap.to(WORDS[index], {
+						duration: 1,
+						y: "100%",
+						opacity: 0,
+						ease: "power3.inOut",
+					});
+				}
+
+				if (word.solutionVisible) {
+					gsap.to(SOLUTIONS[index], {
+						duration: 1,
+						y: 0,
+						opacity: 1,
+						ease: "power3.inOut",
+					});
+				} else {
+					gsap.to(SOLUTIONS[index], {
+						duration: 1,
+						y: "100%",
+						opacity: 0,
+						ease: "power3.inOut",
+					});
+				}
+			});
+		});
+	});
+
+	// DISCONNECT
+	SOCKET.on("disconnect", () => {
+		console.log(`Disconnected from ${SOCKET.id}.`);
 	});
 });
