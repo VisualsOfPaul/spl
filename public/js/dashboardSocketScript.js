@@ -243,104 +243,95 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 		});
 
-		// // Toggle lego build
-		// async function toggleLegoBuild(index) {
-		// 	SOCKET.emit("toggle-lego-build", {
-		// 		index: index,
-		// 	});
-		// }
+		// LEGO
+		function toggleLegoBuild(index) {
+			SOCKET.emit("toggle-lego-build", {
+				index: index,
+			});
+		}
 
-		// window.toggleLegoBuild = toggleLegoBuild;
+		window.toggleLegoBuild = toggleLegoBuild;
 
-		// // Get lego builds
-		// SOCKET.on("send-lego-builds", (data) => {
-		// 	const TOGGLES = document.querySelectorAll(
-		// 		'button[id^="toggle-lego-build-"]'
-		// 	);
+		SOCKET.on("toggle-lego-build-done", (data) => {
+			const TOGGLES = document.querySelectorAll(
+				'button[id^="toggle-lego-build-"]'
+			);
 
-		// 	TOGGLES.forEach((toggle, index) => {
-		// 		toggle.textContent = data[index].visible
-		// 			? "Bild verstecken"
-		// 			: "Bild anzeigen";
-		// 		toggle.classList.toggle("active", data[index].visible);
-		// 	});
-		// });
+			TOGGLES.forEach((toggle, index) => {
+				toggle.textContent = data[index].visible
+					? "Bild verstecken"
+					: "Bild anzeigen";
+				toggle.classList.toggle("active", data[index].visible);
+			});
+		});
 
-		// // Toggle where is this
-		// async function toggleWhereIsThis(index) {
-		// 	SOCKET.emit("toggle-where-is-this", {
-		// 		index: index,
-		// 	});
-		// }
+		// MEMORY
+		const MEMORYFORM = document.querySelector("#memory-form");
 
-		// window.toggleWhereIsThis = toggleWhereIsThis;
+		MEMORYFORM.addEventListener("submit", ($event) => {
+			$event.preventDefault();
 
-		// // Get where is this
-		// SOCKET.on("send-where-is-this", async (data) => {
-		// 	const TOGGLES = document.querySelectorAll(
-		// 		'button[id^="toggle-where-is-this-"]'
-		// 	);
+			SOCKET.emit("toggle-memory");
+		});
 
-		// 	Promise.resolve(data).then((data) => {
-		// 		TOGGLES.forEach((toggle, index) => {
-		// 			toggle.textContent = data[index].visible
-		// 				? "Bild verstecken"
-		// 				: "Bild anzeigen";
-		// 			toggle.classList.toggle("active", data[index].visible);
-		// 		});
-		// 	});
-		// });
+		SOCKET.on("toggle-memory-done", (data) => {
+			const TOGGLE = MEMORYFORM.children[0];
 
-		// // COUNT LETTERS
-		// function toggleWord(index) {
-		// 	SOCKET.emit("toggle-word", index);
-		// }
+			TOGGLE.textContent = data ? "Memory verstecken" : "Memory anzeigen";
+			TOGGLE.classList.toggle("active", data.visible);
+		});
 
-		// window.toggleWord = toggleWord;
+		// WHERE IS THIS
+		async function toggleWhereIsThis(index) {
+			SOCKET.emit("toggle-where-is-this", {
+				index: index,
+			});
+		}
 
-		// // Show solution
-		// function showSolution(index) {
-		// 	SOCKET.emit("show-solution", index);
-		// }
+		window.toggleWhereIsThis = toggleWhereIsThis;
 
-		// window.showSolution = showSolution;
+		SOCKET.on("toggle-where-is-this-done", (data) => {
+			const TOGGLES = document.querySelectorAll(
+				'button[id^="toggle-where-is-this-"]'
+			);
 
-		// // Get words
-		// SOCKET.on("send-count-letters", (data) => {
-		// 	const TOGGLES = document.querySelectorAll('button[id^="toggle-word-"]');
-		// 	const SOLUTIONS = document.querySelectorAll(
-		// 		'button[id^="show-solution-"]'
-		// 	);
+			TOGGLES.forEach((toggle, index) => {
+				toggle.textContent = data[index].visible
+					? "Bild verstecken"
+					: "Bild anzeigen";
+				toggle.classList.toggle("active", data[index].visible);
+			});
+		});
 
-		// 	TOGGLES.forEach((toggle, index) => {
-		// 		toggle.textContent = data[index].visible
-		// 			? "Wort verstecken"
-		// 			: "Wort anzeigen";
-		// 		toggle.classList.toggle("active", data[index].visible);
-		// 	});
+		// COUNT LETTERS
+		function toggleWord(index) {
+			SOCKET.emit("toggle-count-letters", index);
+		}
 
-		// 	SOLUTIONS.forEach((solution, index) => {
-		// 		solution.classList.toggle("active", data[index].solutionVisible);
-		// 	});
-		// });
+		window.toggleWord = toggleWord;
 
-		// // Toogle memory
-		// MEMORYFORM.addEventListener("submit", ($event) => {
-		// 	$event.preventDefault();
+		function showSolution(index) {
+			SOCKET.emit("count-letters-show-solution", index);
+		}
 
-		// 	SOCKET.emit("toggle-memory");
-		// });
+		window.showSolution = showSolution;
 
-		// // Get memory
-		// SOCKET.on("send-memory", (data) => {
-		// 	const TOGGLE = MEMORYFORM.children[0];
+		SOCKET.on("update-count-letters-done", (data) => {
+			const TOGGLES = document.querySelectorAll('button[id^="toggle-word-"]');
+			const SOLUTIONS = document.querySelectorAll(
+				'button[id^="show-solution-"]'
+			);
 
-		// 	TOGGLE.textContent = data ? "Memory verstecken" : "Memory anzeigen";
-		// 	TOGGLE.classList.toggle("active", data);
-		// });
+			TOGGLES.forEach((toggle, index) => {
+				toggle.textContent = data[index].visible
+					? "Wort verstecken"
+					: "Wort anzeigen";
+				toggle.classList.toggle("active", data[index].visible);
+			});
 
-		// // Navigation
-
-		// // Get navigation
+			SOLUTIONS.forEach((solution, index) => {
+				solution.classList.toggle("active", data[index].solutionVisible);
+			});
+		});
 	});
 });

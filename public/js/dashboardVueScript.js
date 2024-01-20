@@ -30,8 +30,8 @@ const NAVIGATION = Vue.createApp({
 	},
 }).mount("#navigation-container");
 
-// Bandages
-const bandages = Vue.createApp({
+// BANDAGES
+const BANDAGES = Vue.createApp({
 	data() {
 		return {
 			bandages: [],
@@ -53,7 +53,7 @@ const bandages = Vue.createApp({
 	},
 }).mount("#bandage-select");
 
-// Quiz
+// QUIZ
 const QUIZ = Vue.createApp({
 	data() {
 		return {
@@ -101,8 +101,8 @@ const QUIZ = Vue.createApp({
 	},
 }).mount("#quiz-container");
 
-// Lego builds
-const legoBuilds = Vue.createApp({
+// LEGO
+const LEGOBUILDS = Vue.createApp({
 	data() {
 		return {
 			images: [],
@@ -119,8 +119,7 @@ const legoBuilds = Vue.createApp({
 	methods: {
 		async getBuilds() {
 			const response = await fetch("/api/lego-builds");
-			const data = await response.json();
-			this.images = await data.images;
+			this.images = await response.json();
 		},
 
 		async toggleImage(index) {
@@ -132,8 +131,8 @@ const legoBuilds = Vue.createApp({
 	},
 }).mount("#lego-builds-container");
 
-// Where is this?
-const whereIsThis = Vue.createApp({
+// WIT
+const WHEREISTHIS = Vue.createApp({
 	data() {
 		return {
 			images: [],
@@ -150,8 +149,7 @@ const whereIsThis = Vue.createApp({
 	methods: {
 		async getBuilds() {
 			const response = await fetch("/api/where-is-this");
-			const data = await response.json();
-			this.images = await data.images;
+			this.images = await response.json();
 		},
 
 		async toggleImage(index) {
@@ -182,8 +180,7 @@ const COUNTLETTERS = Vue.createApp({
 	methods: {
 		async getWords() {
 			const response = await fetch("/api/count-letters");
-			const data = await response.json();
-			this.words = await data;
+			this.words = await response.json();
 		},
 
 		async toggleWord(index) {

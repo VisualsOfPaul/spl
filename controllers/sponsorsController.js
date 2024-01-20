@@ -8,7 +8,12 @@ async function toggle() {
 	return SPONSORS;
 }
 
+async function getVisibility() {
+	return SPONSORS.visible;
+}
+
 // EXPORTS
 module.exports = {
 	toggle,
+	getVisibility,
 };

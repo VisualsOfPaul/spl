@@ -7,7 +7,12 @@ async function toggle() {
 	return TIMER;
 }
 
+async function getVisibility() {
+	return TIMER.visible;
+}
+
 // EXPORTS
 module.exports = {
 	toggle,
+	getVisibility,
 };

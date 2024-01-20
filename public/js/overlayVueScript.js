@@ -133,8 +133,7 @@ const quiz = Vue.createApp({
 	methods: {
 		async getQuiz() {
 			const response = await fetch("/api/quiz");
-			const data = await response.json();
-			this.quiz = await data;
+			this.quiz = await response.json();
 		},
 	},
 	mounted() {
@@ -142,7 +141,7 @@ const quiz = Vue.createApp({
 	},
 }).mount("#quiz-container");
 
-// Lego builds
+// LEGO
 const legoBuilds = Vue.createApp({
 	data() {
 		return {
@@ -161,8 +160,7 @@ const legoBuilds = Vue.createApp({
 	methods: {
 		async getLegoBuilds() {
 			const response = await fetch("/api/lego-builds");
-			const data = await response.json();
-			this.legoBuilds = await data.images;
+			this.legoBuilds = await response.json();
 		},
 	},
 	mounted() {
@@ -170,8 +168,8 @@ const legoBuilds = Vue.createApp({
 	},
 }).mount("#lego-builds-container");
 
-// Memory
-const memory = Vue.createApp({
+// MEMORY
+const MEMORY = Vue.createApp({
 	data() {
 		return {
 			tiles: {},
@@ -187,8 +185,7 @@ const memory = Vue.createApp({
 	methods: {
 		async getTiles() {
 			const response = await fetch("/api/memory");
-			const data = await response.json();
-			this.tiles = await data.tiles;
+			this.tiles = await (await response.json()).tiles;
 		},
 	},
 	mounted() {
@@ -342,8 +339,8 @@ function stopTimer() {
 
 window.stopTimer = stopTimer;
 
-// Where is this?
-const whereIsThis = Vue.createApp({
+// WIT
+const WHEREISTHIS = Vue.createApp({
 	data() {
 		return {
 			images: [],
@@ -361,8 +358,7 @@ const whereIsThis = Vue.createApp({
 	methods: {
 		async getImages() {
 			const response = await fetch("/api/where-is-this");
-			const data = await response.json();
-			this.images = await data.images;
+			this.images = await response.json();
 		},
 	},
 	mounted() {

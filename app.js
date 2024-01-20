@@ -15,7 +15,7 @@ const APP = EXPRESS();
 const SERVER = HTTP.createServer(APP);
 
 // MIDDLEWARE
-APP.use(EXPRESS.static(__dirname + "/static"));
+APP.use(EXPRESS.static(__dirname + "/public"));
 APP.use(COOKIEPARSER());
 DOTENV.config();
 
@@ -29,6 +29,10 @@ const SPONSORSCONTROLLER = require("./controllers/sponsorsController.js");
 const TIMERCONTROLLER = require("./controllers/timerController.js");
 const POINTSCONTROLLER = require("./controllers/pointsController.js");
 const QUIZCONTROLLER = require("./controllers/quizController.js");
+const LEGOCONTROLLER = require("./controllers/legoController.js");
+const MEMORYCONTROLLER = require("./controllers/memoryController.js");
+const WHEREISTHISCONTROLLER = require("./controllers/witController.js");
+const COUNTLETTERSCONTROLLER = require("./controllers/countLettersController.js");
 
 // SOCKET SETUP
 const IO = new SOCKETIO.Server(SERVER);
@@ -36,16 +40,7 @@ const IO = new SOCKETIO.Server(SERVER);
 IO.on("connection", async (socket) => {
 	console.log(`Connected with ${socket.id}.`);
 
-	// IO.emit("update-teams", teams);
-	// IO.emit("send-lego-builds", LEGOBUILDS);
-	// IO.emit("send-where-is-this", WHEREISTHIS);
-	// IO.emit("send-memory", MEMORY.visible);
-	// IO.emit("send-question", QUIZ);
-	// IO.emit("send-view", visibleViewIndex);
-	// IO.emit("show-sponsors", visibleSponsors);
-
 	// FUNCTIONS TO BE CALLED AT CONNECTION
-	IO.emit("toggle-points-done", await POINTSCONTROLLER.getVisibility());
 	IO.emit("update-points-done", await POINTSCONTROLLER.getCurrentPoints());
 
 	// ORDER
@@ -55,10 +50,10 @@ IO.on("connection", async (socket) => {
 	// // TIMER
 	// // TEAMS
 	// // QUIZ
-	// LEGO
-	// MEMORY
-	// WHERE IS THIS
-	// COUNT LETTERS
+	// // LEGO
+	// // MEMORY
+	// // WHERE IS THIS
+	// // COUNT LETTERS
 
 	// SWITCH VIEW
 	socket.on("switch-view", (data) => {
@@ -167,68 +162,40 @@ IO.on("connection", async (socket) => {
 		IO.emit("reset-quiz-done", await QUIZCONTROLLER.resetQuiz());
 	});
 
-	// socket.on("toggle-lego-build", (data) => {
-	// 	LEGOBUILDS.forEach((build) => {
-	// 		if (build.index !== data.index) build.visible = false;
-	// 	});
+	// LEGO
+	socket.on("toggle-lego-build", async (data) => {
+		IO.emit("toggle-lego-build-done", await LEGOCONTROLLER.toggle(data.index));
+	});
 
-	// 	const build = LEGOBUILDS.find((build) => {
-	// 		return build.index === data.index;
-	// 	});
+	// MEMORY
+	socket.on("toggle-memory", async () => {
+		IO.emit("toggle-memory-done", await MEMORYCONTROLLER.toggle());
+	});
 
-	// 	build.visible = !build.visible;
+	// WHERE IS THIS
+	socket.on("toggle-where-is-this", async (data) => {
+		IO.emit(
+			"toggle-where-is-this-done",
+			await WHEREISTHISCONTROLLER.toggle(data.index)
+		);
+	});
 
-	// 	IO.emit("send-lego-builds", LEGOBUILDS);
-	// });
+	// COUNT LETTERS
+	socket.on("toggle-count-letters", async (data) => {
+		IO.emit(
+			"update-count-letters-done",
+			await COUNTLETTERSCONTROLLER.toggleWord(data)
+		);
+	});
 
-	// socket.on("toggle-where-is-this", (data) => {
-	// 	WHEREISTHIS.forEach((image) => {
-	// 		if (image.index !== data.index) image.visible = false;
-	// 	});
-
-	// 	const image = WHEREISTHIS.find((image) => {
-	// 		return image.index === data.index;
-	// 	});
-
-	// 	image.visible = !image.visible;
-
-	// 	IO.emit("send-where-is-this", WHEREISTHIS);
-	// });
-
-	// socket.on("toggle-memory", () => {
-	// 	MEMORY.visible = !MEMORY.visible;
-
-	// 	IO.emit("send-memory", MEMORY.visible);
-	// });
-
-	// socket.on("switch-view", (data) => {
-	// 	visibleViewIndex = data.index;
-
-	// 	IO.emit("send-view", visibleViewIndex);
-	// });
-
-	// //Show sponsors
-	// socket.on("toggle-sponsors", () => {
-	// 	visibleSponsors = !visibleSponsors;
-	// 	IO.emit("show-sponsors", visibleSponsors);
-	// });
-
-	// // COUNT LETTERS
-	// socket.on("toggle-word", (index) => {
-	// 	COUNTLETTERS[index].visible = !COUNTLETTERS[index].visible;
-	// 	COUNTLETTERS[index].solutionVisible = false;
-
-	// 	IO.emit("send-count-letters", COUNTLETTERS);
-	// });
-
-	// socket.on("show-solution", (index) => {
-	// 	COUNTLETTERS[index].solutionVisible = !COUNTLETTERS[index].solutionVisible;
-	// 	IO.emit("send-count-letters", COUNTLETTERS);
-	// });
+	socket.on("count-letters-show-solution", async (data) => {
+		IO.emit(
+			"update-count-letters-done",
+			await COUNTLETTERSCONTROLLER.showSolution(data)
+		);
+	});
 
 	socket.on("disconnect", () => {
-		// pointsModel.setPoints(teams.first.name, teams.first.points);
-		// pointsModel.setPoints(teams.second.name, teams.second.points);
 		console.log(`Socket ${socket.id} disconnected.`);
 	});
 });
