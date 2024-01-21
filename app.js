@@ -202,7 +202,10 @@ IO.on("connection", async (socket) => {
 	});
 
     // POLL
-    socket.on('toggle-poll', async () => {
+    socket.on('toggle-poll', async (data) => {
+		if(data[0] != '' && data[1] != '') {
+			POLLCONTROLLER.changePlayers(data);
+		}
         IO.emit('toggle-poll-done', await POLLCONTROLLER.togglePoll());
         const POLL = await POLLCONTROLLER.getPoll();
         if(POLL.visible) {

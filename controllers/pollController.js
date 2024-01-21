@@ -6,6 +6,12 @@ async function togglePoll() {
     return await POLL;
 }
 
+async function changePlayers(players) {
+    POLL.pollPlayers[0].answer = players[0];
+    POLL.pollPlayers[1].answer = players[1];
+    return await POLL;
+}
+
 async function getPoll() {
     return await POLL;
 }
@@ -18,12 +24,13 @@ async function startPoll(player1, player2) {
 }
 
 async function stopPoll() {
-
+    TWITCHBOT.stopPoll();
 }
 
 module.exports = {
     togglePoll,
     startPoll,
     stopPoll,
-    getPoll
+    getPoll,
+    changePlayers
 }

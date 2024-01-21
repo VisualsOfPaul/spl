@@ -338,7 +338,12 @@ document.addEventListener("DOMContentLoaded", () => {
 		const POLLFORM = document.querySelector("#toggle-poll-form");
 		POLLFORM.addEventListener("submit", ($event) => {
 			$event.preventDefault();
-			SOCKET.emit("toggle-poll");
+			var arr = [];
+			const PLAYERS = POLLFORM.querySelectorAll("div[id^='player-'] input");
+			PLAYERS.forEach((player) => {
+				arr.push(player.value);
+			});
+			SOCKET.emit("toggle-poll", arr);
 		});
 
 		SOCKET.on("toggle-poll-done", async (data) => {

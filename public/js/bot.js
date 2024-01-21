@@ -1,5 +1,6 @@
 const tmi = require('tmi.js');
 const io = require('socket.io-client');
+const POLL = require('../../data/poll.json');
 
 const SOCKET = io("ws://localhost:3000");
 
@@ -69,7 +70,7 @@ exports.resetCounter = function () {
     counter.twos = 0;
 }
 
-exports.startPoll = async function (poll) {
+exports.startPoll = async function () {
   fetch('https://api.twitch.tv/helix/chat/announcements?broadcaster_id=1019573186&moderator_id=1019573186', {
     method: 'POST',
     headers: {
@@ -83,11 +84,7 @@ exports.startPoll = async function (poll) {
 }
 
 exports.stopPoll = function () {
-    poll = false;
-    client.say('#justinpennerthkoeln', `Abstimmung beendet! 
-      Jonas: ${counter.ones}
-      Paul: ${counter.twos}
-    `);
+    client.say('#justinpennerthkoeln', `Abstimmung beendet! ${POLL.pollPlayers[0].answer}: ${POLL.pollPlayers[0].votes} ${POLL.pollPlayers[1].answer}: ${POLL.pollPlayers[1].votes}`);
 }
 
 // Function called when the "dice" command is issued
