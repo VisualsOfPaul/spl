@@ -363,13 +363,19 @@ document.addEventListener("DOMContentLoaded", () => {
 		CLEARPOLLBUTTON.addEventListener('click', ($event) => {
 			const PLAYERS = POLLFORM.querySelectorAll("div[id^='player-'] input");
 			const PLAYERSPOINTS = POLLFORM.querySelectorAll("div[id^='player-'] p");
-			$event.preventDefault();
-			SOCKET.emit('clear-poll');
-			PLAYERS.forEach((player) => {
-				player.value = '';
-			});
-			PLAYERSPOINTS[0].textContent = '0 Stimmen';
-			PLAYERSPOINTS[1].textContent = '0 Stimmen';
+			const TOGGLEBUTTON = POLLFORM.querySelector("button");
+			if(TOGGLEBUTTON.classList.contains('active')) {
+				alert('Bitte beende die Umfrage zuerst!');
+				$event.preventDefault();
+			} else {
+				$event.preventDefault();
+				SOCKET.emit('clear-poll');
+				PLAYERS.forEach((player) => {
+					player.value = '';
+				});
+				PLAYERSPOINTS[0].textContent = '0 Stimmen';
+				PLAYERSPOINTS[1].textContent = '0 Stimmen';
+			}
 		});
 	});
 });
