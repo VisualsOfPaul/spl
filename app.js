@@ -180,6 +180,13 @@ IO.on("connection", async (socket) => {
 		);
 	});
 
+	socket.on("toggle-where-is-this-answer", async (data) => {
+		IO.emit(
+			"toggle-where-is-this-answer-done",
+			await WHEREISTHISCONTROLLER.toggleAnswer(data.index)
+		);
+	});
+
 	// COUNT LETTERS
 	socket.on("toggle-count-letters", async (data) => {
 		IO.emit(

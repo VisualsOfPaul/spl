@@ -381,10 +381,13 @@ const WHEREISTHIS = Vue.createApp({
 					</ul>
 
 					<figure class="image">
-						<img :src="'/assets/where-is-this/' + image">
+						<img :src="'/assets/where-is-this/' + image.file">
 						<figcaption>
 							<div id="scale" class="scale"></div>
 						</figcaption>
+						<div class="correct-answer" id="correct-answer">
+							<p class="correct-answer-content">{{ image.correctAnswer }}</p>
+						</div>
 					</figure>
 				</div>
             </li>

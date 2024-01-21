@@ -141,8 +141,9 @@ const WHEREISTHIS = Vue.createApp({
 	template: `
         <ul>
             <li v-for="(image, index) in images">
-                <img :src="'/assets/where-is-this/' + image">
+                <img :src="'/assets/where-is-this/' + image.file">
                 <button @click="toggleImage(index)" :id="'toggle-where-is-this-' + index">Bild anzeigen</button>
+				<button @click="toggleAnswer(index)" :id="'toggle-answer' + index">Lösung anzeigen</button>
             </li>
         </ul>
     `,
@@ -154,6 +155,10 @@ const WHEREISTHIS = Vue.createApp({
 
 		async toggleImage(index) {
 			toggleWhereIsThis(index);
+		},
+
+		async toggleAnswer(index) {
+			toggleWhereIsThisAnswer(index);
 		},
 	},
 	mounted() {

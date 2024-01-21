@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;0,700;1,500;1,700;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,500;0,700;1,500;1,700&display=swap");
 
 :root {
 	--primary-color: #ffffff;
@@ -47,7 +47,7 @@
 	box-sizing: border-box;
 	padding: 0;
 	margin: 0;
-	font-family: "Roboto", sans-serif;
+	font-family: "Roboto Mono", sans-serif;
 }
 
 body {
@@ -307,8 +307,8 @@ body {
 /* Inner border */
 .team-inner {
 	position: relative;
-	width: 32rem;
-	padding: var(--spacing-m) var(--spacing-l);
+	width: 30rem;
+	padding: var(--spacing-m);
 	box-shadow: calc(-1 * var(--border-thickness)) 0 0
 			var(--border-inner-color-course),
 		var(--border-thickness) 0 0 0 var(--border-inner-color-course),
@@ -707,6 +707,29 @@ body {
 	background-color: var(--primary-color);
 }
 
+.where-is-this-container ul li figure .correct-answer {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background-color: var(--border-background-color-transparent);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--spacing-l);
+	opacity: 0;
+}
+
+.where-is-this-container ul li figure .correct-answer.active {
+	opacity: 1;
+}
+
+.where-is-this-container ul li figure .correct-answer p {
+	font-size: var(--font-size-l);
+	font-weight: 700;
+	color: var(--primary-color);
+	text-align: center;
+}
+
 /* Memory */
 .memory-container {
 	position: absolute;
@@ -832,7 +855,7 @@ body {
 
 .sponsors-inner .content p {
 	font-size: var(--font-size-xl);
-	font-weight: 900;
+	font-weight: 700;
 	line-height: 100%;
 	font-style: italic;
 	color: var(--secondary-color);
@@ -842,7 +865,7 @@ body {
 
 .sponsors-inner .content h1 {
 	font-size: var(--font-size-3xl);
-	font-weight: 900;
+	font-weight: 700;
 	line-height: 100%;
 	font-style: italic;
 	color: var(--primary-color);
@@ -887,7 +910,7 @@ body {
 	align-items: center;
 	justify-content: center;
 	gap: var(--spacing-3xl);
-	padding: var(--spacing-xl);
+	padding: var(--spacing-l);
 	list-style: none;
 }
 
@@ -984,7 +1007,7 @@ body {
 
 .starting-screen-inner .content p {
 	font-size: var(--font-size-xl);
-	font-weight: 900;
+	font-weight: 700;
 	line-height: 100%;
 	font-style: italic;
 	color: var(--secondary-color);
@@ -994,7 +1017,7 @@ body {
 
 .starting-screen-inner .content h1 {
 	font-size: var(--font-size-4xl);
-	font-weight: 900;
+	font-weight: 700;
 	line-height: 100%;
 	font-style: italic;
 	color: var(--primary-color);
@@ -1003,7 +1026,7 @@ body {
 
 .starting-screen-inner .content h2 {
 	font-size: var(--font-size-4xl);
-	font-weight: 900;
+	font-weight: 700;
 	line-height: 100%;
 	font-style: italic;
 	color: var(--primary-color);

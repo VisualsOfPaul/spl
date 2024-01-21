@@ -391,14 +391,14 @@ document.addEventListener("DOMContentLoaded", () => {
 						ease: "power3.inOut",
 					});
 
-					gsap.to(IMAGES[index].querySelector("img"), {
+					window.IMAGESCALE = gsap.to(IMAGES[index].querySelector("img"), {
 						duration: 20,
 						scale: 1,
 						ease: "linear",
 						delay: 2,
 					});
 
-					gsap.to(IMAGES[index].querySelector("#scale"), {
+					window.SCALE = gsap.to(IMAGES[index].querySelector("#scale"), {
 						duration: 20,
 						width: "100%",
 						ease: "linear",
@@ -414,6 +414,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
 					IMAGES[index].querySelector("img").style.transform = "scale(2)";
 					IMAGES[index].querySelector("#scale").style.width = "0%";
+				}
+			});
+		});
+
+		SOCKET.on("toggle-where-is-this-answer-done", async (data) => {
+			const ANSWERS = await document.querySelectorAll(
+				"li[id^='where-is-this-image-'] #correct-answer"
+			);
+
+			data.forEach(async (image, index) => {
+				IMAGESCALE.pause();
+				SCALE.pause();
+
+				if (image.answerVisible) {
+					gsap.to(ANSWERS[index], {
+						duration: 0.5,
+						opacity: 1,
+						ease: "power3.inOut",
+					});
+				} else {
+					gsap.to(ANSWERS[index], {
+						duration: 0.5,
+						opacity: 0,
+						ease: "power3.inOut",
+					});
 				}
 			});
 		});

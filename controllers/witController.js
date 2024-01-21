@@ -6,8 +6,11 @@ const WHEREISTHIS = require("../data/wit");
 async function getImages() {
 	let images = [];
 
-	FS.readdirSync("./public/assets/where-is-this").forEach((file) => {
-		images.push(file);
+	FS.readdirSync("./public/assets/where-is-this").forEach((file, index) => {
+		images.push({
+			file: file,
+			correctAnswer: WHEREISTHIS[index].correctAnswer,
+		});
 	});
 
 	return images;
@@ -23,8 +26,15 @@ async function toggle(index) {
 	return await WHEREISTHIS;
 }
 
+async function toggleAnswer(index) {
+	WHEREISTHIS[index].answerVisible = !WHEREISTHIS[index].answerVisible;
+
+	return await WHEREISTHIS;
+}
+
 // EXPORTS
 module.exports = {
 	getImages,
 	toggle,
+	toggleAnswer,
 };

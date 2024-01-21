@@ -303,6 +303,25 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 		});
 
+		function toggleWhereIsThisAnswer(index) {
+			SOCKET.emit("toggle-where-is-this-answer", {
+				index: index,
+			});
+		}
+
+		window.toggleWhereIsThisAnswer = toggleWhereIsThisAnswer;
+
+		SOCKET.on("toggle-where-is-this-answer-done", (data) => {
+			const TOGGLES = document.querySelectorAll('button[id^="toggle-answer"]');
+
+			TOGGLES.forEach((toggle, index) => {
+				toggle.textContent = data[index].answerVisible
+					? "Lösung verstecken"
+					: "Lösung anzeigen";
+				toggle.classList.toggle("active", data[index].answerVisible);
+			});
+		});
+
 		// COUNT LETTERS
 		function toggleWord(index) {
 			SOCKET.emit("toggle-count-letters", index);
