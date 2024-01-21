@@ -18,7 +18,6 @@ const SERVER = HTTP.createServer(APP);
 APP.use(EXPRESS.static(__dirname + "/public"));
 APP.use(COOKIEPARSER());
 DOTENV.config();
-const TWITCHBOT = require("./public/js/bot.js");
 
 //ROUTING
 APP.use("/", VIEWSROUTE);
@@ -214,6 +213,11 @@ IO.on("connection", async (socket) => {
             POLLCONTROLLER.stopPoll();
         }
     });
+
+	socket.on('update-poll-counter', async () => {
+		const POLL = await POLLCONTROLLER.getPoll();
+		IO.emit('update-poll-counter-done', {ones: POLL.pollPlayers[0].votes, twos: POLL.pollPlayers[1].votes});
+	});
 });
 
 // Host on port
