@@ -200,3 +200,33 @@ const COUNTLETTERS = Vue.createApp({
 		this.getWords();
 	},
 }).mount("#count-letters-container");
+
+// REMEMBER IMAGE
+const REMEMBERIMAGE = Vue.createApp({
+	data() {
+		return {
+			images: [],
+		};
+	},
+	template: `
+		<ul>
+			<li v-for="(image, index) in images">
+				<img :src="'/assets/remember-image/' + image.file">
+				<button @click="toggleImage(index)" :id="'toggle-remember-image-' + index">Bild anzeigen</button>
+			</li>
+		</ul>
+	`,
+	methods: {
+		async getImages() {
+			const response = await fetch("/api/remember-image");
+			this.images = await response.json();
+		},
+
+		async toggleImage(index) {
+			toggleRememberImage(index);
+		},
+	},
+	mounted() {
+		this.getImages();
+	},
+}).mount("#remember-image-container");

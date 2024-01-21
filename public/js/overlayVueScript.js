@@ -465,3 +465,73 @@ const COUNTLETTERS = Vue.createApp({
 		this.getWords();
 	},
 }).mount("#count-letters-container");
+
+// REMEMBER IMAGE
+const REMEMBERIMAGE = Vue.createApp({
+	data() {
+		return {
+			images: [],
+		};
+	},
+	template: `
+		<ul>
+			<li v-for="(image, index) in images" :id="'remember-image-' + index">
+				<div class="card">
+					<div class="remember-image-outer front">
+						<ul class="corners">
+							<li>&nbsp;</li>
+							<li>&nbsp;</li>
+							<li>&nbsp;</li>
+							<li>&nbsp;</li>
+						</ul>
+
+						<div class="remember-image-inner">
+							<ul class="corners">
+								<li>&nbsp;</li>
+								<li>&nbsp;</li>
+								<li>&nbsp;</li>
+								<li>&nbsp;</li>
+							</ul>
+
+							<div class="content">
+								<figure class="image">
+									<img :src="'/assets/remember-image/' + image.file">
+								</figure>
+							</div>
+						</div>
+					</div>
+					<div class="remember-image-outer back">
+						<ul class="corners">
+							<li>&nbsp;</li>
+							<li>&nbsp;</li>
+							<li>&nbsp;</li>
+							<li>&nbsp;</li>
+						</ul>
+
+						<div class="remember-image-inner">
+							<ul class="corners">
+								<li>&nbsp;</li>
+								<li>&nbsp;</li>
+								<li>&nbsp;</li>
+								<li>&nbsp;</li>
+							</ul>
+
+							<div class="content">
+								<p>{{ image.question }}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	`,
+	methods: {
+		async getImages() {
+			const response = await fetch("/api/remember-image");
+			this.images = await response.json();
+		},
+	},
+	mounted() {
+		this.getImages();
+	},
+}).mount("#remember-image-container");

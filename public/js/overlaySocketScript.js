@@ -488,6 +488,64 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 
+	// REMEMBER IMAGE
+	SOCKET.on("toggle-remember-image-done", (data) => {
+		const IMAGES = document.querySelectorAll(
+			"#remember-image-container > ul > li"
+		);
+
+		data.forEach((image, index) => {
+			const FRONT = IMAGES[index].querySelector(".front");
+			const BACK = IMAGES[index].querySelector(".back");
+
+			if (image.visible) {
+				console.log(IMAGES[index]);
+
+				// Show image
+				gsap.to(IMAGES[index], {
+					duration: 1,
+					y: 0,
+					opacity: 1,
+					ease: "power3.inOut",
+				});
+
+				// Flip image
+				gsap.to(FRONT, {
+					duration: 1,
+					rotateY: 180,
+					ease: "power3.inOut",
+					delay: 5,
+				});
+
+				gsap.to(BACK, {
+					duration: 1,
+					rotateY: 0,
+					ease: "power3.inOut",
+					delay: 5,
+				});
+			} else {
+				gsap.to(IMAGES[index], {
+					duration: 1,
+					y: "100%",
+					opacity: 0,
+					ease: "power3.inOut",
+				});
+
+				gsap.to(FRONT, {
+					duration: 0,
+					rotateY: 0,
+					delay: 2,
+				});
+
+				gsap.to(BACK, {
+					duration: 0,
+					rotateY: 180,
+					delay: 2,
+				});
+			}
+		});
+	});
+
 	// DISCONNECT
 	SOCKET.on("disconnect", () => {
 		console.log(`Disconnected from ${SOCKET.id}.`);

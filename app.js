@@ -33,6 +33,7 @@ const LEGOCONTROLLER = require("./controllers/legoController.js");
 const MEMORYCONTROLLER = require("./controllers/memoryController.js");
 const WHEREISTHISCONTROLLER = require("./controllers/witController.js");
 const COUNTLETTERSCONTROLLER = require("./controllers/countLettersController.js");
+const REMEMBERIMAGECONTROLLER = require("./controllers/rememberImageController.js");
 
 // SOCKET SETUP
 const IO = new SOCKETIO.Server(SERVER);
@@ -204,6 +205,14 @@ IO.on("connection", async (socket) => {
 
 	socket.on("disconnect", () => {
 		console.log(`Socket ${socket.id} disconnected.`);
+	});
+
+	// REMEMBER IMAGE
+	socket.on("toggle-remember-image", async (data) => {
+		IO.emit(
+			"toggle-remember-image-done",
+			await REMEMBERIMAGECONTROLLER.toggle(data.index)
+		);
 	});
 });
 

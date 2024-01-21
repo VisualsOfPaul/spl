@@ -1,9 +1,21 @@
 [
 	{
+		"name": "Cansel",
+		"surname": "Altunok",
+		"pronouns": "she/her",
+		"info": "Moderatorin"
+	},
+	{
 		"name": "Cilly",
 		"surname": "Dickmann",
 		"pronouns": "she/her",
-		"info": "Moderatorin"
+		"info": "Interviewerin"
+	},
+	{
+		"name": "Alberje",
+		"surname": "Osaj",
+		"pronouns": "she/her",
+		"info": "Kommentatorin"
 	},
 	{
 		"name": "Aiman",

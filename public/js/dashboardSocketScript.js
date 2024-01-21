@@ -266,20 +266,20 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 
 		// MEMORY
-		const MEMORYFORM = document.querySelector("#memory-form");
+		// const MEMORYFORM = document.querySelector("#memory-form");
 
-		MEMORYFORM.addEventListener("submit", ($event) => {
-			$event.preventDefault();
+		// MEMORYFORM.addEventListener("submit", ($event) => {
+		// 	$event.preventDefault();
 
-			SOCKET.emit("toggle-memory");
-		});
+		// 	SOCKET.emit("toggle-memory");
+		// });
 
-		SOCKET.on("toggle-memory-done", (data) => {
-			const TOGGLE = MEMORYFORM.children[0];
+		// SOCKET.on("toggle-memory-done", (data) => {
+		// 	const TOGGLE = MEMORYFORM.children[0];
 
-			TOGGLE.textContent = data ? "Memory verstecken" : "Memory anzeigen";
-			TOGGLE.classList.toggle("active", data.visible);
-		});
+		// 	TOGGLE.textContent = data ? "Memory verstecken" : "Memory anzeigen";
+		// 	TOGGLE.classList.toggle("active", data.visible);
+		// });
 
 		// WHERE IS THIS
 		async function toggleWhereIsThis(index) {
@@ -350,6 +350,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
 			SOLUTIONS.forEach((solution, index) => {
 				solution.classList.toggle("active", data[index].solutionVisible);
+			});
+		});
+
+		// REMEMBER IMAGE
+		function toggleRememberImage(index) {
+			SOCKET.emit("toggle-remember-image", {
+				index: index,
+			});
+		}
+
+		window.toggleRememberImage = toggleRememberImage;
+
+		SOCKET.on("toggle-remember-image-done", (data) => {
+			const TOGGLES = document.querySelectorAll(
+				'button[id^="toggle-remember-image-"]'
+			);
+
+			TOGGLES.forEach((toggle, index) => {
+				toggle.textContent = data[index].visible
+					? "Bild verstecken"
+					: "Bild anzeigen";
+				toggle.classList.toggle("active", data[index].visible);
 			});
 		});
 	});

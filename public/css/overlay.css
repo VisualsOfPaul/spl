@@ -1146,3 +1146,116 @@ body {
 	color: var(--primary-color);
 	font-size: var(--font-size-xl);
 }
+
+/* REMEMBER IMAGE */
+.remember-image-container {
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	padding: var(--spacing-xl);
+}
+
+.remember-image-container > ul {
+	position: relative;
+	list-style: none;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+}
+
+.remember-image-container > ul > li {
+	position: absolute;
+	bottom: 0;
+	transform: translateY(100%);
+	opacity: 0;
+}
+
+.remember-image-outer {
+	position: relative;
+	width: fit-content;
+	height: fit-content;
+	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+		var(--border-thickness) 0 0 0 var(--border-outer-color),
+		0 calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+		0 var(--border-thickness) 0 0 var(--border-outer-color);
+	padding: var(--border-thickness);
+	background-color: var(--border-background-color-transparent);
+	list-style: none;
+	transform-style: preserve-3d;
+	transform-origin: center center;
+}
+
+.remember-image-outer .corners li {
+	background-color: var(--border-outer-color);
+}
+
+.remember-image-inner {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+		var(--border-thickness) 0 0 0 var(--border-inner-color),
+		0 calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+		0 var(--border-thickness) 0 0 var(--border-inner-color);
+	background-color: var(--border-background-color-transparent);
+}
+
+.remember-image-inner .corners li {
+	background-color: var(--border-inner-color);
+}
+
+.remember-image-container > ul > li .card {
+	position: relative;
+	height: max-content;
+	width: max-content;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transform-style: preserve-3d;
+	transform-origin: center center;
+}
+
+.remember-image-container > ul > li .card .front,
+.remember-image-container > ul > li .card .back {
+	backface-visibility: hidden;
+}
+
+.remember-image-container > ul > li .card > .back {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background-color: var(--border-background-color);
+	transform: rotateY(180deg);
+}
+
+.remember-image-container > ul > li .card > .back .content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+	padding: var(--spacing-l);
+}
+
+.remember-image-inner .image {
+	height: var(--image-height);
+	aspect-ratio: 16/9;
+}
+
+.remember-image-inner .image img {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+}
+
+.remember-image-inner .content p {
+	font-size: var(--font-size-l);
+	font-weight: 700;
+	text-align: center;
+	color: var(--primary-color);
+}
