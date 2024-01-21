@@ -218,6 +218,10 @@ IO.on("connection", async (socket) => {
 		const POLL = await POLLCONTROLLER.getPoll();
 		IO.emit('update-poll-counter-done', {ones: POLL.pollPlayers[0].votes, twos: POLL.pollPlayers[1].votes});
 	});
+
+	socket.on('clear-poll', async () => {
+		POLLCONTROLLER.clearPoll();
+	});
 });
 
 // Host on port

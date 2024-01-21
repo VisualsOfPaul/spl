@@ -27,10 +27,20 @@ async function stopPoll() {
     TWITCHBOT.stopPoll();
 }
 
+async function clearPoll() {
+    POLL.votes = 0;
+    POLL.visible = false;
+    POLL.pollPlayers[0].votes = 0;
+    POLL.pollPlayers[1].votes = 0;
+    POLL.pollPlayers[0].answer = 'Player 1';
+    POLL.pollPlayers[1].answer = 'Player 2';
+}
+
 module.exports = {
     togglePoll,
     startPoll,
     stopPoll,
     getPoll,
-    changePlayers
+    changePlayers,
+    clearPoll
 }

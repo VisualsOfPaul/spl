@@ -120,7 +120,6 @@ exports.stopPoll = function () {
 // Function called when the "dice" command is issued
 function rollDice () {
   const sides = 6;
-  console.log(voters)
   return Math.floor(Math.random() * sides) + 1;
 }
 
