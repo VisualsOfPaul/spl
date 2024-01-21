@@ -5,7 +5,7 @@ const POLL = require('../../data/poll.json');
 const SOCKET = io("ws://localhost:3000");
 
 var votes = 0;
-var poll = false;
+var voters = [];
 
 // Define configuration options
 const opts = {
@@ -45,15 +45,21 @@ function onMessageHandler (target, context, msg, self) {
         const num = rollDice();
         client.say(target, `You rolled a ${num}`);
         break;
-    case '1': 
-        POLL.pollPlayers[0].votes++;
-        POLL.votes++;
-        SOCKET.emit('update-poll-counter');
+    case '1':
+        if(!voters.includes(context.username)) {
+            voters.push(context.username);
+            POLL.pollPlayers[0].votes++;
+            POLL.votes++;
+            SOCKET.emit('update-poll-counter');
+        };
         break;
-    case '2': 
-        POLL.pollPlayers[1].votes++;
-        POLL.votes++;
-        SOCKET.emit('update-poll-counter');
+    case '2':
+        if(!voters.includes(context.username)) {
+          voters.push(context.username);
+          POLL.pollPlayers[1].votes++;
+          POLL.votes++;
+          SOCKET.emit('update-poll-counter');
+        };
         break;
     case '!commands':
     case '!Commands':
@@ -98,6 +104,7 @@ exports.startPoll = async function () {
 }
 
 exports.stopPoll = function () {
+  voters = [];
   fetch('https://api.twitch.tv/helix/chat/announcements?broadcaster_id=1019573186&moderator_id=1019573186', {
     method: 'POST',
     headers: {
@@ -106,13 +113,14 @@ exports.stopPoll = function () {
       'Authorization': 'Bearer ukwkpln1r93e3cdtj69tlaquavh3hh',
       'Client-Id': '9n8gs2q0svqy0wq7hcx07inlhnyzck'
     },
-    body: JSON.stringify({"message": `[Beendet] ${POLL.pollPlayers[0].answer}: ${POLL.pollPlayers[0].votes} ${POLL.pollPlayers[1].answer}: ${POLL.pollPlayers[1].votes}`, "color": "blue"})
+    body: JSON.stringify({"message": `[Beendet] ${POLL.pollPlayers[0].answer}: ${POLL.pollPlayers[0].votes} || ${POLL.pollPlayers[1].answer}: ${POLL.pollPlayers[1].votes}`, "color": "blue"})
   })
 }
 
 // Function called when the "dice" command is issued
 function rollDice () {
   const sides = 6;
+  console.log(voters)
   return Math.floor(Math.random() * sides) + 1;
 }
 

@@ -354,9 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 
 		SOCKET.on("update-poll-counter-done", async (data) => {
-			console.log(data);
 			const PLAYERS = POLLFORM.querySelectorAll("div[id^='player-'] p");
-			console.log(PLAYERS);
 			PLAYERS[0].textContent = await data.ones + ' Stimmen';
 			PLAYERS[1].textContent = await data.twos + ' Stimmen';
 		})
