@@ -230,3 +230,33 @@ const REMEMBERIMAGE = Vue.createApp({
 		this.getImages();
 	},
 }).mount("#remember-image-container");
+
+// IMITATE
+const IMITATE = Vue.createApp({
+	data() {
+		return {
+			imitates: [],
+		};
+	},
+	template: `
+		<ul>
+			<li v-for="(imitate, index) in imitates">
+				<p>{{ imitate.description }}</p>
+				<button @click="toggleImitate(index)" :id="'toggle-imitate-' + index">Beschreibung anzeigen</button>
+			</li>
+		</ul>
+	`,
+	methods: {
+		async getImitates() {
+			const response = await fetch("/api/imitate");
+			this.imitates = await response.json();
+		},
+
+		async toggleImitate(index) {
+			toggleImitate(index);
+		},
+	},
+	mounted() {
+		this.getImitates();
+	},
+}).mount("#imitate-container");

@@ -34,6 +34,7 @@ const MEMORYCONTROLLER = require("./controllers/memoryController.js");
 const WHEREISTHISCONTROLLER = require("./controllers/witController.js");
 const COUNTLETTERSCONTROLLER = require("./controllers/countLettersController.js");
 const REMEMBERIMAGECONTROLLER = require("./controllers/rememberImageController.js");
+const IMITATECONTROLLER = require("./controllers/imitateController.js");
 
 // SOCKET SETUP
 const IO = new SOCKETIO.Server(SERVER);
@@ -43,18 +44,6 @@ IO.on("connection", async (socket) => {
 
 	// FUNCTIONS TO BE CALLED AT CONNECTION
 	IO.emit("update-points-done", await POINTSCONTROLLER.getCurrentPoints());
-
-	// ORDER
-	// // STARTING SCREEN
-	// // SPONSORS
-	// // BANDAGES
-	// // TIMER
-	// // TEAMS
-	// // QUIZ
-	// // LEGO
-	// // MEMORY
-	// // WHERE IS THIS
-	// // COUNT LETTERS
 
 	// SWITCH VIEW
 	socket.on("switch-view", (data) => {
@@ -203,16 +192,21 @@ IO.on("connection", async (socket) => {
 		);
 	});
 
-	socket.on("disconnect", () => {
-		console.log(`Socket ${socket.id} disconnected.`);
-	});
-
 	// REMEMBER IMAGE
 	socket.on("toggle-remember-image", async (data) => {
 		IO.emit(
 			"toggle-remember-image-done",
 			await REMEMBERIMAGECONTROLLER.toggle(data.index)
 		);
+	});
+
+	// IMITATE
+	socket.on("toggle-imitate", async (data) => {
+		IO.emit("toggle-imitate-done", await IMITATECONTROLLER.toggle(data.index));
+	});
+
+	socket.on("disconnect", () => {
+		console.log(`Socket ${socket.id} disconnected.`);
 	});
 });
 

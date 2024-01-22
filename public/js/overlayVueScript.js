@@ -535,3 +535,50 @@ const REMEMBERIMAGE = Vue.createApp({
 		this.getImages();
 	},
 }).mount("#remember-image-container");
+
+// IMITATE
+const IMITATE = Vue.createApp({
+	data() {
+		return {
+			imitates: [],
+		};
+	},
+	template: `
+		<ul>
+			<li v-for="(imitate, index) in imitates" :id="'imitate-' + index">
+				<div class="card">
+					<div class="imitate-outer front">
+						<ul class="corners">
+							<li>&nbsp;</li>
+							<li>&nbsp;</li>
+							<li>&nbsp;</li>
+							<li>&nbsp;</li>
+						</ul>
+
+						<div class="imitate-inner">
+							<ul class="corners">
+								<li>&nbsp;</li>
+								<li>&nbsp;</li>
+								<li>&nbsp;</li>
+								<li>&nbsp;</li>
+							</ul>
+
+							<div class="content">
+								<p>{{ imitate.description }}</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+	`,
+	methods: {
+		async getImitates() {
+			const response = await fetch("/api/imitate");
+			this.imitates = await response.json();
+		},
+	},
+	mounted() {
+		this.getImitates();
+	},
+}).mount("#imitate-container");

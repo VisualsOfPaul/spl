@@ -10,6 +10,7 @@ const MEMORYCONTROLLER = require("../controllers/memoryController");
 const WITCONTROLLER = require("../controllers/witController");
 const COUNTLETTERSCONTROLLER = require("../controllers/countLettersController");
 const REMEMBERIMAGECONTROLLER = require("../controllers/rememberImageController");
+const IMITATECONTROLLER = require("../controllers/imitateController");
 
 // ROUTES
 ROUTER.get("/bandages", async (req, res) => {
@@ -38,6 +39,10 @@ ROUTER.get("/count-letters", async (req, res) => {
 
 ROUTER.get("/remember-image", async (req, res) => {
 	res.send(await REMEMBERIMAGECONTROLLER.getImages());
+});
+
+ROUTER.get("/imitate", async (req, res) => {
+	res.send(await IMITATECONTROLLER.getImitate());
 });
 
 module.exports = ROUTER;

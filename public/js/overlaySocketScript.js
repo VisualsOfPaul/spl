@@ -546,6 +546,31 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 
+	// IMITATE
+	SOCKET.on("toggle-imitate-done", (data) => {
+		const IMITATE = document.querySelectorAll(
+			"#imitate-container > ul > li[id^='imitate-']"
+		);
+
+		data.forEach((imitate, index) => {
+			if (imitate.visible) {
+				gsap.to(IMITATE[index], {
+					duration: 1,
+					y: 0,
+					opacity: 1,
+					ease: "power3.inOut",
+				});
+			} else {
+				gsap.to(IMITATE[index], {
+					duration: 1,
+					y: "100%",
+					opacity: 0,
+					ease: "power3.inOut",
+				});
+			}
+		});
+	});
+
 	// DISCONNECT
 	SOCKET.on("disconnect", () => {
 		console.log(`Disconnected from ${SOCKET.id}.`);

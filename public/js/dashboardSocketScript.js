@@ -374,5 +374,27 @@ document.addEventListener("DOMContentLoaded", () => {
 				toggle.classList.toggle("active", data[index].visible);
 			});
 		});
+
+		// IMITATE
+		function toggleImitate(index) {
+			SOCKET.emit("toggle-imitate", {
+				index: index,
+			});
+		}
+
+		window.toggleImitate = toggleImitate;
+
+		SOCKET.on("toggle-imitate-done", (data) => {
+			const TOGGLES = document.querySelectorAll(
+				'button[id^="toggle-imitate-"]'
+			);
+
+			TOGGLES.forEach((toggle, index) => {
+				toggle.textContent = data[index].visible
+					? "Bild verstecken"
+					: "Bild anzeigen";
+				toggle.classList.toggle("active", data[index].visible);
+			});
+		});
 	});
 });
