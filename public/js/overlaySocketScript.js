@@ -431,8 +431,9 @@ document.addEventListener("DOMContentLoaded", () => {
 	// POLL
 	SOCKET.on("toggle-poll-done", (data) => {
 		const POLL = document.querySelector("#poll-container");
-
+		window.updatePlayers(data);
 		if (data.visible) {
+			POLL.classList.remove("hidden")
 			gsap.to(POLL, {
 				duration: 1,
 				y: 0,
@@ -440,6 +441,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				ease: "power3.inOut",
 			});
 		} else {
+			POLL.classList.add("hidden")
 			gsap.to(POLL, {
 				duration: 1,
 				y: "100%",
@@ -447,5 +449,13 @@ document.addEventListener("DOMContentLoaded", () => {
 				ease: "power3.inOut",
 			});
 		}
+	});
+
+	SOCKET.on("update-poll-counter-done", async (data) => {
+		window.updateVotes(data);
+	});
+
+	SOCKET.on("show-poll-winner-done", async (data) => {
+		window.showPollWinner(data);
 	});
 });

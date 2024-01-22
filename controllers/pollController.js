@@ -36,11 +36,21 @@ async function clearPoll() {
     POLL.pollPlayers[1].answer = 'Player 2';
 }
 
+async function showPollWinner() {
+    if(POLL.pollPlayers[0].votes > POLL.pollPlayers[1].votes) {
+        POLL.winner = 0;
+    } else if(POLL.pollPlayers[0].votes < POLL.pollPlayers[1].votes) {
+        POLL.winner = 1;
+    }
+    return await POLL;
+}
+
 module.exports = {
     togglePoll,
     startPoll,
     stopPoll,
     getPoll,
     changePlayers,
-    clearPoll
+    clearPoll,
+    showPollWinner
 }

@@ -1,7 +1,7 @@
 {
     "visible": false,
     "votes": 0,
-    "pollQuestion": "Wer machts besser?",
+    "pollQuestion": "Wer soll den Punkt bekommen?",
     "pollPlayers": [
         {
             "answer": "Player 1",
@@ -11,5 +11,6 @@
             "answer": "Player 2",
             "votes": 0
         }
-    ]
+    ],
+    "winner": null
 }

@@ -337,6 +337,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		// Twitch poll
 		const POLLFORM = document.querySelector("#toggle-poll-form");
 		const CLEARPOLLBUTTON = document.querySelector('#clear-poll-button');
+		const STOPPOLLBUTTON = document.querySelector('#stop-poll-button');
 		POLLFORM.addEventListener("submit", ($event) => {
 			$event.preventDefault();
 			var arr = [];
@@ -376,6 +377,11 @@ document.addEventListener("DOMContentLoaded", () => {
 				PLAYERSPOINTS[0].textContent = '0 Stimmen';
 				PLAYERSPOINTS[1].textContent = '0 Stimmen';
 			}
+		});
+
+		STOPPOLLBUTTON.addEventListener('click', ($event) => {
+			$event.preventDefault();
+			SOCKET.emit('show-poll-winner');
 		});
 	});
 });

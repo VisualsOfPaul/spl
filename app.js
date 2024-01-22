@@ -216,12 +216,17 @@ IO.on("connection", async (socket) => {
 
 	socket.on('update-poll-counter', async () => {
 		const POLL = await POLLCONTROLLER.getPoll();
-		IO.emit('update-poll-counter-done', {ones: POLL.pollPlayers[0].votes, twos: POLL.pollPlayers[1].votes});
+		IO.emit('update-poll-counter-done', {ones: POLL.pollPlayers[0].votes, twos: POLL.pollPlayers[1].votes, total: POLL.votes});
 	});
 
 	socket.on('clear-poll', async () => {
 		POLLCONTROLLER.clearPoll();
 	});
+
+	socket.on('show-poll-winner', async () => {
+		const POLL = await POLLCONTROLLER.showPollWinner();
+		IO.emit('show-poll-winner-done', await POLL.winner);
+	})
 });
 
 // Host on port

@@ -427,3 +427,68 @@ const COUNTLETTERS = Vue.createApp({
 		this.getWords();
 	},
 }).mount("#count-letters-container");
+
+// POLL
+
+const POLL = Vue.createApp({
+	data() {
+		return {
+			poll: []
+		}
+	},
+	template: `
+		<article id="twitch-poll" class="twitch-poll-outer">
+			<ul class="corners">
+				<li>&nbsp;</li>
+				<li>&nbsp;</li>
+				<li>&nbsp;</li>
+				<li>&nbsp;</li>
+			</ul>
+
+			<div class="twitch-poll-inner">
+				<ul class="corners">
+					<li>&nbsp;</li>
+					<li>&nbsp;</li>
+					<li>&nbsp;</li>
+					<li>&nbsp;</li>
+				</ul>
+
+				<div class="content">
+					<h1>{{this.poll.pollQuestion}}</h1>
+					<div v-for="(player, index) in this.poll.pollPlayers" :key="index" :class="this.poll.winner == index ? 'winner' : ''">
+						<h2>{{ player.answer }} <span>({{ player.votes }}%)</span></h2>
+						<div>
+							<div class="scale">
+								<div class="progress" :style="'width: ' + player.votes + '%;'"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</article>
+    `,
+	methods: {
+		async getPoll() {
+			const response = await fetch("/api/poll");
+			this.poll = await response.json();
+		},
+		async updateVotes(poll) {
+			this.poll.pollPlayers[0].votes = Math.round((Number(poll.ones) / Number(poll.total)) * 100);
+			this.poll.pollPlayers[1].votes = Math.round((Number(poll.twos) / Number(poll.total)) * 100);
+		},
+		async updatePlayers(players) {
+			this.poll.pollPlayers[0].answer = players.pollPlayers[0].answer;
+			this.poll.pollPlayers[1].answer = players.pollPlayers[1].answer;
+		},
+		async showPollWinner(data) {
+			this.poll.winner = data;
+		}
+	},
+	mounted() {
+		this.getPoll();
+	},
+}).mount("#poll-container");
+
+window.updateVotes = POLL.updateVotes;
+window.updatePlayers = POLL.updatePlayers;
+window.showPollWinner = POLL.showPollWinner;

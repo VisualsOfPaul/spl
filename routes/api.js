@@ -9,6 +9,7 @@ const LEGOCONTROLLER = require("../controllers/legoController");
 const MEMORYCONTROLLER = require("../controllers/memoryController");
 const WITCONTROLLER = require("../controllers/witController");
 const COUNTLETTERSCONTROLLER = require("../controllers/countLettersController");
+const POLLCONTROLLER = require("../controllers/pollController");
 
 // ROUTES
 ROUTER.get("/bandages", async (req, res) => {
@@ -33,6 +34,10 @@ ROUTER.get("/where-is-this", async (req, res) => {
 
 ROUTER.get("/count-letters", async (req, res) => {
 	res.send(await COUNTLETTERSCONTROLLER.getData());
+});
+
+ROUTER.get("/poll", async (req, res) => {
+	res.send(await POLLCONTROLLER.getPoll());
 });
 
 module.exports = ROUTER;
