@@ -6,11 +6,11 @@ const NAVIGATION = Vue.createApp({
 		};
 	},
 	template: `
-        <ul>
-            <li v-for="(game, index) in games">
-                <button @click="switchView(index)" :id="'switch-view-' + index">{{ game.name }}</button>
-            </li>
-        </ul>
+        <select @change="switchView($event.target.value)">
+            <option v-for="(game, index) in games" :value="index">
+                {{ game.name }}
+            </option>
+        </select>
     `,
 	methods: {
 		async getGames() {
@@ -111,7 +111,9 @@ const LEGOBUILDS = Vue.createApp({
 	template: `
         <ul>
             <li v-for="(image, index) in images">
-                <img :src="'/assets/lego-builds/' + image">
+				<figure>
+					<img :src="'/assets/lego-builds/' + image">
+				</figure>
                 <button @click="toggleImage(index)" :id="'toggle-lego-build-' + index">Bild anzeigen</button>
             </li>
         </ul>
@@ -141,7 +143,9 @@ const WHEREISTHIS = Vue.createApp({
 	template: `
         <ul>
             <li v-for="(image, index) in images">
-                <img :src="'/assets/where-is-this/' + image.file">
+				<figure>
+					<img :src="'/assets/where-is-this/' + image.file">
+				</figure>
                 <button @click="toggleImage(index)" :id="'toggle-where-is-this-' + index">Bild anzeigen</button>
 				<button @click="toggleAnswer(index)" :id="'toggle-answer' + index">Lösung anzeigen</button>
             </li>
@@ -211,7 +215,9 @@ const REMEMBERIMAGE = Vue.createApp({
 	template: `
 		<ul>
 			<li v-for="(image, index) in images">
-				<img :src="'/assets/remember-image/' + image.file">
+				<figure>
+					<img :src="'/assets/remember-image/' + image.file">
+				</figure>
 				<button @click="toggleImage(index)" :id="'toggle-remember-image-' + index">Bild anzeigen</button>
 			</li>
 		</ul>

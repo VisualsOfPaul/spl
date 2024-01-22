@@ -16,17 +16,11 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 		}
 
-		// !!! Noch überarbeiten
 		SOCKET.on("switch-view-done", (data) => {
-			const TOGGLES = document.querySelectorAll('button[id^="switch-view-"]');
 			const SECTIONS = document.querySelectorAll("section[data-navigation]");
 
 			SECTIONS.forEach((section, index) => {
-				section.classList.toggle("active", index === data.index);
-			});
-
-			TOGGLES.forEach((toggle, index) => {
-				toggle.classList.toggle("active", index === data.index);
+				section.classList.toggle("active", index === Number(data.index));
 			});
 		});
 
