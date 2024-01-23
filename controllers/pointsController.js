@@ -3,6 +3,10 @@ const CURRENTPOINTS = require("../data/currentPoints");
 const POINTS = require("../data/points");
 
 // FUNCTIONS
+async function getTeams() {
+	return await POINTS.teams;
+}
+
 async function toggle() {
 	CURRENTPOINTS.visible = !CURRENTPOINTS.visible;
 	return CURRENTPOINTS;
@@ -48,10 +52,6 @@ async function getVisibility() {
 	return CURRENTPOINTS.visible;
 }
 
-// !!! Soll es für die Spiele selber eigene Punkte geben?
-
-// !!! Soll die Funktion auch die Gesamtpunktzahl zurücksetzen?
-
 async function resetPoints() {
 	CURRENTPOINTS.teams.forEach((team) => {
 		team.name = "-";
@@ -65,12 +65,37 @@ async function resetPoints() {
 	return CURRENTPOINTS;
 }
 
+async function updateTotalPoints(points) {
+	points.forEach((point, index) => {
+		POINTS.teams[index].points = point;
+	});
+
+	return POINTS;
+}
+
+async function toggleTotal() {
+	POINTS.visible = !POINTS.visible;
+	return POINTS;
+}
+
+async function resetTotalPoints() {
+	POINTS.teams.forEach((team) => {
+		team.points = 0;
+	});
+
+	return POINTS;
+}
+
 // EXPORTS
 module.exports = {
+	getTeams,
 	toggle,
 	updateTeamName,
 	updateTeamPoints,
 	getCurrentPoints,
 	getVisibility,
 	resetPoints,
+	updateTotalPoints,
+	toggleTotal,
+	resetTotalPoints,
 };

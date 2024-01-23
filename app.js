@@ -97,7 +97,31 @@ IO.on("connection", async (socket) => {
 		IO.emit("stop-timer-done");
 	});
 
-	// POINTS
+	// POINTS (TOTAL)
+	socket.on("update-total-points", async (points) => {
+		IO.emit(
+			"update-total-points-done",
+			await POINTSCONTROLLER.updateTotalPoints(points)
+		);
+	});
+
+	socket.on("toggle-total-points", async () => {
+		IO.emit(
+			"toggle-total-points-done",
+			await (
+				await POINTSCONTROLLER.toggleTotal()
+			).visible
+		);
+	});
+
+	socket.on("reset-total-points", async () => {
+		IO.emit(
+			"update-total-points-done",
+			await POINTSCONTROLLER.resetTotalPoints()
+		);
+	});
+
+	// POINTS (GAME)
 	socket.on("toggle-points", async () => {
 		IO.emit(
 			"toggle-points-done",

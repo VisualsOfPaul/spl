@@ -238,7 +238,160 @@ body {
 	line-height: 100%;
 }
 
-/* POINTS */
+/* POINTS (TOTAL) */
+.points-total {
+	position: absolute;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: 10;
+}
+
+.points-total-container {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+	opacity: 0;
+}
+
+.points-total-container .corners li {
+	background-color: var(--border-outest-color);
+}
+
+.points-total-outer {
+	position: relative;
+	width: calc(100vw - var(--border-thickness) * 2);
+	height: calc(100vh - var(--border-thickness) * 2);
+	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+		var(--border-thickness) 0 0 0 var(--border-outer-color),
+		0 calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+		0 var(--border-thickness) 0 0 var(--border-outer-color);
+	padding: var(--border-thickness);
+}
+
+.points-total-outer .corners li {
+	background-color: var(--border-outer-color);
+}
+
+.points-total-inner {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+		var(--border-thickness) 0 0 0 var(--border-inner-color),
+		0 calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+		0 var(--border-thickness) 0 0 var(--border-inner-color);
+	background-color: var(--border-background-color-transparent);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.points-total-inner .corners li {
+	background-color: var(--border-inner-color);
+}
+
+.points-total-inner > .content {
+	position: relative;
+	width: 100%;
+	height: fit-content;
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-xxl);
+	align-items: center;
+}
+
+.points-total-inner .content > div:nth-child(1) {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-s);
+	align-items: center;
+}
+
+.points-total-inner .content > div > h1 {
+	font-size: var(--font-size-xl);
+	font-weight: 700;
+	line-height: 100%;
+	color: var(--secondary-color);
+}
+
+.points-total-inner .content > div > h2 {
+	font-size: var(--font-size-2xl);
+	font-weight: 700;
+	line-height: 100%;
+	color: var(--primary-color);
+}
+
+.points-total-inner > .content > div:nth-child(2) {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-xl);
+	align-items: center;
+}
+
+/* Teams */
+.points-total-team-outer {
+	position: relative;
+	width: calc(100% - var(--spacing-3xl) * 4);
+	height: fit-content;
+	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+		var(--border-thickness) 0 0 0 var(--border-outer-color),
+		0 calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+		0 var(--border-thickness) 0 0 var(--border-outer-color);
+	padding: var(--border-thickness);
+}
+
+.points-total-team-outer .corners li {
+	background-color: var(--border-outer-color);
+}
+
+.points-total-team-inner {
+	position: relative;
+	width: 100%;
+	height: fit-content;
+	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+		var(--border-thickness) 0 0 0 var(--border-inner-color),
+		0 calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+		0 var(--border-thickness) 0 0 var(--border-inner-color);
+	background-color: var(--border-background-color-transparent);
+}
+
+.points-total-team-inner .corners li {
+	background-color: var(--border-inner-color);
+}
+
+.points-total-team-inner .content {
+	height: 100%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--spacing-3xl);
+	color: var(--primary-color);
+	padding: var(--spacing-m) var(--spacing-l);
+}
+
+.points-total-team-inner .content > h2,
+.points-total-team-inner .content > p {
+	font-size: var(--font-size-l);
+	font-weight: 700;
+	line-height: 100%;
+}
+
+/* POINTS (GAME) */
 .medieninformatik {
 	--border-outer-color-course: #624c80;
 	--border-inner-color-course: #493960;

@@ -117,7 +117,55 @@ document.addEventListener("DOMContentLoaded", () => {
 			TOGGLE.classList.toggle("active", data);
 		});
 
-		// POINTS
+		// POINTS (TOTAL)
+		const TOTALPOINTSFORM = document.querySelector("#points-total-form");
+
+		TOTALPOINTSFORM.addEventListener("submit", ($event) => {
+			$event.preventDefault();
+
+			const ACTION = $event.submitter.dataset.value;
+
+			switch (ACTION) {
+				case "update":
+					{
+						const POINTS = Array.from(
+							document.querySelectorAll("#points-total-form input")
+						).map((input) => Number(input.value));
+
+						SOCKET.emit("update-total-points", POINTS);
+					}
+					break;
+				case "toggle":
+					{
+						SOCKET.emit("toggle-total-points");
+					}
+					break;
+				case "reset":
+					{
+						SOCKET.emit("reset-total-points");
+					}
+					break;
+			}
+		});
+
+		SOCKET.on("update-total-points-done", (data) => {
+			const POINTS = document.querySelectorAll("#points-total-form input");
+
+			POINTS.forEach((point, index) => {
+				point.value = data.teams[index].points;
+			});
+		});
+
+		SOCKET.on("toggle-total-points-done", (data) => {
+			const TOGGLE = document.querySelector("#toggle-total-points");
+
+			TOGGLE.textContent = data
+				? "Gesamtpunkte ausblenden"
+				: "Gesamtpunkte anzeigen";
+			TOGGLE.classList.toggle("active", data);
+		});
+
+		// POINTS (GAME)
 		const POINTSFORM = document.querySelector("#points-form");
 
 		POINTSFORM.addEventListener("submit", ($event) => {

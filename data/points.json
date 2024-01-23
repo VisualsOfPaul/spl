@@ -16,5 +16,6 @@
 			"name": "IT-Management",
 			"points": 0
 		}
-	]
+	],
+	"visible": false
 }

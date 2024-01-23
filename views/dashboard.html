@@ -56,13 +56,24 @@
                     </div>
                 </form>
             </section>
-            <section class="points" aria-label="Points">
-                <h1>Punkte</h1>
+
+            <!-- POINTS (TOTAL) -->
+            <section class="points-total" aria-label="Punkte (Insgesamt)">
+                <h1>Punkte (Insgesamt)</h1>
+                <form class="points-total-form" id="points-total-form">
+                    <div id="points-total-container" class="points-total-container">
+
+                    </div>
+                    <button type="submit" data-value="update">Punkte aktualisieren</button>
+                    <button type="submit" data-value="toggle" id="toggle-total-points">Punkte anzeigen</button>
+                    <button type="submit" data-value="reset">Punkte zurücksetzen</button>
+                </form>
+            </section>
+
+            <!-- POINTS (GAME -->
+            <section class="points-game" aria-label="Punkte (SPiel)">
+                <h1>Punkte (Spiel)</h1>
                 <div class="teams-container">
-                    <select name="pointsType" id="points-type">
-                        <option value="game">Spiel</option>
-                        <option value="total">Insgesamt</option>
-                    </select>
                     <article class="team-container" id="team-1">
                         <h2>Team 1</h2>
                         <p class="points-team" id="team-points">0 Punkte</p>
@@ -98,7 +109,7 @@
                     <button type="submit">Punkte anzeigen</button>
                 </form>
                 <form id="reset-points-form">
-                    <button type="submit">Teams zurücksetzen</button>
+                    <button type="submit">Punkte zurücksetzen</button>
                 </form>
             </section>
         </aside>

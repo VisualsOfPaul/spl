@@ -266,3 +266,30 @@ const IMITATE = Vue.createApp({
 		this.getImitates();
 	},
 }).mount("#imitate-container");
+
+// POINTS (TOTAL)
+const POINTSTOTAL = Vue.createApp({
+	data() {
+		return {
+			teams: [],
+		};
+	},
+	template: `
+		<div v-for="(team, index) in teams">
+			<h2>{{ team.name }}</h2>
+			<div class="points-total-input">
+				<label :for="'team-points-' + index">Punkte</label>
+				<input type="text" placeholder="Punkte" :value="team.points" :id="'team-points-' + index">
+			</div>
+		</div>
+	`,
+	methods: {
+		async getTeams() {
+			const response = await fetch("/api/teams");
+			this.teams = await response.json();
+		},
+	},
+	mounted() {
+		this.getTeams();
+	},
+}).mount("#points-total-container");

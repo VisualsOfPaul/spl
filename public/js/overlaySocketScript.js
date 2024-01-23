@@ -93,7 +93,6 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 
 		// SPONSORS
-		// Todo: Eventuell Animation ändern
 		SOCKET.on("toggle-sponsors-done", (data) => {
 			if (data == true) {
 				gsap.to("#sponsors-container", {
@@ -183,7 +182,28 @@ document.addEventListener("DOMContentLoaded", () => {
 			window.stopTimer();
 		});
 
-		// POINTS
+		// POINTS (TOTAL)
+		SOCKET.on("update-total-points-done", async (data) => {
+			window.updatePointsTotal(data);
+		});
+
+		SOCKET.on("toggle-total-points-done", (data) => {
+			if (data) {
+				gsap.to("#points-total-container", {
+					duration: 1,
+					opacity: 1,
+					ease: "power3.inOut",
+				});
+			} else {
+				gsap.to("#points-total-container", {
+					duration: 1,
+					opacity: 0,
+					ease: "power3.inOut",
+				});
+			}
+		});
+
+		// POINTS (GAME)
 		const POINTS = document.querySelectorAll("div[id^='team-points-']");
 
 		SOCKET.on("toggle-points-done", (data) => {

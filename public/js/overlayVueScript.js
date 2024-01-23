@@ -582,3 +582,93 @@ const IMITATE = Vue.createApp({
 		this.getImitates();
 	},
 }).mount("#imitate-container");
+
+// POINTS (TOTAL)
+const POINTSTOTAL = Vue.createApp({
+	data() {
+		return {
+			teams: [],
+		};
+	},
+	template: `
+		<ul class="corners">
+			<li>&nbsp;</li>
+			<li>&nbsp;</li>
+			<li>&nbsp;</li>
+			<li>&nbsp;</li>
+		</ul>
+		<div class="points-total-outer">
+			<ul class="corners">
+				<li>&nbsp;</li>
+				<li>&nbsp;</li>
+				<li>&nbsp;</li>
+				<li>&nbsp;</li>
+			</ul>
+
+			<div class="points-total-inner">
+				<ul class="corners">
+					<li>&nbsp;</li>
+					<li>&nbsp;</li>
+					<li>&nbsp;</li>
+					<li>&nbsp;</li>
+				</ul>
+
+				<div id="pixels"></div>
+
+				<div class="content">
+					<div>
+						<h1>Punkte</h1>
+						<h2>Aktueller Punktestand</h2>
+					</div>
+
+					<div>
+						<template v-for="team of teams">
+							<div class="points-total-team-outer">
+								<ul class="corners">
+									<li>&nbsp;</li>
+									<li>&nbsp;</li>
+									<li>&nbsp;</li>
+									<li>&nbsp;</li>
+								</ul>
+
+								<div class="points-total-team-inner">
+									<ul class="corners">
+										<li>&nbsp;</li>
+										<li>&nbsp;</li>
+										<li>&nbsp;</li>
+										<li>&nbsp;</li>
+									</ul>
+
+									<div class="content">
+										<h2>{{ team.name }}</h2>
+										<p>{{ team.points }}</p>
+									</div>
+							</div>
+						</template>
+					</div>
+				</div>
+			</div>
+		</div>
+	`,
+	methods: {
+		async getTeams() {
+			const RESPONSE = await fetch("/api/teams");
+			const DATA = await RESPONSE.json();
+
+			this.teams = DATA.sort((a, b) => {
+				return b.points - a.points;
+			});
+		},
+
+		async updateTeams(data) {
+			this.teams = data.teams.sort((a, b) => {
+				return b.points - a.points;
+			});
+		},
+	},
+	mounted() {
+		this.getTeams();
+	},
+}).mount("#points-total-container");
+
+window.updatePointsTotal = POINTSTOTAL.updateTeams;
