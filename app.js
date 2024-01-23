@@ -35,6 +35,7 @@ const WHEREISTHISCONTROLLER = require("./controllers/witController.js");
 const COUNTLETTERSCONTROLLER = require("./controllers/countLettersController.js");
 const REMEMBERIMAGECONTROLLER = require("./controllers/rememberImageController.js");
 const IMITATECONTROLLER = require("./controllers/imitateController.js");
+const POLLCONTROLLER = require("./controllers/pollController.js");
 
 // SOCKET SETUP
 const IO = new SOCKETIO.Server(SERVER);
@@ -231,6 +232,38 @@ IO.on("connection", async (socket) => {
 
 	socket.on("disconnect", () => {
 		console.log(`Socket ${socket.id} disconnected.`);
+	});
+
+    // POLL
+    socket.on('toggle-poll', async (data) => {
+		if(data[0] != '' && data[1] != '') {
+			POLLCONTROLLER.changePlayers(data);
+		}
+		const POLL = await POLLCONTROLLER.togglePollStarted();
+        IO.emit('toggle-poll-done', await POLL);
+        if(await POLL.visible) {
+            POLLCONTROLLER.startPoll(POLL.pollPlayers[0].answer, POLL.pollPlayers[1].answer);
+        } else {
+			POLLCONTROLLER.stopPoll();
+			const Winner = await POLLCONTROLLER.showPollWinner();
+			IO.emit('show-poll-winner-done', await Winner.winner)
+        }
+    });
+
+	socket.on('update-poll-counter', async () => {
+		const POLL = await POLLCONTROLLER.getPoll();
+		IO.emit('update-poll-counter-done', {ones: POLL.pollPlayers[0].votes, twos: POLL.pollPlayers[1].votes, total: POLL.votes});
+	});
+
+	socket.on('clear-poll', async () => {
+		IO.emit('clear-poll-done', await POLLCONTROLLER.clearPoll());
+	});
+
+	socket.on('toggle-poll-visible', async (data) => {
+		if(data[0] != '' && data[1] != '') {
+			POLLCONTROLLER.changePlayers(data);
+		}
+        IO.emit('toggle-poll-visible-done', await POLLCONTROLLER.togglePoll());
 	});
 });
 

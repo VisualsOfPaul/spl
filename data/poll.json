@@ -1,0 +1,17 @@
+{
+    "visible": false,
+    "started": false,
+    "votes": 0,
+    "pollQuestion": "Wer soll den Punkt bekommen?",
+    "pollPlayers": [
+        {
+            "answer": "Player 1",
+            "votes": 0
+        },
+        {
+            "answer": "Player 2",
+            "votes": 0
+        }
+    ],
+    "winner": null
+}

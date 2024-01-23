@@ -595,4 +595,59 @@ document.addEventListener("DOMContentLoaded", () => {
 	SOCKET.on("disconnect", () => {
 		console.log(`Disconnected from ${SOCKET.id}.`);
 	});
+
+	// POLL
+	// SOCKET.on("toggle-poll-done", (data) => {
+	// 	const POLL = document.querySelector("#poll-container");
+	// 	window.updatePlayers(data);
+	// 	if (data.visible) {
+	// 		POLL.classList.remove("hidden")
+	// 		gsap.to(POLL, {
+	// 			duration: 1,
+	// 			y: 0,
+	// 			opacity: 1,
+	// 			ease: "power3.inOut",
+	// 		});
+	// 	} else {
+	// 		POLL.classList.add("hidden")
+	// 		gsap.to(POLL, {
+	// 			duration: 1,
+	// 			y: "100%",
+	// 			opacity: 0,
+	// 			ease: "power3.inOut",
+	// 		});
+	// 	}
+	// });
+
+	SOCKET.on("toggle-poll-visible-done", (data) => {
+		const POLL = document.querySelector("#poll-container");
+		window.updatePlayers(data);
+		if (data.visible) {
+			gsap.to(POLL, {
+				duration: 1,
+				y: 0,
+				opacity: 1,
+				ease: "power3.inOut",
+			});
+		} else {
+			gsap.to(POLL, {
+				duration: 1,
+				y: "100%",
+				opacity: 0,
+				ease: "power3.inOut",
+			});
+		}
+	});
+
+	SOCKET.on("update-poll-counter-done", async (data) => {
+		window.updateVotes(data);
+	});
+
+	SOCKET.on("show-poll-winner-done", async (data) => {
+		window.showPollWinner(await data);
+	});
+
+	SOCKET.on("clear-poll-done", async (data) => {
+		window.clearPoll(data);
+	});
 });

@@ -276,6 +276,17 @@ form {
 	align-items: center;
 }
 
+.points-player {
+    display: flex;
+    padding: var(--spacing-m);
+    border: var(--border-width) solid var(--primary-color);
+    width: fit-content;
+    border-radius: var(--border-radius);
+    display: flex;
+    align-items: center;
+}
+
+
 /* Quiz */
 
 .quiz ol {
@@ -333,4 +344,22 @@ form {
 
 .where-is-this-container ul li button {
 	width: fit-content;
+}
+
+/* Input */
+input {
+    border: var(--border-width) solid var(--primary-color);
+    border-radius: var(--border-radius);
+    background-color: transparent;
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: var(--font-size-m);
+    cursor: pointer;
+    transition: 100ms ease-in-out;
+    height: calc(var(--font-size-m) + 2 * var(--spacing-m));
+    padding: 0 var(--spacing-m);
+}
+
+input:focus-visible {
+    outline: var(--border-width) solid var(--primary-color-lightest);
 }

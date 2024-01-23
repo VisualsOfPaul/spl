@@ -12,6 +12,7 @@ const WITCONTROLLER = require("../controllers/witController");
 const COUNTLETTERSCONTROLLER = require("../controllers/countLettersController");
 const REMEMBERIMAGECONTROLLER = require("../controllers/rememberImageController");
 const IMITATECONTROLLER = require("../controllers/imitateController");
+const POLLCONTROLLER = require("../controllers/pollController");
 
 // ROUTES
 ROUTER.get("/bandages", async (req, res) => {
@@ -48,6 +49,10 @@ ROUTER.get("/remember-image", async (req, res) => {
 
 ROUTER.get("/imitate", async (req, res) => {
 	res.send(await IMITATECONTROLLER.getImitate());
+});
+
+ROUTER.get("/poll", async (req, res) => {
+	res.send(await POLLCONTROLLER.getPoll());
 });
 
 module.exports = ROUTER;

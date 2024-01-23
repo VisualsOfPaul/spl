@@ -1488,3 +1488,103 @@ body {
 	padding: var(--spacing-l);
 	font-size: var(--font-size-l);
 }
+
+/* POLL */
+
+.poll-container {
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	padding: var(--spacing-xl);
+	transform: translateY(100%);
+	opacity: 0;
+}
+
+.twitch-poll-outer {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: fit-content;
+	gap: var(--spacing-m);
+	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+		var(--border-thickness) 0 0 0 var(--border-outer-color),
+		0 calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+		0 var(--border-thickness) 0 0 var(--border-outer-color);
+	padding: var(--border-thickness);
+	background-color: var(--border-background-color-transparent);
+}
+
+.twitch-poll-outer .corners li {
+	background-color: var(--border-outer-color);
+}
+
+.twitch-poll-inner {
+	position: relative;
+	width: 100%;
+	padding: var(--spacing-m);
+	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+		var(--border-thickness) 0 0 0 var(--border-inner-color),
+		0 calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+		0 var(--border-thickness) 0 0 var(--border-inner-color);
+	background-color: var(--border-background-color-transparent);
+}
+
+.twitch-poll-inner .corners li {
+	background-color: var(--border-inner-color);
+}
+
+.twitch-poll-inner .content {
+	position: relative;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	color: var(--primary-color);
+	gap: var(--spacing-l);
+	padding: var(--spacing-m);
+}
+
+.twitch-poll-inner .content h1 {
+	font-size: var(--font-size-l);
+}
+
+.twitch-poll-inner .content > div {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-s);
+}
+
+.twitch-poll-inner .content h2 {
+	font-size: var(--font-size-m);
+}
+
+.twitch-poll-inner .content h2 > span {
+	color: var(--secondary-color);
+}
+
+.twitch-poll-inner .content .scale {
+	position: relative;
+	width: 100%;
+	background-color: var(--border-inner-color);
+	height: 1rem;
+}
+
+.twitch-poll-inner .content .scale .progress {
+	background-color: var(--primary-color);
+	height: 1rem;
+	transition: 200ms ease-in-out;
+}
+
+.twitch-poll-inner .content > div.winner .scale .progress {
+	background-color: var(--correct-color);
+}
+
+.twitch-poll-inner .content > div.winner h2,
+.twitch-poll-inner .content > div.winner h2 span {
+	color: var(--correct-color);
+}
