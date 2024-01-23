@@ -1,5 +1,6 @@
 {
     "visible": false,
+    "started": false,
     "votes": 0,
     "pollQuestion": "Wer soll den Punkt bekommen?",
     "pollPlayers": [

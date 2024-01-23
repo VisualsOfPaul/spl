@@ -205,14 +205,13 @@ IO.on("connection", async (socket) => {
 		if(data[0] != '' && data[1] != '') {
 			POLLCONTROLLER.changePlayers(data);
 		}
-        IO.emit('toggle-poll-done', await POLLCONTROLLER.togglePoll());
-        const POLL = await POLLCONTROLLER.getPoll();
-        if(POLL.visible) {
+		const POLL = await POLLCONTROLLER.togglePollStarted();
+        IO.emit('toggle-poll-done', await POLL);
+        if(await POLL.visible) {
             POLLCONTROLLER.startPoll(POLL.pollPlayers[0].answer, POLL.pollPlayers[1].answer);
         } else {
 			POLLCONTROLLER.stopPoll();
 			const Winner = await POLLCONTROLLER.showPollWinner();
-			console.log(Winner);
 			IO.emit('show-poll-winner-done', await Winner.winner)
         }
     });

@@ -99,19 +99,29 @@
             </section>
             <section class="poll" aria-label="poll">
                 <h1>Abstimmung</h1>
-                <form id="toggle-poll-form">
-                    <div id="player-1">
-                        <p class="points-player">0 Stimmen</p>
-                        <input type="text" placeholder="Spieler 1">
-                    </div>
-                    <div id="player-2">
-                        <p class="points-player">0 Stimmen</p>
-                        <input type="text" placeholder="Spieler 2">
-                    </div>
-                    <button type="submit" id="toggle-poll-button">Umfrage Starten</button>
-                    <button id="clear-poll-button">Umfrage zurücksetzen</button>
-                    <button id="toggle-poll-visible-button">Umfrage Anzeigen</button>
-                </form>
+                <div>
+                    <form id="toggle-poll-form">
+                        <div id="player-1">
+                            <p class="points-player">0 Stimmen</p>
+                            <input type="text" placeholder="Spieler 1">
+                        </div>
+                        <div id="player-2">
+                            <p class="points-player">0 Stimmen</p>
+                            <input type="text" placeholder="Spieler 2">
+                        </div>
+                        <button type="submit" id="toggle-poll-button">Umfrage Starten</button>
+                    </form>
+                </div>
+                <div>
+                    <form id="clear-poll-form">
+                        <button type="submit" id="clear-poll-button">Umfrage zurücksetzen</button>
+                    </form>
+                </div>
+                <div>
+                    <form id="toggle-poll-visible-form">
+                        <button type="submit" id="toggle-poll-visible-button">Umfrage Anzeigen</button>
+                    </form>
+                </div>
             </section>
         </aside>
         <aside>

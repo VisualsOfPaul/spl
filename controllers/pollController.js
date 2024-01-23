@@ -6,6 +6,11 @@ async function togglePoll() {
     return await POLL;
 }
 
+async function togglePollStarted() {
+    POLL.started = !POLL.started;
+    return await POLL;
+}
+
 async function changePlayers(players) {
     POLL.pollPlayers[0].answer = players[0];
     POLL.pollPlayers[1].answer = players[1];
@@ -53,5 +58,6 @@ module.exports = {
     getPoll,
     changePlayers,
     clearPoll,
-    showPollWinner
+    showPollWinner,
+    togglePollStarted
 }

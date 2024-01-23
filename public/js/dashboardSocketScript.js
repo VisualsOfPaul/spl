@@ -337,9 +337,10 @@ document.addEventListener("DOMContentLoaded", () => {
 		// Twitch poll
 		const POLLFORM = document.querySelector("#toggle-poll-form");
 		const TOGGLEPOLLBUTTON = document.querySelector("#toggle-poll-button");
-		const CLEARPOLLBUTTON = document.querySelector('#clear-poll-button');
+		const CLEARPOLLFORM = document.querySelector("#clear-poll-form");
+		const TOGGLEPOLLVISIBLEFORM = document.querySelector('#toggle-poll-visible-form');
 		const TOGGLEPOLLVISIBLEBUTTON = document.querySelector('#toggle-poll-visible-button');
-		TOGGLEPOLLBUTTON.addEventListener("click", ($event) => {
+		POLLFORM.addEventListener("submit", ($event) => {
 			$event.preventDefault();
 			var arr = [];
 			const PLAYERS = POLLFORM.querySelectorAll("div[id^='player-'] input");
@@ -350,10 +351,10 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 
 		SOCKET.on("toggle-poll-done", async (data) => {
-			const TOGGLE = POLLFORM.querySelector("button");
+			const TOGGLE = TOGGLEPOLLBUTTON;
 
-			TOGGLE.textContent = await data.visible ? "Umfrage Stoppen" : "Umfrage Starten";
-			TOGGLE.classList.toggle("active", await data.visible);
+			TOGGLE.textContent = await data.started ? "Umfrage Stoppen" : "Umfrage Starten";
+			TOGGLE.classList.toggle("active", await data.started);
 		});
 
 		SOCKET.on("update-poll-counter-done", async (data) => {
@@ -362,25 +363,19 @@ document.addEventListener("DOMContentLoaded", () => {
 			PLAYERS[1].textContent = await data.twos + ' Stimmen';
 		})
 
-		CLEARPOLLBUTTON.addEventListener('click', ($event) => {
+		CLEARPOLLFORM.addEventListener('submit', ($event) => {
 			const PLAYERS = POLLFORM.querySelectorAll("div[id^='player-'] input");
 			const PLAYERSPOINTS = POLLFORM.querySelectorAll("div[id^='player-'] p");
-			const TOGGLEBUTTON = POLLFORM.querySelector("button");
-			if(TOGGLEBUTTON.classList.contains('active')) {
-				alert('Bitte beende die Umfrage zuerst!');
-				$event.preventDefault();
-			} else {
-				$event.preventDefault();
-				SOCKET.emit('clear-poll');
-				PLAYERS.forEach((player) => {
-					player.value = '';
-				});
-				PLAYERSPOINTS[0].textContent = '0 Stimmen';
-				PLAYERSPOINTS[1].textContent = '0 Stimmen';
-			}
+			$event.preventDefault();
+			SOCKET.emit('clear-poll');
+			PLAYERS.forEach((player) => {
+				player.value = '';
+			});
+			PLAYERSPOINTS[0].textContent = '0 Stimmen';
+			PLAYERSPOINTS[1].textContent = '0 Stimmen';
 		});
 
-		TOGGLEPOLLVISIBLEBUTTON.addEventListener('click', ($event) => {
+		TOGGLEPOLLVISIBLEFORM.addEventListener('submit', ($event) => {
 			$event.preventDefault();
 			var arr = [];
 			const PLAYERS = POLLFORM.querySelectorAll("div[id^='player-'] input");
@@ -391,7 +386,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 		
 		SOCKET.on('toggle-poll-visible-done', async (data) => {
-			const TOGGLE = POLLFORM.querySelector("#toggle-poll-visible-button");
+			const TOGGLE = TOGGLEPOLLVISIBLEBUTTON;
 
 			TOGGLE.textContent = await data.visible ? "Umfrage Ausblenden" : "Umfrage Anzeigen";
 			TOGGLE.classList.toggle("active", await data.visible);
