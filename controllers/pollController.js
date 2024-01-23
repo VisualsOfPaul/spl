@@ -34,6 +34,7 @@ async function clearPoll() {
     POLL.pollPlayers[1].votes = 0;
     POLL.pollPlayers[0].answer = 'Player 1';
     POLL.pollPlayers[1].answer = 'Player 2';
+    return await POLL;
 }
 
 async function showPollWinner() {

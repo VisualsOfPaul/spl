@@ -210,7 +210,10 @@ IO.on("connection", async (socket) => {
         if(POLL.visible) {
             POLLCONTROLLER.startPoll(POLL.pollPlayers[0].answer, POLL.pollPlayers[1].answer);
         } else {
-            POLLCONTROLLER.stopPoll();
+			POLLCONTROLLER.stopPoll();
+			const Winner = await POLLCONTROLLER.showPollWinner();
+			console.log(Winner);
+			IO.emit('show-poll-winner-done', await Winner.winner)
         }
     });
 
@@ -220,13 +223,15 @@ IO.on("connection", async (socket) => {
 	});
 
 	socket.on('clear-poll', async () => {
-		POLLCONTROLLER.clearPoll();
+		IO.emit('clear-poll-done', await POLLCONTROLLER.clearPoll());
 	});
 
-	socket.on('show-poll-winner', async () => {
-		const POLL = await POLLCONTROLLER.showPollWinner();
-		IO.emit('show-poll-winner-done', await POLL.winner);
-	})
+	socket.on('toggle-poll-visible', async (data) => {
+		if(data[0] != '' && data[1] != '') {
+			POLLCONTROLLER.changePlayers(data);
+		}
+        IO.emit('toggle-poll-visible-done', await POLLCONTROLLER.togglePoll());
+	});
 });
 
 // Host on port

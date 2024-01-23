@@ -336,9 +336,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		// Twitch poll
 		const POLLFORM = document.querySelector("#toggle-poll-form");
+		const TOGGLEPOLLBUTTON = document.querySelector("#toggle-poll-button");
 		const CLEARPOLLBUTTON = document.querySelector('#clear-poll-button');
-		const STOPPOLLBUTTON = document.querySelector('#stop-poll-button');
-		POLLFORM.addEventListener("submit", ($event) => {
+		const TOGGLEPOLLVISIBLEBUTTON = document.querySelector('#toggle-poll-visible-button');
+		TOGGLEPOLLBUTTON.addEventListener("click", ($event) => {
 			$event.preventDefault();
 			var arr = [];
 			const PLAYERS = POLLFORM.querySelectorAll("div[id^='player-'] input");
@@ -351,7 +352,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		SOCKET.on("toggle-poll-done", async (data) => {
 			const TOGGLE = POLLFORM.querySelector("button");
 
-			TOGGLE.textContent = await data.visible ? "Umfrage Beenden" : "Umfrage Starten";
+			TOGGLE.textContent = await data.visible ? "Umfrage Stoppen" : "Umfrage Starten";
 			TOGGLE.classList.toggle("active", await data.visible);
 		});
 
@@ -379,9 +380,21 @@ document.addEventListener("DOMContentLoaded", () => {
 			}
 		});
 
-		STOPPOLLBUTTON.addEventListener('click', ($event) => {
+		TOGGLEPOLLVISIBLEBUTTON.addEventListener('click', ($event) => {
 			$event.preventDefault();
-			SOCKET.emit('show-poll-winner');
+			var arr = [];
+			const PLAYERS = POLLFORM.querySelectorAll("div[id^='player-'] input");
+			PLAYERS.forEach((player) => {
+				arr.push(player.value);
+			});
+			SOCKET.emit('toggle-poll-visible', arr);
+		});
+		
+		SOCKET.on('toggle-poll-visible-done', async (data) => {
+			const TOGGLE = POLLFORM.querySelector("#toggle-poll-visible-button");
+
+			TOGGLE.textContent = await data.visible ? "Umfrage Ausblenden" : "Umfrage Anzeigen";
+			TOGGLE.classList.toggle("active", await data.visible);
 		});
 	});
 });

@@ -936,6 +936,8 @@ body {
 	align-items: flex-end;
 	justify-content: center;
 	padding: var(--spacing-xl);
+	transform: translateY(100%);
+	opacity: 0;
 }
 
 .twitch-poll-outer {

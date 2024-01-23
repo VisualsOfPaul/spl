@@ -481,7 +481,11 @@ const POLL = Vue.createApp({
 			this.poll.pollPlayers[1].answer = players.pollPlayers[1].answer;
 		},
 		async showPollWinner(data) {
-			this.poll.winner = data;
+			this.poll.winner = await data;
+		},
+		async clearPoll(data) {
+			this.poll = data;
+			this.poll.winner = null
 		}
 	},
 	mounted() {
@@ -492,3 +496,4 @@ const POLL = Vue.createApp({
 window.updateVotes = POLL.updateVotes;
 window.updatePlayers = POLL.updatePlayers;
 window.showPollWinner = POLL.showPollWinner;
+window.clearPoll = POLL.clearPoll;
