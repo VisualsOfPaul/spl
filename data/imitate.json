@@ -1,18 +1,58 @@
 [
 	{
 		"visible": false,
-		"description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
+		"description": "Du nimmst an einer EBR-Vorlesung teil und möchtest die Vorlesung vorzeitig verlassen, fällst jedoch die Treppe im Vorlesungssaal herunter."
 	},
 	{
 		"visible": false,
-		"description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
+		"description": "Du versuchst deine Bachelorarbeit zu schreiben, während dein 3-jähriger Neffe mit Bauklötzen spielt."
 	},
 	{
 		"visible": false,
-		"description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
+		"description": "Du versuchst dein Auto bei -10° zu starten, aber deine Autobatterie ist 17 Jahre alt."
 	},
 	{
 		"visible": false,
-		"description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam"
+		"description": "Beim Einparken mit deinem WW T5 parkst du in einer Kölner Tiefgarage ein. Dabei erwischst du jedes Auto im Umkreis."
+	},
+	{
+		"visible": false,
+		"description": "Deine Katze bringt dir eine Maus ins Haus und möchte unbedingt, dass du das Geschenk begutachtest."
+	},
+	{
+		"visible": false,
+		"description": "Du bist auf einer einsamen Insel gestrandet und freundest dich mit einem Delfin an, mit dem du schwimmen gehst."
+	},
+	{
+		"visible": false,
+		"description": "Du nimmst an einem Steckenpferd-Turnier teil und kurz vor dem schwierigsten Sprung rutscht dein Pferd aus."
+	},
+	{
+		"visible": false,
+		"description": "Du spielst mit deinem Erzfeind Basketball. Du dribbelst ihn aus und landest einen Volltreffer. Nach einer Freudenparty bemerkst du, dass der Ball deinen Erzfeind K.O. gehauen hat."
+	},
+	{
+		"visible": false,
+		"description": "Du sitzt im Polarexpress auf dem Weg zum Nordpol. Du willst deiner Sitznachbarin ihre Fahrkarte bringen und öffnest die Tür. Dabei rutschst du fast aus."
+	},
+	{
+		"visible": false,
+		"description": "Du stehst mit deiner Geliebten am Deck eines Kreuzfahrtschiffes und betrachtest einen eindrucksvollen Eisberg, der immer näher zu kommen scheint. Plötzlich fängt das Schiff an zu sinken."
+	},
+	{
+		"visible": false,
+		"description": "Du machst einen Stepptanz und bist so in deinem Element, dass du nicht auf den Boden achtest und von der Bühne fällst."
+	},
+	{
+		"visible": false,
+		"description": "Du erklärst dich bereit im Schulorchester mitzuspielen und sollst das Saxofon spielen. Da du nur mitspielst, um dich bei deinem Lehrer einzuschleimen, verheimlichst du, dass du gar nicht spielen kannst. Es ist eure erste Probe."
+	},
+	{
+		"visible": false,
+		"description": "Du bist auf einem Date und trägst dein schönstes Outfit. Leider hast du über Weihnachten ein paar Kilos zugelegt, weshalb das Outfit etwas enger ist als sonst. Als du dich bückst, um etwas aufzuheben, hörst du etwas reißen."
+	},
+	{
+		"visible": false,
+		"description": "Du bist mit deinen zwei besten Freunden auf einer Party. Einer deiner Freunde trägt ein Latex-Top, der andere eine Cordhose und du trägst deine höchsten Lackstiefel. Ihr zeigt gerade eure besten Moves auf der Tanzfläche, als die Musik ausgeht."
 	}
 ]

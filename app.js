@@ -162,13 +162,6 @@ IO.on("connection", async (socket) => {
 		IO.emit("toggle-question-done", await QUIZCONTROLLER.toggle(data.index));
 	});
 
-	socket.on("log-answer", async (data) => {
-		IO.emit(
-			"log-answer-done",
-			await QUIZCONTROLLER.logAnswer(data.index, data.id)
-		);
-	});
-
 	socket.on("show-answer", async (data) => {
 		IO.emit("show-answer-done", await QUIZCONTROLLER.showAnswer(data.index));
 	});
@@ -234,36 +227,43 @@ IO.on("connection", async (socket) => {
 		console.log(`Socket ${socket.id} disconnected.`);
 	});
 
-    // POLL
-    socket.on('toggle-poll', async (data) => {
-		if(data[0] != '' && data[1] != '') {
+	// POLL
+	socket.on("toggle-poll", async (data) => {
+		if (data[0] != "" && data[1] != "") {
 			POLLCONTROLLER.changePlayers(data);
 		}
 		const POLL = await POLLCONTROLLER.togglePollStarted();
-        IO.emit('toggle-poll-done', await POLL);
-        if(await POLL.visible) {
-            POLLCONTROLLER.startPoll(POLL.pollPlayers[0].answer, POLL.pollPlayers[1].answer);
-        } else {
+		IO.emit("toggle-poll-done", await POLL);
+		if (await POLL.visible) {
+			POLLCONTROLLER.startPoll(
+				POLL.pollPlayers[0].answer,
+				POLL.pollPlayers[1].answer
+			);
+		} else {
 			POLLCONTROLLER.stopPoll();
 			const Winner = await POLLCONTROLLER.showPollWinner();
-			IO.emit('show-poll-winner-done', await Winner.winner)
-        }
-    });
+			IO.emit("show-poll-winner-done", await Winner.winner);
+		}
+	});
 
-	socket.on('update-poll-counter', async () => {
+	socket.on("update-poll-counter", async () => {
 		const POLL = await POLLCONTROLLER.getPoll();
-		IO.emit('update-poll-counter-done', {ones: POLL.pollPlayers[0].votes, twos: POLL.pollPlayers[1].votes, total: POLL.votes});
+		IO.emit("update-poll-counter-done", {
+			ones: POLL.pollPlayers[0].votes,
+			twos: POLL.pollPlayers[1].votes,
+			total: POLL.votes,
+		});
 	});
 
-	socket.on('clear-poll', async () => {
-		IO.emit('clear-poll-done', await POLLCONTROLLER.clearPoll());
+	socket.on("clear-poll", async () => {
+		IO.emit("clear-poll-done", await POLLCONTROLLER.clearPoll());
 	});
 
-	socket.on('toggle-poll-visible', async (data) => {
-		if(data[0] != '' && data[1] != '') {
+	socket.on("toggle-poll-visible", async (data) => {
+		if (data[0] != "" && data[1] != "") {
 			POLLCONTROLLER.changePlayers(data);
 		}
-        IO.emit('toggle-poll-visible-done', await POLLCONTROLLER.togglePoll());
+		IO.emit("toggle-poll-visible-done", await POLLCONTROLLER.togglePoll());
 	});
 });
 

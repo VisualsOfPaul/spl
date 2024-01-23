@@ -294,49 +294,12 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 		});
 
-		SOCKET.on("log-answer-done", (data) => {
-			const QUESTIONS = document.querySelectorAll("#quiz-container article");
-
-			Object.keys(data).forEach((key, index) => {
-				const ANSWERS = QUESTIONS[index].querySelectorAll(".content ul li");
-
-				[...ANSWERS].forEach((answer, index) => {
-					answer.classList.toggle(
-						"selected",
-						index === data[key].selectedAnswerIndex
-					);
-				});
-			});
-		});
-
 		SOCKET.on("show-answer-done", async (data) => {
-			const VISIBLEQUESTION = await data.findIndex(
-				(question) => question.visible
-			);
-			const QUESTION = await document.querySelectorAll(
-				"#quiz-container article"
-			)[VISIBLEQUESTION];
-			const ALLANSWERS = await QUESTION.querySelectorAll(".content > ul > li");
-			const SELECTEDANSWER = await ALLANSWERS[
-				data[VISIBLEQUESTION].selectedAnswerIndex
-			];
-			const CORRECTANSWER = await ALLANSWERS[
-				data[VISIBLEQUESTION].answers.findIndex((answer) => {
-					return answer.correct;
-				})
-			];
+			const ANSWERS = await document.querySelectorAll("#answer");
 
-			SELECTEDANSWER.classList.remove("selected");
-
-			SELECTEDANSWER.classList.toggle(
-				"wrong",
-				data[VISIBLEQUESTION].selectedAnswerIndex !==
-					data[VISIBLEQUESTION].answers.findIndex((answer) => {
-						return answer.correct;
-					})
-			);
-
-			CORRECTANSWER.classList.toggle("correct");
+			ANSWERS.forEach((answer, index) => {
+				answer.classList.toggle("hidden", !data[index].visible);
+			});
 		});
 
 		SOCKET.on("reset-quiz-done", () => {

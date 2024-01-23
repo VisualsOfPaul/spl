@@ -1,194 +1,252 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="/css/variables.css">
-    <link rel="stylesheet" href="/css/dashboard.css">
-</head>
-<body>
-    <main>
-        <aside>
-            <section aria-label="Startbild">
-                <h1>Intro & Abspann</h1>
-                <form id="starting-screen-form">
-                    <button type="submit">Startbild anzeigen</button>
-                </form>
-            </section>
-            <section class="sponsors">
-                <h1>Sponsoren</h1>
-                <form id="show-sponsors-form">
-                    <button type="submit" id="show-sponsors-button">Sponsoren anzeigen</button>
-                </form>
-            </section>
-            <section aria-label="Bandage">
-                <h1>Bauchbinde</h1>
-                <form id="bandage">
-                    <select id="bandage-select"></select>
-                    <button type="submit" value="left">Links einblenden</button>
-                    <button type="submit" value="right">Rechts einblenden</button>
-                </form>
-            </section>
-            <section aria-label="Timer">
-                <h1>Timer</h1>
-                <form id="timer-form" class="timer-form">
-                    <div>
-                        <div>
-                            <label for="minutes">Minuten</label>
-                            <input type="text" name="minutes" placeholder="0" id="minutes" value="5">
-                        </div>
-                        <div>
-                            <label for="seconds">Sekunden</label>
-                            <input type="text" name="seconds" placeholder="0" id="seconds" value="0">
-                        </div>
-                    </div>
-                    <div>
-                        <button type="submit" name="toggleTimer" value="toggle" id="toggle-timer">Timer anzeigen</button>
-                    </div>
-                    <div>
-                        <select name="action" id="action">
-                            <option value="count-up">Hochzählen</option>
-                            <option value="count-down">Runterzählen</option>
-                        </select>
-                        <button type="submit" name="start" value="start">Start</button>
-                        <button type="submit" name="stop" value="stop">Stopp</button>
-                    </div>
-                </form>
-            </section>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Dashboard</title>
+		<link rel="stylesheet" href="/css/variables.css" />
+		<link rel="stylesheet" href="/css/dashboard.css" />
+	</head>
+	<body>
+		<main>
+			<aside>
+				<section aria-label="Startbild">
+					<h1>Intro & Abspann</h1>
+					<form id="starting-screen-form">
+						<button type="submit">Startbild anzeigen</button>
+					</form>
+				</section>
+				<section class="sponsors">
+					<h1>Sponsoren</h1>
+					<form id="show-sponsors-form">
+						<button type="submit" id="show-sponsors-button"
+							>Sponsoren anzeigen</button
+						>
+					</form>
+				</section>
+				<section aria-label="Bandage">
+					<h1>Bauchbinde</h1>
+					<form id="bandage">
+						<select id="bandage-select"></select>
+						<button type="submit" value="left">Links einblenden</button>
+						<button type="submit" value="right">Rechts einblenden</button>
+					</form>
+				</section>
+				<section aria-label="Timer">
+					<h1>Timer</h1>
+					<form id="timer-form" class="timer-form">
+						<div>
+							<div>
+								<label for="minutes">Minuten</label>
+								<input
+									type="text"
+									name="minutes"
+									placeholder="0"
+									id="minutes"
+									value="5" />
+							</div>
+							<div>
+								<label for="seconds">Sekunden</label>
+								<input
+									type="text"
+									name="seconds"
+									placeholder="0"
+									id="seconds"
+									value="0" />
+							</div>
+						</div>
+						<div>
+							<button
+								type="submit"
+								name="toggleTimer"
+								value="toggle"
+								id="toggle-timer"
+								>Timer anzeigen</button
+							>
+						</div>
+						<div>
+							<select name="action" id="action">
+								<option value="count-up">Hochzählen</option>
+								<option value="count-down">Runterzählen</option>
+							</select>
+							<button type="submit" name="start" value="start">Start</button>
+							<button type="submit" name="stop" value="stop">Stopp</button>
+						</div>
+					</form>
+				</section>
 
-            <!-- POINTS (TOTAL) -->
-            <section class="points-total" aria-label="Punkte (Insgesamt)">
-                <h1>Punkte (Insgesamt)</h1>
-                <form class="points-total-form" id="points-total-form">
-                    <div id="points-total-container" class="points-total-container">
+				<!-- POINTS (TOTAL) -->
+				<section class="points-total" aria-label="Punkte (Insgesamt)">
+					<h1>Punkte (Insgesamt)</h1>
+					<form class="points-total-form" id="points-total-form">
+						<div id="points-total-container" class="points-total-container">
+						</div>
+						<button type="submit" data-value="update"
+							>Punkte aktualisieren</button
+						>
+						<button type="submit" data-value="toggle" id="toggle-total-points"
+							>Punkte anzeigen</button
+						>
+						<button type="submit" data-value="reset"
+							>Punkte zurücksetzen</button
+						>
+					</form>
+				</section>
 
-                    </div>
-                    <button type="submit" data-value="update">Punkte aktualisieren</button>
-                    <button type="submit" data-value="toggle" id="toggle-total-points">Punkte anzeigen</button>
-                    <button type="submit" data-value="reset">Punkte zurücksetzen</button>
-                </form>
-            </section>
+				<!-- POINTS (GAME -->
+				<section class="points-game" aria-label="Punkte (SPiel)">
+					<h1>Punkte (Spiel)</h1>
+					<div class="teams-container">
+						<article class="team-container" id="team-1">
+							<h2>Links</h2>
+							<p class="points-team" id="team-points">0 Punkte</p>
+							<form id="team-points-form" data-team="0">
+								<select name="team-1-name" id="team-select">
+									<option value="-" disabled selected
+										>Bitte einen Studiengang auswählen...</option
+									>
+									<option value="Allgemeine Informatik"
+										>Allegmeine Informatik</option
+									>
+									<option value="Wirtschaftsinformatik"
+										>Wirtschaftsinformatik</option
+									>
+									<option value="Medieninformatik">Medieninformatik</option>
+									<option value="IT-Management">IT-Management</option>
+								</select>
+								<button value="minus">- 1 Punkt</button>
+								<button value="add">+ 1 Punkt</button>
+							</form>
+						</article>
+						<article class="team-container" id="team-2">
+							<h2>Rechts</h2>
+							<p class="points-team" id="team-points">0 Punkte</p>
+							<form id="team-points-form" data-team="1">
+								<select name="team-2-name" id="team-select">
+									<option value="-" disabled selected
+										>Bitte einen Studiengang auswählen...</option
+									>
+									<option value="Allgemeine Informatik"
+										>Allegmeine Informatik</option
+									>
+									<option value="Wirtschaftsinformatik"
+										>Wirtschaftsinformatik</option
+									>
+									<option value="Medieninformatik">Medieninformatik</option>
+									<option value="IT-Management">IT-Management</option>
+								</select>
+								<button value="minus">- 1 Punkt</button>
+								<button value="add">+ 1 Punkt</button>
+							</form>
+						</article>
+					</div>
+					<form id="points-form">
+						<button type="submit">Punkte anzeigen</button>
+					</form>
+					<form id="reset-points-form">
+						<button type="submit">Punkte zurücksetzen</button>
+					</form>
+				</section>
 
-            <!-- POINTS (GAME -->
-            <section class="points-game" aria-label="Punkte (SPiel)">
-                <h1>Punkte (Spiel)</h1>
-                <div class="teams-container">
-                    <article class="team-container" id="team-1">
-                        <h2>Team 1</h2>
-                        <p class="points-team" id="team-points">0 Punkte</p>
-                        <form id="team-points-form" data-team="0">
-                            <select name="team-1-name" id="team-select">
-                                <option value="-" disabled selected>Bitte einen Studiengang auswählen...</option>
-                                <option value="Allgemeine Informatik">Allegmeine Informatik</option>
-                                <option value="Wirtschaftsinformatik">Wirtschaftsinformatik</option>
-                                <option value="Medieninformatik">Medieninformatik</option>
-                                <option value="IT-Management">IT-Management</option>
-                            </select>
-                            <button value="minus">- 1 Punkt</button>
-                            <button value="add">+ 1 Punkt</button>
-                        </form>
-                    </article>
-                    <article class="team-container" id="team-2">
-                        <h2>Team 2</h2>
-                        <p class="points-team" id="team-points">0 Punkte</p>
-                        <form id="team-points-form" data-team="1">
-                            <select name="team-2-name" id="team-select">
-                                <option value="-" disabled selected>Bitte einen Studiengang auswählen...</option>
-                                <option value="Allgemeine Informatik">Allegmeine Informatik</option>
-                                <option value="Wirtschaftsinformatik">Wirtschaftsinformatik</option>
-                                <option value="Medieninformatik">Medieninformatik</option>
-                                <option value="IT-Management">IT-Management</option>
-                            </select>
-                            <button value="minus">- 1 Punkt</button>
-                            <button value="add">+ 1 Punkt</button>
-                        </form>
-                    </article>
-                </div>
-                <form id="points-form">
-                    <button type="submit">Punkte anzeigen</button>
-                </form>
-                <form id="reset-points-form">
-                    <button type="submit">Punkte zurücksetzen</button>
-                </form>
-            </section>
-            <section class="poll" aria-label="poll">
-                <h1>Abstimmung</h1>
-                <div>
-                    <form id="toggle-poll-form">
-                        <div id="player-1">
-                            <p class="points-player">0 Stimmen</p>
-                            <input type="text" placeholder="Spieler 1">
-                        </div>
-                        <div id="player-2">
-                            <p class="points-player">0 Stimmen</p>
-                            <input type="text" placeholder="Spieler 2">
-                        </div>
-                        <button type="submit" id="toggle-poll-button">Umfrage Starten</button>
-                    </form>
-                </div>
-                <div>
-                    <form id="clear-poll-form">
-                        <button type="submit" id="clear-poll-button">Umfrage zurücksetzen</button>
-                    </form>
-                </div>
-                <div>
-                    <form id="toggle-poll-visible-form">
-                        <button type="submit" id="toggle-poll-visible-button">Umfrage Anzeigen</button>
-                    </form>
-                </div>
-            </section>
-        </aside>
-        <aside>
-            <nav id="navigation-container">
+				<!-- POLL -->
+				<section class="poll" aria-label="poll">
+					<h1>Abstimmung</h1>
+					<div>
+						<form id="toggle-poll-form">
+							<div id="player-1">
+								<p class="points-player">0 Stimmen</p>
+								<input type="text" placeholder="Spieler 1" />
+							</div>
+							<div id="player-2">
+								<p class="points-player">0 Stimmen</p>
+								<input type="text" placeholder="Spieler 2" />
+							</div>
+							<button type="submit" id="toggle-poll-button"
+								>Umfrage Starten</button
+							>
+						</form>
+					</div>
+					<div>
+						<form id="clear-poll-form">
+							<button type="submit" id="clear-poll-button"
+								>Umfrage zurücksetzen</button
+							>
+						</form>
+					</div>
+					<div>
+						<form id="toggle-poll-visible-form">
+							<button type="submit" id="toggle-poll-visible-button"
+								>Umfrage Anzeigen</button
+							>
+						</form>
+					</div>
+				</section>
+			</aside>
+			<aside>
+				<nav id="navigation-container"> </nav>
 
-            </nav>
+				<!-- WHERE IS THIS -->
+				<section
+					class="where-is-this active"
+					id="where-is-this"
+					data-navigation="Wo ist das?">
+					<div
+						class="where-is-this-container"
+						id="where-is-this-container"></div>
+				</section>
 
-            <!-- QUIZ -->
-            <section class="questions active" id="questions" data-navigation="Quiz">
-                <div class="quiz" id="quiz-container"></div>
-                <form id="reset-quiz">
-                    <button>Reset Quiz</button>
-                </form>
-            </section>
+				<!-- LEGO BUILDS -->
+				<section
+					class="lego-builds"
+					id="lego-builds"
+					data-navigation="Build Battle">
+					<div class="lego-builds-container" id="lego-builds-container"></div>
+				</section>
 
-            <!-- LEGO BUILDS -->
-            <section class="lego-builds" id="lego-builds" data-navigation="Nachbauen">
-                <div class="lego-builds-container" id="lego-builds-container"></div>
-            </section>
+				<!-- IMITATE -->
+				<section
+					class="imitate"
+					id="imitate"
+					data-navigation="Geräusche nachmachen">
+					<div class="imitate-container" id="imitate-container"></div>
+				</section>
 
-            <!-- MEMORY -->
-            <!-- <section class="memory" data-navigation="Memory">
+				<!-- QUIZ -->
+				<section class="questions" id="questions" data-navigation="Boolean">
+					<div class="quiz" id="quiz-container"></div>
+					<form id="reset-quiz">
+						<button>Reset Quiz</button>
+					</form>
+				</section>
+
+				<!-- MEMORY -->
+				<!-- <section class="memory" data-navigation="Memory">
                 <h1>Memory</h1>
                 <form id="memory-form">
                     <button>Memory anzeigen</button>
                 </form>
             </section> -->
 
-            <!-- WHERE IS THIS -->
-            <section class="where-is-this" id="where-is-this" data-navigation="Where is this?">
-                <div class="where-is-this-container" id="where-is-this-container"></div>
-            </section>
-
-            <!-- COUNT LETTERS -->
-            <section class="count-letters" id="count-letters" data-navigation="Buchstaben zählen">
+				<!-- COUNT LETTERS -->
+				<!-- <section class="count-letters" id="count-letters" data-navigation="Buchstaben zählen">
                 <div class="count-letters-container" id="count-letters-container"></div>
-            </section>
+            </section> -->
 
-            <!-- REMEMBER IMAGE -->
-            <section class="remember-image" id="remember-image" data-navigation="Bild merken">
-                <div class="remember-image-container" id="remember-image-container"></div>
-            </section>
+				<!-- REMEMBER IMAGE -->
+				<!-- <section
+					class="remember-image"
+					id="remember-image"
+					data-navigation="Bild merken">
+					<div
+						class="remember-image-container"
+						id="remember-image-container"></div>
+				</section> -->
+			</aside>
+		</main>
 
-            <!-- IMITATE -->
-            <section class="imitate" id="imitate" data-navigation="Nachmachen">
-                <div class="imitate-container" id="imitate-container"></div>
-        </aside>
-    </main>
-
-    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-    <script src="/js/saveCookie.js" type="module"></script>
-    <script src="/js/dashboardSocketScript.js" type="module"></script>
-    <script src="/js/dashboardVueScript.js" type="module"></script>
-</body>
+		<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+		<script src="/js/saveCookie.js" type="module"></script>
+		<script src="/js/dashboardSocketScript.js" type="module"></script>
+		<script src="/js/dashboardVueScript.js" type="module"></script>
+	</body>
 </html>
