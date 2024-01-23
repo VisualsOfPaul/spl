@@ -328,7 +328,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				} else {
 					gsap.to(BUILDS[index], {
 						duration: 1,
-						y: "50%",
+						y: "100%",
 						opacity: 0,
 						ease: "power3.inOut",
 					});

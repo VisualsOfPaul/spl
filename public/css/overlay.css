@@ -693,8 +693,16 @@ body {
 	padding: var(--spacing-xl);
 }
 
+.lego-builds-container > ul {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-end;
+	list-style: none;
+}
+
 .lego-outer {
-	position: relative;
+	position: absolute;
 	width: fit-content;
 	height: fit-content;
 	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
