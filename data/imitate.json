@@ -54,5 +54,13 @@
 	{
 		"visible": false,
 		"description": "Du bist mit deinen zwei besten Freunden auf einer Party. Einer deiner Freunde trägt ein Latex-Top, der andere eine Cordhose und du trägst deine höchsten Lackstiefel. Ihr zeigt gerade eure besten Moves auf der Tanzfläche, als die Musik ausgeht."
+	},
+	{
+		"visible": false,
+		"description": "Bei einem Erdbeben fallen alle deine Töpfe und Pfannen auf den Boden."
+	},
+	{
+		"visible": false,
+		"description": "Der Schrank mit all deinen Gläsern löst sich von der Wand und fällt runter."
 	}
 ]
