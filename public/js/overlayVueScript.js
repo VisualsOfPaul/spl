@@ -116,16 +116,10 @@ const quiz = Vue.createApp({
 
                 <div class="content">
                     <header>
-                        <h1>Frage {{ index + 1 }}</h1>
-                        <h2>{{ question.question }}</h2>
+                        <h1>// Frage {{ index + 1 }}</h1>
+                        <h2 v-html="this.formatQuestion(question.question)"></h2>
                     </header>
-                    <ul>
-                        <li class="answer" id="answer" v-for="answer in question.answers">
-                            <p id="content" class="content">
-                                {{ answer.answer }}
-                            </p>
-                        </li>
-                    </ul>
+                    <p>> <span id="answer" :class="'answer hidden ' + question.answer">{{ question.answer }}</span></p>
                 </div>
             </div>
         </article>
@@ -134,6 +128,12 @@ const quiz = Vue.createApp({
 		async getQuiz() {
 			const response = await fetch("/api/quiz");
 			this.quiz = await response.json();
+		},
+
+		formatQuestion(question) {
+			const LINES = question.split("\n");
+			const FORMATTEDLINES = LINES.map((line) => `// ${line}`);
+			return FORMATTEDLINES.join("<br>");
 		},
 	},
 	mounted() {
@@ -673,15 +673,13 @@ const POINTSTOTAL = Vue.createApp({
 
 window.updatePointsTotal = POINTSTOTAL.updateTeams;
 
-
-
 // POLL
 
 const POLL = Vue.createApp({
 	data() {
 		return {
-			poll: []
-		}
+			poll: [],
+		};
 	},
 	template: `
 		<article id="twitch-poll" class="twitch-poll-outer">
@@ -720,8 +718,12 @@ const POLL = Vue.createApp({
 			this.poll = await response.json();
 		},
 		async updateVotes(poll) {
-			this.poll.pollPlayers[0].votes = Math.round((Number(poll.ones) / Number(poll.total)) * 100);
-			this.poll.pollPlayers[1].votes = Math.round((Number(poll.twos) / Number(poll.total)) * 100);
+			this.poll.pollPlayers[0].votes = Math.round(
+				(Number(poll.ones) / Number(poll.total)) * 100
+			);
+			this.poll.pollPlayers[1].votes = Math.round(
+				(Number(poll.twos) / Number(poll.total)) * 100
+			);
 		},
 		async updatePlayers(players) {
 			this.poll.pollPlayers[0].answer = players.pollPlayers[0].answer;
@@ -732,8 +734,8 @@ const POLL = Vue.createApp({
 		},
 		async clearPoll(data) {
 			this.poll = data;
-			this.poll.winner = null
-		}
+			this.poll.winner = null;
+		},
 	},
 	mounted() {
 		this.getPoll();

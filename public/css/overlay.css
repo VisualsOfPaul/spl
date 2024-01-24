@@ -551,7 +551,7 @@ body {
 	align-items: center;
 	bottom: calc(var(--border-thickness) * 2);
 	left: 50%;
-	width: calc(100% - var(--border-thickness) * 4);
+	width: fit-content;
 	gap: var(--spacing-m);
 	padding: var(--spacing-l);
 	transform: translate(-50%, 100%);
@@ -572,7 +572,7 @@ body {
 /* Inner border */
 .question-inner {
 	position: relative;
-	width: 100%;
+	width: var(--width);
 	padding: var(--spacing-l);
 	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
 		var(--border-thickness) 0 0 0 var(--border-inner-color),
@@ -589,82 +589,42 @@ body {
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	gap: var(--spacing-l);
+	align-items: flex-start;
+	gap: 1em;
 	color: var(--primary-color);
 }
 
 .question-inner .content header {
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	gap: var(--spacing-m);
+	align-items: flex-start;
+	gap: 1em;
 	width: 100%;
 }
 
-.question-inner .content header h1 {
+.question-inner .content header h1,
+.question-inner .content header h2 {
 	font-size: var(--font-size-m);
 	font-weight: 500;
 	color: var(--secondary-color);
-	line-height: 100%;
 }
 
-.question-inner .content header h2 {
-	font-size: var(--font-size-xl);
+.question-inner .content p {
+	font-size: var(--font-size-m);
 	font-weight: 700;
 	color: var(--primary-color);
-	text-align: center;
-	line-height: 100%;
 }
 
-.question-inner .content ul {
-	display: grid;
-	list-style: none;
-	gap: var(--spacing-xl);
-	grid-template-columns: repeat(2, 1fr);
-	padding: var(--border-thickness);
+.question-inner .content p span.hidden {
+	opacity: 0;
 }
 
-/* Answers */
-.answer {
-	width: 100%;
-	padding: var(--spacing-s) var(--spacing-l);
-	color: var(--primary-color);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: var(--font-size-l);
-	font-weight: 500;
-	line-height: 100%;
-	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
-		var(--border-thickness) 0 0 0 var(--border-inner-color),
-		0 calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
-		0 var(--border-thickness) 0 0 var(--border-inner-color);
-	background-color: var(--border-inner-color);
+.question-inner .content p span.true {
+	color: var(--correct-color);
 }
 
-.selected {
-	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--selected-color),
-		var(--border-thickness) 0 0 0 var(--selected-color),
-		0 calc(-1 * var(--border-thickness)) 0 0 var(--selected-color),
-		0 var(--border-thickness) 0 0 var(--selected-color);
-	background-color: var(--selected-color);
-}
-
-.correct {
-	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--correct-color),
-		var(--border-thickness) 0 0 0 var(--correct-color),
-		0 calc(-1 * var(--border-thickness)) 0 0 var(--correct-color),
-		0 var(--border-thickness) 0 0 var(--correct-color);
-	background-color: var(--correct-color);
-}
-
-.wrong {
-	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--wrong-color),
-		var(--border-thickness) 0 0 0 var(--wrong-color),
-		0 calc(-1 * var(--border-thickness)) 0 0 var(--wrong-color),
-		0 var(--border-thickness) 0 0 var(--wrong-color);
-	background-color: var(--wrong-color);
+.question-inner .content p span.false {
+	color: var(--wrong-color);
 }
 
 /* TIMER */
@@ -733,8 +693,16 @@ body {
 	padding: var(--spacing-xl);
 }
 
+.lego-builds-container > ul {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-end;
+	list-style: none;
+}
+
 .lego-outer {
-	position: relative;
+	position: absolute;
 	width: fit-content;
 	height: fit-content;
 	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),

@@ -1,107 +1,56 @@
 [
 	{
-		"question": "Rechne die Dezimalzahl 12 in Binär um",
-		"answers": [
-			{ "answer": "1100", "correct": true },
-			{ "answer": "1011", "correct": false },
-			{ "answer": "1111", "correct": false },
-			{ "answer": "1110", "correct": false }
-		],
+		"question": "In der Informatik gibt es einen \n Unterschied zwischen \"NULL\" und \"0\".",
+		"answer": "true",
 		"visible": false,
-		"selectedAnswerIndex": null,
 		"answerVisible": false
 	},
 	{
-		"question": "Wer gilt als der \"Vater der Informatik\"?",
-		"answers": [
-			{ "answer": "Frank Viktor", "correct": false },
-			{ "answer": "Alan Turing", "correct": true },
-			{ "answer": "Charles Babbage", "correct": false },
-			{ "answer": "Bill Gates", "correct": false }
-		],
+		"question": "Ein \"Lisp\"-Programmierer könnte \n sagen: \"In my next life, I want to \n be a tree,\" und dabei einen \n syntaktisch korrekten Code meinen.",
+		"answer": "true",
 		"visible": false,
-		"selectedAnswerIndex": null,
 		"answerVisible": false
 	},
 	{
-		"question": "Die Zeit ist 11:50 Uhr. In welchem Winkel stehen die Zeiger zueinander (Große Fläche)?",
-		"answers": [
-			{ "answer": "300°", "correct": false },
-			{ "answer": "330°", "correct": true },
-			{ "answer": "90°", "correct": false },
-			{ "answer": "180°", "correct": false }
-		],
+		"question": "Bei einer \"Zero-Day-Attacke\" handelt \n es sich um einen Angriff, der keinen \n Schaden verursacht.",
+		"answer": "false",
 		"visible": false,
-		"selectedAnswerIndex": null,
 		"answerVisible": false
 	},
 	{
-		"question": "Was bedeutet der Befehl \"\\n\" in der Programmiersprache C?",
-		"answers": [
-			{ "answer": "Kommentar", "correct": false },
-			{ "answer": "Leerzeichen", "correct": false },
-			{ "answer": "Zeilenumbruch", "correct": true },
-			{
-				"answer": "Einlesen und Speichern von Daten",
-				"correct": false
-			}
-		],
+		"question": "Eine \"Nonce\" ist in der Informatik \n ein Jargon für eine unerfahrene \n Person.",
+		"answer": "false",
 		"visible": false,
-		"selectedAnswerIndex": null,
 		"answerVisible": false
 	},
 	{
-		"question": "Aus wie vielen Knochen besteht das Skelett eines erwachsenen Menschen?",
-		"answers": [
-			{ "answer": "243", "correct": false },
-			{ "answer": "208", "correct": false },
-			{ "answer": "189", "correct": false },
-			{ "answer": "206", "correct": true }
-		],
+		"question": "Der Satz \"Dieser Satz ist falsch\" \n kann in der formalen Logik \n konsistent wahr sein.",
+		"answer": "Konsistenzparadoxon",
 		"visible": false,
-		"selectedAnswerIndex": null,
 		"answerVisible": false
 	},
 	{
-		"question": "Was ist Modulo?",
-		"answers": [
-			{ "answer": "Restoperator", "correct": true },
-			{
-				"answer": "Ein Programm, das einem bei der Modulwahl hilft",
-				"correct": false
-			},
-			{
-				"answer": "Befehl, mit dem man ein Make-File erstellen kann",
-				"correct": false
-			},
-			{ "answer": "Eine Art Fehlermeldung", "correct": false }
-		],
+		"question": "Der Begriff \"Y2K-Bug\" steht für \n \"Year 2000 Bug\" und führte \n tatsächlich zu globalen \n Computerproblemen.",
+		"answer": "true",
 		"visible": false,
-		"selectedAnswerIndex": null,
 		"answerVisible": false
 	},
 	{
-		"question": "Wie viele Tiere nahm Moses mit auf die Arche?",
-		"answers": [
-			{ "answer": "15 Mio.", "correct": false },
-			{ "answer": "1,8 Mio.", "correct": false },
-			{ "answer": "Gar keine", "correct": true },
-			{ "answer": "22", "correct": false }
-		],
+		"question": "Der \"IPv6\"-Standard wurde \n eingeführt, um die begrenzte Anzahl \n von IPv4-Adressen zu erhöhen.",
+		"answer": "true",
 		"visible": false,
-		"selectedAnswerIndex": null,
 		"answerVisible": false
 	},
 	{
-		"question": "Rechne 40 Bits in Bytes um",
-		"answers": [
-			{ "answer": "16 Bytes", "correct": false },
-			{ "answer": "5 Bytes", "correct": true },
-			{ "answer": "8 Bytes", "correct": false },
-			{ "answer": "2 Bytes", "correct": false }
-		],
+		"question": "Bei der Programmierung bedeutet \n \"Polymorphie\" zwangsläufig, dass \n ein Programm viele Bugs hat.",
+		"answer": "false",
 		"visible": false,
-		"selectedAnswerIndex": null,
+		"answerVisible": false
+	},
+	{
+		"question": "Der Begriff \"Refactoring\" bezeichnet \n das Hinzufügen neuer Funktionen \n zu einem bestehenden Code, um ihn \n zu verbessern.",
+		"answer": "false",
+		"visible": false,
 		"answerVisible": false
 	}
 ]

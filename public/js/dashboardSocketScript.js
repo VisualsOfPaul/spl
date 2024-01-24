@@ -251,15 +251,6 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 		});
 
-		function logAnswer(index, id) {
-			SOCKET.emit("log-answer", {
-				index: index,
-				id: id,
-			});
-		}
-
-		window.logAnswer = logAnswer;
-
 		function showAnswer(index) {
 			SOCKET.emit("show-answer", {
 				index: index,
@@ -443,8 +434,12 @@ document.addEventListener("DOMContentLoaded", () => {
 		const POLLFORM = document.querySelector("#toggle-poll-form");
 		const TOGGLEPOLLBUTTON = document.querySelector("#toggle-poll-button");
 		const CLEARPOLLFORM = document.querySelector("#clear-poll-form");
-		const TOGGLEPOLLVISIBLEFORM = document.querySelector('#toggle-poll-visible-form');
-		const TOGGLEPOLLVISIBLEBUTTON = document.querySelector('#toggle-poll-visible-button');
+		const TOGGLEPOLLVISIBLEFORM = document.querySelector(
+			"#toggle-poll-visible-form"
+		);
+		const TOGGLEPOLLVISIBLEBUTTON = document.querySelector(
+			"#toggle-poll-visible-button"
+		);
 		POLLFORM.addEventListener("submit", ($event) => {
 			$event.preventDefault();
 			var arr = [];
@@ -458,42 +453,46 @@ document.addEventListener("DOMContentLoaded", () => {
 		SOCKET.on("toggle-poll-done", async (data) => {
 			const TOGGLE = TOGGLEPOLLBUTTON;
 
-			TOGGLE.textContent = await data.started ? "Umfrage Stoppen" : "Umfrage Starten";
+			TOGGLE.textContent = (await data.started)
+				? "Umfrage Stoppen"
+				: "Umfrage Starten";
 			TOGGLE.classList.toggle("active", await data.started);
 		});
 
 		SOCKET.on("update-poll-counter-done", async (data) => {
 			const PLAYERS = POLLFORM.querySelectorAll("div[id^='player-'] p");
-			PLAYERS[0].textContent = await data.ones + ' Stimmen';
-			PLAYERS[1].textContent = await data.twos + ' Stimmen';
-		})
+			PLAYERS[0].textContent = (await data.ones) + " Stimmen";
+			PLAYERS[1].textContent = (await data.twos) + " Stimmen";
+		});
 
-		CLEARPOLLFORM.addEventListener('submit', ($event) => {
+		CLEARPOLLFORM.addEventListener("submit", ($event) => {
 			const PLAYERS = POLLFORM.querySelectorAll("div[id^='player-'] input");
 			const PLAYERSPOINTS = POLLFORM.querySelectorAll("div[id^='player-'] p");
 			$event.preventDefault();
-			SOCKET.emit('clear-poll');
+			SOCKET.emit("clear-poll");
 			PLAYERS.forEach((player) => {
-				player.value = '';
+				player.value = "";
 			});
-			PLAYERSPOINTS[0].textContent = '0 Stimmen';
-			PLAYERSPOINTS[1].textContent = '0 Stimmen';
+			PLAYERSPOINTS[0].textContent = "0 Stimmen";
+			PLAYERSPOINTS[1].textContent = "0 Stimmen";
 		});
 
-		TOGGLEPOLLVISIBLEFORM.addEventListener('submit', ($event) => {
+		TOGGLEPOLLVISIBLEFORM.addEventListener("submit", ($event) => {
 			$event.preventDefault();
 			var arr = [];
 			const PLAYERS = POLLFORM.querySelectorAll("div[id^='player-'] input");
 			PLAYERS.forEach((player) => {
 				arr.push(player.value);
 			});
-			SOCKET.emit('toggle-poll-visible', arr);
+			SOCKET.emit("toggle-poll-visible", arr);
 		});
-		
-		SOCKET.on('toggle-poll-visible-done', async (data) => {
+
+		SOCKET.on("toggle-poll-visible-done", async (data) => {
 			const TOGGLE = TOGGLEPOLLVISIBLEBUTTON;
 
-			TOGGLE.textContent = await data.visible ? "Umfrage Ausblenden" : "Umfrage Anzeigen";
+			TOGGLE.textContent = (await data.visible)
+				? "Umfrage Ausblenden"
+				: "Umfrage Anzeigen";
 			TOGGLE.classList.toggle("active", await data.visible);
 		});
 	});
