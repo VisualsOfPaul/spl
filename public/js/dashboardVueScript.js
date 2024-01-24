@@ -53,6 +53,38 @@ const BANDAGES = Vue.createApp({
 	},
 }).mount("#bandage-select");
 
+// HALLI GALLI
+const HALLIGALLI = Vue.createApp({
+	data() {
+		return {
+			cards: [],
+		};
+	},
+	template: `
+		<ul>
+			<li v-for="(card, index) in cards">
+				<figure>
+					<img :src="'/assets/halli-galli/' + card.file">
+				</figure>
+				<button @click="toggleHalliGalli(index)" :id="'toggle-halli-galli-' + index">Karte anzeigen</button>
+			</li>
+		</ul>
+	`,
+	methods: {
+		async getCards() {
+			const response = await fetch("/api/halli-galli");
+			this.cards = await response.json();
+		},
+
+		async toggleHalliGalli(index) {
+			toggleHalliGalli(index);
+		},
+	},
+	mounted() {
+		this.getCards();
+	},
+}).mount("#halli-galli-container");
+
 // QUIZ
 const QUIZ = Vue.createApp({
 	data() {

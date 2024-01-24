@@ -27,7 +27,7 @@ const bandagesLeft = Vue.createApp({
                     </figure>
                 </aside>
                 <aside class="content">
-                    <h3>{{ bandage.name }} {{ bandage.surname }}</h3>
+                    <h3>{{ bandage.name }}</h3>
                     <h4>{{ bandage.pronouns }}</h4>
                     <p>{{ bandage.info }}</p>
                 </aside>
@@ -68,7 +68,7 @@ const bandagesRight = Vue.createApp({
                 </ul>
 
                 <aside class="content">
-                    <h3>{{ bandage.name }} {{ bandage.surname }}</h3>
+                    <h3>{{ bandage.name }}</h3>
                     <h4>{{ bandage.pronouns }}</h4>
                     <p>{{ bandage.info }}</p>
                 </aside>
@@ -90,6 +90,50 @@ const bandagesRight = Vue.createApp({
 		this.getBandages();
 	},
 }).mount("#bandages-container-right");
+
+// HALLI GALLI
+const HALLIGALLI = Vue.createApp({
+	data() {
+		return {
+			cards: [],
+		};
+	},
+	template: `
+		<ul>
+			<li v-for="(card, index) in cards" :id="'halli-galli-card-' + index" class="halli-galli-outer">
+				<ul class="corners">
+					<li>&nbsp;</li>
+					<li>&nbsp;</li>
+					<li>&nbsp;</li>
+					<li>&nbsp;</li>					
+				</ul>
+
+				<div class="halli-galli-inner">
+					<ul class="corners">
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+					</ul>
+
+
+					<figure class="image">
+						<img :src="'/assets/halli-galli/' + card.file">
+					</figure>
+				</div>
+			</li>
+		</ul>
+	`,
+	methods: {
+		async getCards() {
+			const response = await fetch("/api/halli-galli");
+			this.cards = await response.json();
+		},
+	},
+	mounted() {
+		this.getCards();
+	},
+}).mount("#halli-galli-container");
 
 // QUIZ
 const quiz = Vue.createApp({

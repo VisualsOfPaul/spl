@@ -231,6 +231,25 @@ document.addEventListener("DOMContentLoaded", () => {
 			SOCKET.emit("reset-points");
 		});
 
+		// HALLI GALLI
+		function toggleHalliGalli(index) {
+			SOCKET.emit("toggle-halli-galli", {
+				index: index,
+			});
+		}
+
+		window.toggleHalliGalli = toggleHalliGalli;
+
+		SOCKET.on("toggle-halli-galli-done", (data) => {
+			const TOGGLES = document.querySelectorAll(
+				"button[id^='toggle-halli-galli-']"
+			);
+
+			TOGGLES.forEach((toggle, index) => {
+				toggle.classList.toggle("active", data[index].visible);
+			});
+		});
+
 		// QUIZ
 		function showQuestion(index) {
 			SOCKET.emit("toggle-question", {

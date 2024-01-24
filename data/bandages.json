@@ -34,5 +34,11 @@
 		"surname": "Kern",
 		"pronouns": "he/him",
 		"info": "Wirtschaftsinformatik"
+	},
+	{
+		"name": "Anton",
+		"surname": "Riemer",
+		"pronouns": "he/him",
+		"info": "IT-Management"
 	}
 ]

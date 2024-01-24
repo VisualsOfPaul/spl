@@ -28,6 +28,7 @@ const STARTINGSCREENCONTROLLER = require("./controllers/startingScreenController
 const SPONSORSCONTROLLER = require("./controllers/sponsorsController.js");
 const TIMERCONTROLLER = require("./controllers/timerController.js");
 const POINTSCONTROLLER = require("./controllers/pointsController.js");
+const HALLIGALLICONTROLLER = require("./controllers/halliGalliController.js");
 const QUIZCONTROLLER = require("./controllers/quizController.js");
 const LEGOCONTROLLER = require("./controllers/legoController.js");
 const MEMORYCONTROLLER = require("./controllers/memoryController.js");
@@ -156,6 +157,14 @@ IO.on("connection", async (socket) => {
 
 	socket.on("reset-points", async () => {
 		IO.emit("update-points-done", await POINTSCONTROLLER.resetPoints());
+	});
+
+	// HALLI GALLI
+	socket.on("toggle-halli-galli", async (data) => {
+		IO.emit(
+			"toggle-halli-galli-done",
+			await HALLIGALLICONTROLLER.toggle(data.index)
+		);
 	});
 
 	// QUIZ

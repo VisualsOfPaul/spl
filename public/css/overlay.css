@@ -532,6 +532,76 @@ body {
 	line-height: 100%;
 }
 
+/* HALLI GALLI */
+.halli-galli-container {
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	padding: var(--spacing-xl);
+}
+
+.halli-galli-container > ul {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-end;
+	list-style: none;
+}
+
+.halli-galli-outer {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: fit-content;
+	gap: var(--spacing-m);
+	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+		var(--border-thickness) 0 0 0 var(--border-outer-color),
+		0 calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+		0 var(--border-thickness) 0 0 var(--border-outer-color);
+	padding: var(--border-thickness);
+	background-color: var(--border-background-color-transparent);
+	transform: translateY(-100%);
+	opacity: 0;
+}
+
+.halli-galli-outer .corners li {
+	background-color: var(--border-outer-color);
+}
+
+.halli-galli-inner {
+	position: relative;
+	width: fit-content;
+	height: fit-content;
+	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+		var(--border-thickness) 0 0 0 var(--border-inner-color),
+		0 calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+		0 var(--border-thickness) 0 0 var(--border-inner-color);
+	background-color: var(--border-background-color-transparent);
+	padding: var(--spacing-m);
+}
+
+.halli-galli-inner .corners li {
+	background-color: var(--border-inner-color);
+}
+
+.halli-galli-inner .image {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.halli-galli-inner .image img {
+	height: 14rem;
+	width: 100%;
+	object-fit: cover;
+}
+
 /* QUIZ */
 .quiz-container {
 	position: absolute;

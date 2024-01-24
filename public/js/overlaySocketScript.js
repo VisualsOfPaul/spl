@@ -265,6 +265,33 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	});
 
+	// HALLI GALLI
+	SOCKET.on("toggle-halli-galli-done", async (data) => {
+		const CARDS = await document.querySelectorAll(
+			"li[id^='halli-galli-card-']"
+		);
+
+		CARDS.forEach((card, index) => {
+			console.log(card, data[index].visible);
+
+			if (data[index].visible) {
+				gsap.to(card, {
+					duration: 1,
+					y: 0,
+					opacity: 1,
+					ease: "power3.inOut",
+				});
+			} else {
+				gsap.to(card, {
+					duration: 1,
+					y: "100%",
+					opacity: 0,
+					ease: "power3.inOut",
+				});
+			}
+		});
+	});
+
 	// QUIZ
 	SOCKET.on("toggle-question-done", (data) => {
 		const QUESTIONS = document.querySelectorAll("#quiz-container article");

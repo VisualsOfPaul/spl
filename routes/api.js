@@ -5,6 +5,7 @@ const ROUTER = EXPRESS.Router();
 // CONTROLLERS
 const BANDAGESCONTROLLER = require("../controllers/bandagesController");
 const POINTSCONTROLLER = require("../controllers/pointsController");
+const HALLIGALLICONTROLLER = require("../controllers/halliGalliController");
 const QUIZCONTROLLER = require("../controllers/quizController");
 const LEGOCONTROLLER = require("../controllers/legoController");
 const MEMORYCONTROLLER = require("../controllers/memoryController");
@@ -21,6 +22,10 @@ ROUTER.get("/bandages", async (req, res) => {
 
 ROUTER.get("/teams", async (req, res) => {
 	res.send(await POINTSCONTROLLER.getTeams());
+});
+
+ROUTER.get("/halli-galli", async (req, res) => {
+	res.send(await HALLIGALLICONTROLLER.getHalliGalli());
 });
 
 ROUTER.get("/quiz", async (req, res) => {
