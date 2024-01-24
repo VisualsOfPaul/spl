@@ -2,7 +2,11 @@ const tmi = require('tmi.js');
 const io = require('socket.io-client');
 const POLL = require('../../data/poll.json');
 
-const SOCKET = io("ws://localhost:3000");
+const LOCALLINK = 'ws://localhost:3000';
+const REMOTELINK = 'wss://spl-e931.onrender.com';
+const PILINK = 'ws://87.186.16.196:3000';
+
+const SOCKET = io(REMOTELINK);
 
 SOCKET.on("disconnect", (reason) => {
   if(reason === 'io server disconnect') {
