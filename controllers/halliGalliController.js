@@ -9,21 +9,14 @@ async function getHalliGalli() {
 	FS.readdirSync("./public/assets/halli-galli").forEach((file) => {
 		HALLIGALLI.push({
 			file: file,
-			visible: false,
 		});
 	});
 
 	return await HALLIGALLI;
 }
 
-async function toggle(visibleIndex) {
-	if (!HALLIGALLI[visibleIndex].visible) {
-		HALLIGALLI.forEach((card, index) => {
-			card.visible = visibleIndex === index;
-		});
-	} else {
-		HALLIGALLI[visibleIndex].visible = false;
-	}
+async function toggle() {
+	HALLIGALLI.visible = !HALLIGALLI.visible;
 
 	return await HALLIGALLI;
 }

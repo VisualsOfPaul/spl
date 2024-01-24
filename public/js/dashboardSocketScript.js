@@ -232,22 +232,21 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 
 		// HALLI GALLI
-		function toggleHalliGalli(index) {
-			SOCKET.emit("toggle-halli-galli", {
-				index: index,
-			});
-		}
+		const HALLIGALLIFORM = document.querySelector("#halli-galli-form");
 
-		window.toggleHalliGalli = toggleHalliGalli;
+		HALLIGALLIFORM.addEventListener("submit", ($event) => {
+			$event.preventDefault();
+
+			SOCKET.emit("toggle-halli-galli");
+		});
 
 		SOCKET.on("toggle-halli-galli-done", (data) => {
-			const TOGGLES = document.querySelectorAll(
-				"button[id^='toggle-halli-galli-']"
-			);
+			const TOGGLE = document.querySelector("#halli-galli-form button");
 
-			TOGGLES.forEach((toggle, index) => {
-				toggle.classList.toggle("active", data[index].visible);
-			});
+			TOGGLE.textContent = data.visible
+				? "Halli Galli ausblenden"
+				: "Halli Galli anzeigen";
+			TOGGLE.classList.toggle("active", data.visible);
 		});
 
 		// QUIZ

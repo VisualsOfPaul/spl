@@ -160,11 +160,8 @@ IO.on("connection", async (socket) => {
 	});
 
 	// HALLI GALLI
-	socket.on("toggle-halli-galli", async (data) => {
-		IO.emit(
-			"toggle-halli-galli-done",
-			await HALLIGALLICONTROLLER.toggle(data.index)
-		);
+	socket.on("toggle-halli-galli", async () => {
+		IO.emit("toggle-halli-galli-done", await HALLIGALLICONTROLLER.toggle());
 	});
 
 	// QUIZ

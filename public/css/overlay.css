@@ -543,12 +543,41 @@ body {
 	padding: var(--spacing-xl);
 }
 
-.halli-galli-container > ul {
+.halli-galli-container > div {
+	position: relative;
+	height: 100%;
+	width: 100%;
 	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: flex-end;
-	list-style: none;
+	align-items: flex-end;
+	justify-content: center;
+	transform-style: preserve-3d;
+	transform-origin: center center;
+	transform: translateY(100%);
+	opacity: 0;
+}
+
+.halli-galli-outer.side-0,
+.halli-galli-outer.side-1,
+.halli-galli-outer.side-2,
+.halli-galli-outer.side-3 {
+	backface-visibility: hidden;
+	background-color: var(--border-background-color);
+}
+
+.halli-galli-outer.side-0 {
+	transform: rotateY(0deg);
+}
+
+.halli-galli-outer.side-1 {
+	transform: rotateY(180deg);
+}
+
+.halli-galli-outer.side-2 {
+	transform: rotateY(180deg);
+}
+
+.halli-galli-outer.side-3 {
+	transform: rotateY(180deg);
 }
 
 .halli-galli-outer {
@@ -564,8 +593,6 @@ body {
 		0 var(--border-thickness) 0 0 var(--border-outer-color);
 	padding: var(--border-thickness);
 	background-color: var(--border-background-color-transparent);
-	transform: translateY(-100%);
-	opacity: 0;
 }
 
 .halli-galli-outer .corners li {
@@ -588,9 +615,17 @@ body {
 	background-color: var(--border-inner-color);
 }
 
-.halli-galli-inner .image {
+.halli-galli-inner .content {
 	height: 100%;
-	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.halli-galli-inner .image {
+	height: fit-content;
+	width: fit-content;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -598,7 +633,6 @@ body {
 
 .halli-galli-inner .image img {
 	height: 14rem;
-	width: 100%;
 	object-fit: cover;
 }
 

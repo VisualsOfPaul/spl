@@ -99,13 +99,13 @@ const HALLIGALLI = Vue.createApp({
 		};
 	},
 	template: `
-		<ul>
-			<li v-for="(card, index) in cards" :id="'halli-galli-card-' + index" class="halli-galli-outer">
+		<div class="halli-galli-card" id="halli-galli-card">
+			<div v-for="(image, index) of cards" :class="'halli-galli-outer side-' + index" :id="'halli-galli-card-side-' + index">
 				<ul class="corners">
 					<li>&nbsp;</li>
 					<li>&nbsp;</li>
 					<li>&nbsp;</li>
-					<li>&nbsp;</li>					
+					<li>&nbsp;</li>
 				</ul>
 
 				<div class="halli-galli-inner">
@@ -116,18 +116,20 @@ const HALLIGALLI = Vue.createApp({
 						<li>&nbsp;</li>
 					</ul>
 
-
-					<figure class="image">
-						<img :src="'/assets/halli-galli/' + card.file">
-					</figure>
+					<div class="content">
+						<figure class="image">
+							<img :src="'/assets/halli-galli/' + image.file">
+						</figure>
+					</div>
 				</div>
-			</li>
-		</ul>
+			</div>
+		</div>
 	`,
 	methods: {
 		async getCards() {
 			const response = await fetch("/api/halli-galli");
-			this.cards = await response.json();
+			const data = await response.json();
+			this.cards = data;
 		},
 	},
 	mounted() {
@@ -591,7 +593,7 @@ const IMITATE = Vue.createApp({
 		<ul>
 			<li v-for="(imitate, index) in imitates" :id="'imitate-' + index">
 				<div class="card">
-					<div class="imitate-outer front">
+					<div class="imitate-outer">
 						<ul class="corners">
 							<li>&nbsp;</li>
 							<li>&nbsp;</li>
@@ -687,6 +689,7 @@ const POINTSTOTAL = Vue.createApp({
 										<h2>{{ team.name }}</h2>
 										<p>{{ team.points }}</p>
 									</div>
+								</div>
 							</div>
 						</template>
 					</div>

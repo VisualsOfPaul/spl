@@ -267,29 +267,53 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	// HALLI GALLI
 	SOCKET.on("toggle-halli-galli-done", async (data) => {
-		const CARDS = await document.querySelectorAll(
-			"li[id^='halli-galli-card-']"
+		const HALLIGALLI = document.querySelector("#halli-galli-card");
+		const CARDS = document.querySelectorAll(
+			"div[id^='halli-galli-card-side-']"
 		);
+		const TIME = 2;
 
-		CARDS.forEach((card, index) => {
-			console.log(card, data[index].visible);
+		if (data.visible) {
+			gsap.to(HALLIGALLI, {
+				duration: 1,
+				y: 0,
+				opacity: 1,
+				ease: "power3.inOut",
+			});
 
-			if (data[index].visible) {
-				gsap.to(card, {
-					duration: 1,
-					y: 0,
-					opacity: 1,
-					ease: "power3.inOut",
+			CARDS.forEach((card, index) => {
+				if (CARDS.length - 1 > index) {
+					gsap.to(CARDS[index], {
+						duration: 1,
+						rotateY: 180,
+						ease: "power3.inOut",
+						delay: TIME * (index + 1) + 1,
+					});
+
+					gsap.to(CARDS[index + 1], {
+						duration: 1,
+						rotateY: 0,
+						ease: "power3.inOut",
+						delay: TIME * (index + 1) + 1,
+					});
+				}
+			});
+		} else {
+			gsap.to(HALLIGALLI, {
+				duration: 1,
+				y: "100%",
+				opacity: 0,
+				ease: "power3.inOut",
+			});
+
+			CARDS.forEach((card, index) => {
+				gsap.to(CARDS[index], {
+					duration: 0,
+					rotateY: 0,
+					delay: 2,
 				});
-			} else {
-				gsap.to(card, {
-					duration: 1,
-					y: "100%",
-					opacity: 0,
-					ease: "power3.inOut",
-				});
-			}
-		});
+			});
+		}
 	});
 
 	// QUIZ
