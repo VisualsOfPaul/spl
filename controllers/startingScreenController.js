@@ -8,6 +8,10 @@ async function toggle() {
 	return STARTINGSCREEN;
 }
 
+async function get() {
+	return STARTINGSCREEN;
+}
+
 async function getVisibility() {
 	return STARTINGSCREEN.visible;
 }
@@ -16,4 +20,5 @@ async function getVisibility() {
 module.exports = {
 	toggle,
 	getVisibility,
+	get
 };

@@ -13,6 +13,10 @@ async function getImages() {
 	return images;
 }
 
+async function get() {
+	return LEGOBUILDS;
+}
+
 async function toggle(index) {
 	LEGOBUILDS.forEach((build) => {
 		if (build.index !== index) build.visible = false;
@@ -31,4 +35,5 @@ async function toggle(index) {
 module.exports = {
 	getImages,
 	toggle,
+	get
 };

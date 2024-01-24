@@ -37,6 +37,31 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	});
 
+	SOCKET.on("update-starting-screen-done", (data) => {
+		const STARTINGSCREEN = document.querySelector("#starting-screen-container");
+
+		if (data.visible) {
+			gsap.to(STARTINGSCREEN, {
+				duration: 0.5,
+				opacity: 1,
+				ease: "power3.inOut",
+			});
+
+			startingScreenCountDown({
+				minutes: 5,
+				seconds: 0,
+			});
+		} else {
+			gsap.to(STARTINGSCREEN, {
+				duration: 0.5,
+				opacity: 0,
+				ease: "power3.inOut",
+			});
+
+			clearInterval(window.STARTINGSCREENCOUNTDOWN);
+		}
+	});	
+
 	function startingScreenCountDown(time) {
 		const TIMER = document.querySelector("#starting-screen-countdown");
 		const TIME = {
@@ -94,6 +119,22 @@ document.addEventListener("DOMContentLoaded", () => {
 	// SPONSORS
 	SOCKET.on("toggle-sponsors-done", (data) => {
 		if (data == true) {
+			gsap.to("#sponsors-container", {
+				duration: 0.5,
+				opacity: 1,
+				ease: "power3.inOut",
+			});
+		} else {
+			gsap.to("#sponsors-container", {
+				duration: 0.5,
+				opacity: 0,
+				ease: "power3.inOut",
+			});
+		}
+	});
+
+	SOCKET.on("update-sponsors-done", (data) => {
+		if (data.visible == true) {
 			gsap.to("#sponsors-container", {
 				duration: 0.5,
 				opacity: 1,
@@ -181,6 +222,24 @@ document.addEventListener("DOMContentLoaded", () => {
 		window.stopTimer();
 	});
 
+	SOCKET.on('update-timer-done', (data) => {
+		if (data.visible) {
+			gsap.to("#timer", {
+				duration: 1,
+				y: 0,
+				opacity: 1,
+				ease: "power3.inOut",
+			});
+		} else {
+			gsap.to("#timer", {
+				duration: 1,
+				y: "-100%",
+				opacity: 0,
+				ease: "power3.inOut",
+			});
+		}
+	});
+
 	// POINTS (TOTAL)
 	SOCKET.on("update-total-points-done", async (data) => {
 		window.updatePointsTotal(data);
@@ -201,6 +260,22 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 		}
 	});
+
+	SOCKET.on("update-total-points-done", async (data) => {
+		if (data.visible) {
+			gsap.to("#points-total-container", {
+				duration: 1,
+				opacity: 1,
+				ease: "power3.inOut",
+			});
+		} else {
+			gsap.to("#points-total-container", {
+				duration: 1,
+				opacity: 0,
+				ease: "power3.inOut",
+			});
+		}
+	})
 
 	// POINTS (GAME)
 	const POINTS = document.querySelectorAll("div[id^='team-points-']");
@@ -265,6 +340,27 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 	});
 
+	SOCKET.on("update-points-done", (data) => {
+
+		POINTS.forEach((point, index) => {
+			if (data.visible) {
+				gsap.to(point, {
+					duration: 1,
+					x: 0,
+					opacity: 1,
+					ease: "power3.inOut",
+				});
+			} else {
+				gsap.to(point, {
+					duration: 1,
+					x: index % 2 === 0 ? "-100%" : "100%",
+					opacity: 0,
+					ease: "power3.inOut",
+				});
+			}
+		});
+	});
+
 	// QUIZ
 	SOCKET.on("toggle-question-done", (data) => {
 		const QUESTIONS = document.querySelectorAll("#quiz-container article");
@@ -311,6 +407,10 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 
+	SOCKET.on('update-quiz-done', (data) => {
+		
+	})
+
 	// LEGO
 	SOCKET.on("toggle-lego-build-done", (data) => {
 		const BUILDS = document.querySelectorAll("li[id^='lego-build-image-']");
@@ -333,6 +433,28 @@ document.addEventListener("DOMContentLoaded", () => {
 			}
 		});
 	});
+
+	SOCKET.on('update-lego-build-done', (data) => {
+		const BUILDS = document.querySelectorAll("li[id^='lego-build-image-']");
+
+		data.forEach((build, index) => {
+			if (build.visible) {
+				gsap.to(BUILDS[index], {
+					duration: 1,
+					y: 0,
+					opacity: 1,
+					ease: "power3.inOut",
+				});
+			} else {
+				gsap.to(BUILDS[index], {
+					duration: 1,
+					y: "100%",
+					opacity: 0,
+					ease: "power3.inOut",
+				});
+			}
+		});
+	})
 
 	// MEMORY
 	// SOCKET.on("toggle-memory-done", (data) => {
@@ -478,7 +600,6 @@ document.addEventListener("DOMContentLoaded", () => {
 			const TIME = 15;
 
 			if (image.visible) {
-				console.log(IMAGES[index]);
 
 				// Show image
 				gsap.to(IMAGES[index], {
@@ -550,29 +671,31 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 
-	// POLL
-	// SOCKET.on("toggle-poll-done", (data) => {
-	// 	const POLL = document.querySelector("#poll-container");
-	// 	window.updatePlayers(data);
-	// 	if (data.visible) {
-	// 		POLL.classList.remove("hidden")
-	// 		gsap.to(POLL, {
-	// 			duration: 1,
-	// 			y: 0,
-	// 			opacity: 1,
-	// 			ease: "power3.inOut",
-	// 		});
-	// 	} else {
-	// 		POLL.classList.add("hidden")
-	// 		gsap.to(POLL, {
-	// 			duration: 1,
-	// 			y: "100%",
-	// 			opacity: 0,
-	// 			ease: "power3.inOut",
-	// 		});
-	// 	}
-	// });
+	SOCKET.on('update-imitate-done', (data) => {
+		const IMITATE = document.querySelectorAll(
+			"#imitate-container > ul > li[id^='imitate-']"
+		);
 
+		data.forEach((imitate, index) => {
+			if (imitate.visible) {
+				gsap.to(IMITATE[index], {
+					duration: 1,
+					y: 0,
+					opacity: 1,
+					ease: "power3.inOut",
+				});
+			} else {
+				gsap.to(IMITATE[index], {
+					duration: 1,
+					y: "100%",
+					opacity: 0,
+					ease: "power3.inOut",
+				});
+			}
+		});
+	})
+
+	// POLL
 	SOCKET.on("toggle-poll-visible-done", (data) => {
 		const POLL = document.querySelector("#poll-container");
 		window.updatePlayers(data);
@@ -605,7 +728,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		window.clearPoll(data);
 	});
 
-	SOCKET.on("update-poll", async (data) => {
+	SOCKET.on("update-poll-done", async (data) => {
 		const POLL = document.querySelector("#poll-container");
 		window.updatePlayers(data);
 

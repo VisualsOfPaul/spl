@@ -39,10 +39,19 @@ document.addEventListener("DOMContentLoaded", () => {
 			const TOGGLE = STARTINGSCREENFORM.children[0];
 
 			TOGGLE.textContent = data
-				? "Startbildschirm verstecken"
-				: "Startbildschirm anzeigen";
+				? "Startbild verstecken"
+				: "Startbild anzeigen";
 			TOGGLE.classList.toggle("active", data);
 		});
+
+		SOCKET.on("update-starting-screen-done", (data) => {
+			const TOGGLE = STARTINGSCREENFORM.children[0];
+
+			TOGGLE.textContent = data.visible
+				? "Startbild verstecken"
+				: "Startbild anzeigen";
+			TOGGLE.classList.toggle("active", data.visible);
+		});	
 
 		// SPONSORS
 		const SPONSORFORM = document.querySelector("#show-sponsors-form");
@@ -57,6 +66,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 			TOGGLE.textContent = data ? "Sponsoren verstecken" : "Sponsoren anzeigen";
 			TOGGLE.classList.toggle("active", data);
+		});
+
+		SOCKET.on("update-sponsors-done", (data) => {
+			const TOGGLE = SPONSORFORM.children[0];
+
+			TOGGLE.textContent = data.visible
+				? "Sponsoren verstecken"
+				: "Sponsoren anzeigen";
+			TOGGLE.classList.toggle("active", data.visible);
 		});
 
 		// BANDAGES
@@ -117,6 +135,13 @@ document.addEventListener("DOMContentLoaded", () => {
 			TOGGLE.classList.toggle("active", data);
 		});
 
+		SOCKET.on('update-timer-done', (data) => {
+			const TOGGLE = document.querySelector("#toggle-timer");
+
+			TOGGLE.textContent = data.visible ? "Timer ausblenden" : "Timer anzeigen";
+			TOGGLE.classList.toggle("active", data.visible);
+		});
+
 		// POINTS (TOTAL)
 		const TOTALPOINTSFORM = document.querySelector("#points-total-form");
 
@@ -163,6 +188,19 @@ document.addEventListener("DOMContentLoaded", () => {
 				? "Gesamtpunkte ausblenden"
 				: "Gesamtpunkte anzeigen";
 			TOGGLE.classList.toggle("active", data);
+		});
+
+		SOCKET.on('update-total-points-done', (data) => {
+			const POINTS = document.querySelectorAll("#points-total-form input");
+
+			POINTS.forEach((point, index) => {
+				point.value = data.teams[index].points;
+			});
+
+			const TOGGLE = document.querySelector("#toggle-total-points");
+
+			TOGGLE.textContent = data.visible ? "Gesamtpunkte ausblenden" : "Gesamtpunkte anzeigen";
+			TOGGLE.classList.toggle("active", data.visible);
 		});
 
 		// POINTS (GAME)
@@ -221,6 +259,11 @@ document.addEventListener("DOMContentLoaded", () => {
 			TEAMSELECTS.forEach((teamSelect, index) => {
 				teamSelect.value = data.teams[index].name;
 			});
+
+			const TOGGLE = POINTSFORM.children[0];
+
+			TOGGLE.textContent = data.visible ? "Punkte ausblenden" : "Punkte anzeigen";
+			TOGGLE.classList.toggle("active", data.visible);
 		});
 
 		const RESETPOINTSFORM = document.querySelector("#reset-points-form");
@@ -276,6 +319,15 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 		});
 
+		SOCKET.on('update-quiz-done', (data) => {
+			const QUESTIONS = document.querySelectorAll("#quiz-container ol li");
+
+			QUESTIONS.forEach((question, index) => {
+				question.children[1].textContent = data[index].visible ? "Frage ausblenden" : "Frage einblenden";
+				question.children[1].classList.toggle("active", data[index].visible);
+			});
+		});
+
 		// LEGO
 		function toggleLegoBuild(index) {
 			SOCKET.emit("toggle-lego-build", {
@@ -297,6 +349,19 @@ document.addEventListener("DOMContentLoaded", () => {
 				toggle.classList.toggle("active", data[index].visible);
 			});
 		});
+
+		SOCKET.on("update-lego-build-done", (data) => {
+			const TOGGLES = document.querySelectorAll(
+				'button[id^="toggle-lego-build-"]'
+			);
+
+			TOGGLES.forEach((toggle, index) => {
+				toggle.textContent = data[index].visible
+					? "Bild verstecken"
+					: "Bild anzeigen";
+				toggle.classList.toggle("active", data[index].visible);
+			});
+		})
 
 		// MEMORY
 		// const MEMORYFORM = document.querySelector("#memory-form");
@@ -355,6 +420,28 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 		});
 
+		SOCKET.on('update-where-is-this-done', (data) => {
+			const TOGGLES = document.querySelectorAll(
+				'button[id^="toggle-where-is-this-"]'
+			);
+
+			TOGGLES.forEach((toggle, index) => {
+				toggle.textContent = data[index].visible
+					? "Bild verstecken"
+					: "Bild anzeigen";
+				toggle.classList.toggle("active", data[index].visible);
+			});
+
+			const ANSWERS = document.querySelectorAll('button[id^="toggle-answer"]');
+
+			ANSWERS.forEach((answer, index) => {
+				answer.textContent = data[index].answerVisible
+					? "Lösung verstecken"
+					: "Lösung anzeigen";
+				answer.classList.toggle("active", data[index].answerVisible);
+			});
+		})
+
 		// COUNT LETTERS
 		function toggleWord(index) {
 			SOCKET.emit("toggle-count-letters", index);
@@ -408,6 +495,17 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 		});
 
+		SOCKET.on('update-remember-image-done', (data) => {
+			const TOGGLES = document.querySelectorAll('button[id^="toggle-remember-image-"]');
+
+			TOGGLES.forEach((toggle, index) => {
+				toggle.textContent = data[index].visible
+					? "Bild verstecken"
+					: "Bild anzeigen";
+				toggle.classList.toggle("active", data[index].visible);
+			});
+		});
+
 		// IMITATE
 		function toggleImitate(index) {
 			SOCKET.emit("toggle-imitate", {
@@ -418,6 +516,19 @@ document.addEventListener("DOMContentLoaded", () => {
 		window.toggleImitate = toggleImitate;
 
 		SOCKET.on("toggle-imitate-done", (data) => {
+			const TOGGLES = document.querySelectorAll(
+				'button[id^="toggle-imitate-"]'
+			);
+
+			TOGGLES.forEach((toggle, index) => {
+				toggle.textContent = data[index].visible
+					? "Bild verstecken"
+					: "Bild anzeigen";
+				toggle.classList.toggle("active", data[index].visible);
+			});
+		});
+
+		SOCKET.on('update-imitate-done', (data) => {
 			const TOGGLES = document.querySelectorAll(
 				'button[id^="toggle-imitate-"]'
 			);
@@ -496,7 +607,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			TOGGLE.classList.toggle("active", await data.visible);
 		});
 
-		SOCKET.on("update-poll", async (data) => {
+		SOCKET.on("update-poll-done", async (data) => {
 			const PLAYERS = POLLFORM.querySelectorAll("div[id^='player-'] input");
 			const POINTS = POLLFORM.querySelectorAll("div[id^='player-'] p");
 			if (

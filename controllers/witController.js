@@ -40,9 +40,14 @@ async function toggleAnswer(index) {
 	return await WHEREISTHIS;
 }
 
+async function get() {
+	return await WHEREISTHIS;
+}
+
 // EXPORTS
 module.exports = {
 	getImages,
 	toggle,
 	toggleAnswer,
+	get
 };

@@ -16,6 +16,10 @@ async function getImages() {
 	return images;
 }
 
+async function get() {
+	return REMEMBERIMAGE;
+}
+
 async function toggle(index) {
 	REMEMBERIMAGE[index].visible = !REMEMBERIMAGE[index].visible;
 
@@ -26,4 +30,5 @@ async function toggle(index) {
 module.exports = {
 	getImages,
 	toggle,
+	get
 };

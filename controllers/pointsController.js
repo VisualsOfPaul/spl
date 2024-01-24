@@ -48,6 +48,10 @@ async function getCurrentPoints() {
 	return CURRENTPOINTS;
 }
 
+async function getTotalPoints() {
+	return POINTS;
+}
+
 async function getVisibility() {
 	return CURRENTPOINTS.visible;
 }
@@ -86,6 +90,7 @@ async function resetTotalPoints() {
 	return POINTS;
 }
 
+
 // EXPORTS
 module.exports = {
 	getTeams,
@@ -98,4 +103,5 @@ module.exports = {
 	updateTotalPoints,
 	toggleTotal,
 	resetTotalPoints,
+	getTotalPoints
 };
