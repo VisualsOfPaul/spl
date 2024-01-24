@@ -1,3 +1,5 @@
 node_modules
 .env
 /static/js/wsHost.js
+.DS_Store
+**/.DS_Store
