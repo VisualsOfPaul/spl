@@ -10,5 +10,9 @@
 	{
 		"index": 2,
 		"visible": false
+	},
+	{
+		"index": 3,
+		"visible": false
 	}
 ]
