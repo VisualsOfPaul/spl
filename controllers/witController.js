@@ -6,7 +6,15 @@ const WHEREISTHIS = require("../data/wit");
 async function getImages() {
 	let images = [];
 
-	FS.readdirSync("./public/assets/where-is-this").forEach((file, index) => {
+	let files = FS.readdirSync("./public/assets/where-is-this");
+
+	files = files.sort((a, b) => {
+		const aIndex = parseInt(a.match(/\d+/)[0], 10);
+		const bIndex = parseInt(b.match(/\d+/)[0], 10);
+		return aIndex - bIndex;
+	});
+
+	files.forEach((file, index) => {
 		images.push({
 			file: file,
 			correctAnswer: WHEREISTHIS[index].correctAnswer,

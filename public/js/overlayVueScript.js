@@ -517,7 +517,7 @@ const REMEMBERIMAGE = Vue.createApp({
 							</ul>
 
 							<div class="content">
-								<p>{{ image.question }}</p>
+								<p v-html="image.question"></p>
 							</div>
 						</div>
 					</div>

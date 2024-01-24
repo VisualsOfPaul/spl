@@ -393,7 +393,7 @@ document.addEventListener("DOMContentLoaded", () => {
 						ease: "power3.inOut",
 					});
 
-					IMAGES[index].querySelector("img").style.transform = "scale(2)";
+					IMAGES[index].querySelector("img").style.transform = "scale(4)";
 					IMAGES[index].querySelector("#scale").style.width = "0%";
 				}
 			});

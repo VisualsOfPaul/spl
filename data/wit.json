@@ -58,5 +58,11 @@
 		"visible": false,
 		"correctAnswer": "Foyer (Decke)",
 		"answerVisible": false
+	},
+	{
+		"index": 10,
+		"visible": false,
+		"correctAnswer": "Show-Light",
+		"answerVisible": false
 	}
 ]

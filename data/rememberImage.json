@@ -2,41 +2,36 @@
 	{
 		"index": 0,
 		"visible": false,
-		"question": "Lorem ipsum?"
+		"question": "Welche Farbe hat die Uhr? <br> Wie viele Persoenen sind auf dem Bild?"
 	},
 	{
 		"index": 1,
 		"visible": false,
-		"question": "Lorem ipsum?"
+		"question": "Was ist auf dem grünen Pulli? <br> Welches Kleidungsstück ist Pink?"
 	},
 	{
 		"index": 2,
 		"visible": false,
-		"question": "Lorem ipsum?"
+		"question": "Welche Pose hat der Elektriker? <br> Wie viele Blitze sind gelb?"
 	},
 	{
 		"index": 3,
 		"visible": false,
-		"question": "Lorem ipsum?"
+		"question": "Aus welchen Zutaten besteht der Salat? <br> Wie viele Erdbeeren sind auf dem Bild?s"
 	},
 	{
 		"index": 4,
 		"visible": false,
-		"question": "Lorem ipsum?"
+		"question": "Was steht im Regal? <br> Wie viele Tische sind auf dem Bild?"
 	},
 	{
 		"index": 5,
 		"visible": false,
-		"question": "Lorem ipsum?"
+		"question": "Wie viele Reifen sind zu sehen? <br> In welche Richtungen zeigen die Pfeile der Schilder?"
 	},
 	{
 		"index": 6,
 		"visible": false,
-		"question": "Lorem ipsum?"
-	},
-	{
-		"index": 7,
-		"visible": false,
-		"question": "Lorem ipsum?"
+		"question": "Wie viele Bälle sind auf dem Bild?"
 	}
 ]
