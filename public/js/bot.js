@@ -6,6 +6,8 @@ const SOCKET = io("ws://localhost:3000");
 
 var votes = 0;
 var voters = [];
+var channelsTH = ['mithkoeln'];
+var channelsJustin = ['justinpennerthkoeln'];
 
 // Define configuration options
 const opts = {
@@ -16,9 +18,7 @@ const opts = {
     username: 'justinpennerthkoeln',
     password: 'fjkabk3yjlxogywsf0zlynnlix6lvx'
   },
-  channels: [
-    'justinpennerthkoeln'
-  ]
+  channels: channelsTH
 };
 
 // Create a client with our options
@@ -90,13 +90,15 @@ exports.resetCounter = function () {
   POLL.pollPlayers[1].votes = 0;
 }
 
+const mikoeln_id = '760615928';
+const justinpennerthkoeln_id = '1019573186';
 exports.startPoll = async function () {
-  fetch('https://api.twitch.tv/helix/chat/announcements?broadcaster_id=1019573186&moderator_id=1019573186', {
+  fetch(`https://api.twitch.tv/helix/chat/announcements?broadcaster_id=${mikoeln_id}&moderator_id=1019573186`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Accept': '*/*',
-      'Authorization': 'Bearer ukwkpln1r93e3cdtj69tlaquavh3hh',
+      'Authorization': 'Bearer w3wvzudsh2k6oh7mm4m3bjmxpapfk7',
       'Client-Id': '9n8gs2q0svqy0wq7hcx07inlhnyzck'
     },
     body: JSON.stringify({"message": `[Abstimmung] 1 für ${POLL.pollPlayers[0].answer} || 2 Für ${POLL.pollPlayers[1].answer}`, "color": "blue"})
@@ -105,12 +107,12 @@ exports.startPoll = async function () {
 
 exports.stopPoll = function () {
   voters = [];
-  fetch('https://api.twitch.tv/helix/chat/announcements?broadcaster_id=1019573186&moderator_id=1019573186', {
+  fetch(`https://api.twitch.tv/helix/chat/announcements?broadcaster_id=${mikoeln_id}&moderator_id=1019573186`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       'Accept': '*/*',
-      'Authorization': 'Bearer ukwkpln1r93e3cdtj69tlaquavh3hh',
+      'Authorization': 'Bearer w3wvzudsh2k6oh7mm4m3bjmxpapfk7',
       'Client-Id': '9n8gs2q0svqy0wq7hcx07inlhnyzck'
     },
     body: JSON.stringify({"message": `[Beendet] ${POLL.pollPlayers[0].answer}: ${POLL.pollPlayers[0].votes} || ${POLL.pollPlayers[1].answer}: ${POLL.pollPlayers[1].votes}`, "color": "blue"})

@@ -241,7 +241,7 @@ IO.on("connection", async (socket) => {
 		}
 		const POLL = await POLLCONTROLLER.togglePollStarted();
         IO.emit('toggle-poll-done', await POLL);
-        if(await POLL.visible) {
+        if(await POLL.started) {
             POLLCONTROLLER.startPoll(POLL.pollPlayers[0].answer, POLL.pollPlayers[1].answer);
         } else {
 			POLLCONTROLLER.stopPoll();
