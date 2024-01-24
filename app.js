@@ -224,21 +224,19 @@ IO.on("connection", async (socket) => {
 		IO.emit("toggle-imitate-done", await IMITATECONTROLLER.toggle(data.index));
 	});
 
-	socket.on("disconnect", () => {
-		IO.disconnectSockets();
-		console.log(`Socket ${socket.id} disconnected.`);
-	});
-
 	// POLL
 	socket.on("toggle-poll", async (data) => {
 		if (data[0] != "" && data[1] != "") {
 			POLLCONTROLLER.changePlayers(data);
 		}
 		const POLL = await POLLCONTROLLER.togglePollStarted();
-        IO.emit('toggle-poll-done', await POLL);
-        if(await POLL.started) {
-            POLLCONTROLLER.startPoll(POLL.pollPlayers[0].answer, POLL.pollPlayers[1].answer);
-        } else {
+		IO.emit("toggle-poll-done", await POLL);
+		if (await POLL.started) {
+			POLLCONTROLLER.startPoll(
+				POLL.pollPlayers[0].answer,
+				POLL.pollPlayers[1].answer
+			);
+		} else {
 			POLLCONTROLLER.stopPoll();
 			const Winner = await POLLCONTROLLER.showPollWinner();
 			IO.emit("show-poll-winner-done", await Winner.winner);
@@ -263,6 +261,11 @@ IO.on("connection", async (socket) => {
 			POLLCONTROLLER.changePlayers(data);
 		}
 		IO.emit("toggle-poll-visible-done", await POLLCONTROLLER.togglePoll());
+	});
+
+	socket.on("disconnect", () => {
+		socket.disconnect(true);
+		console.log(`Socket ${socket.id} disconnected.`);
 	});
 });
 
