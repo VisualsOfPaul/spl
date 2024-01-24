@@ -608,8 +608,10 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 
 		// DISCONNECT
-		SOCKET.on("disconnect", () => {
-			console.log(`Disconnected from ${SOCKET.id}.`);
+		SOCKET.on("disconnect", (reason) => {
+			if(reason === 'io server disconnect') {
+				SOCKET.connect();
+			}
 		});
 	});
 });

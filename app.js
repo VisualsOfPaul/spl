@@ -45,6 +45,7 @@ IO.on("connection", async (socket) => {
 
 	// FUNCTIONS TO BE CALLED AT CONNECTION
 	IO.emit("update-points-done", await POINTSCONTROLLER.getCurrentPoints());
+	IO.emit("update-poll", await POLLCONTROLLER.getPoll());
 
 	// SWITCH VIEW
 	socket.on("switch-view", (data) => {
@@ -224,6 +225,7 @@ IO.on("connection", async (socket) => {
 	});
 
 	socket.on("disconnect", () => {
+		IO.disconnectSockets();
 		console.log(`Socket ${socket.id} disconnected.`);
 	});
 

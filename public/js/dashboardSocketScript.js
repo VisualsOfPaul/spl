@@ -495,5 +495,29 @@ document.addEventListener("DOMContentLoaded", () => {
 				: "Umfrage Anzeigen";
 			TOGGLE.classList.toggle("active", await data.visible);
 		});
+
+		SOCKET.on('update-poll', async (data) => {
+			const PLAYERS = POLLFORM.querySelectorAll("div[id^='player-'] input");
+			const POINTS = POLLFORM.querySelectorAll("div[id^='player-'] p");
+			if(await data.pollPlayers[0].answer != "Player 1" && await data.pollPlayers[1].answer != "Player 2") {
+				PLAYERS[0].value = await data.pollPlayers[0].answer;
+				PLAYERS[1].value = await data.pollPlayers[1].answer;
+			}
+			POINTS[0].textContent = await data.pollPlayers[0].votes + " Stimmen";
+			POINTS[1].textContent = await data.pollPlayers[1].votes + " Stimmen";
+
+			(data.visible) ? TOGGLEPOLLVISIBLEBUTTON.classList.toggle("active", data.visible) : "";
+			(data.visible) ? TOGGLEPOLLVISIBLEBUTTON.textContent = "Umfrage Ausblenden" : TOGGLEPOLLVISIBLEBUTTON.textContent = "Umfrage Anzeigen";
+			(data.started) ? TOGGLEPOLLBUTTON.classList.toggle("active", data.started) : "";
+			(data.started) ? TOGGLEPOLLBUTTON.textContent = "Umfrage Stoppen" : TOGGLEPOLLBUTTON.textContent = "Umfrage Starten";
+		});
+
+		//DISCONNECT
+		SOCKET.on("disconnect", (reason) => {
+			if(reason === 'io server disconnect') {
+				SOCKET.connect();
+				console.log('Socket disconnected. Reconnecting...');
+			}
+		});
 	});
 });

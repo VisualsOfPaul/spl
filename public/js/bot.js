@@ -4,6 +4,13 @@ const POLL = require('../../data/poll.json');
 
 const SOCKET = io("ws://localhost:3000");
 
+SOCKET.on("disconnect", (reason) => {
+  if(reason === 'io server disconnect') {
+    SOCKET.connect();
+    console.log('Socket disconnected. Reconnecting...');
+  }
+});
+
 var votes = 0;
 var voters = [];
 var channelsTH = ['mithkoeln'];
