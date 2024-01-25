@@ -914,7 +914,7 @@ body {
 	height: 100%;
 	width: 100%;
 	object-fit: cover;
-	transform: scale(4);
+	transform: scale(10);
 }
 
 .where-is-this-container ul li figure figcaption {
@@ -1222,8 +1222,8 @@ body {
 }
 
 .starting-screen-inner .content figure {
-	height: 12rem;
-	width: 12rem;
+	height: 18rem;
+	width: 18rem;
 }
 
 .starting-screen-inner .content figure img {
@@ -1562,7 +1562,6 @@ body {
 }
 
 /* POLL */
-
 .poll-container {
 	position: absolute;
 	height: 100vh;
@@ -1659,4 +1658,100 @@ body {
 .twitch-poll-inner .content > div.winner h2,
 .twitch-poll-inner .content > div.winner h2 span {
 	color: var(--correct-color);
+}
+
+/* OUTRO */
+.outro-container {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: #000000;
+	opacity: 0;
+}
+
+.outro-box {
+	position: relative;
+	width: 100vw;
+	height: fit-content;
+	margin-top: 0;
+	z-index: 10;
+	display: flex;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: var(--spacing-3xl);
+	padding: var(--spacing-3xl);
+}
+
+.outro-box .logo-container {
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: calc(100vh - var(--spacing-3xl));
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.outro-box .logo-container img {
+	height: 30rem;
+	width: 30rem;
+	object-fit: contain;
+}
+
+.outro-box .departments {
+	position: relative;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-3xl);
+	color: var(--primary-color);
+	list-style: none;
+}
+
+.outro-box .departments > li {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--spacing-3xl);
+}
+
+.outro-box .departments > li > aside:nth-child(1) {
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-end;
+}
+
+.outro-box .departments > li > aside:nth-child(1) > h1 {
+	font-size: var(--font-size-xl);
+	font-weight: 700;
+	line-height: 100%;
+	font-style: italic;
+	color: var(--primary-color);
+}
+
+.outro-box .departments > li > aside:nth-child(2) {
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+}
+
+.outro-box .departments > li > aside:nth-child(2) > ul {
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-m);
+	list-style: none;
+}
+
+.outro-box .departments > li > aside:nth-child(2) > ul > li > p {
+	font-size: var(--font-size-l);
+	font-weight: 500;
+	line-height: 100%;
+	color: var(--primary-color);
 }

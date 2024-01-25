@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		// STARTING SCREEN
 		const STARTINGSCREENFORM = document.querySelector("#starting-screen-form");
+		const OUTROFORM = document.querySelector("#outro-form");
 
 		STARTINGSCREENFORM.addEventListener("submit", ($event) => {
 			$event.preventDefault();
@@ -41,6 +42,19 @@ document.addEventListener("DOMContentLoaded", () => {
 			TOGGLE.textContent = data
 				? "Startbildschirm verstecken"
 				: "Startbildschirm anzeigen";
+			TOGGLE.classList.toggle("active", data);
+		});
+
+		OUTROFORM.addEventListener("submit", ($event) => {
+			$event.preventDefault();
+
+			SOCKET.emit("toggle-outro");
+		});
+
+		SOCKET.on("toggle-outro-done", (data) => {
+			const TOGGLE = OUTROFORM.children[0];
+
+			TOGGLE.textContent = data ? "Outro verstecken" : "Outro anzeigen";
 			TOGGLE.classList.toggle("active", data);
 		});
 

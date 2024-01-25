@@ -68,6 +68,41 @@ document.addEventListener("DOMContentLoaded", () => {
 		window.STARTINGSCREENCOUNTDOWN = STARTINGSCREENCOUNTDOWN;
 	}
 
+	// OUTRO
+	SOCKET.on("toggle-outro-done", (data) => {
+		const OUTRO = document.querySelector("#outro-container");
+		const OUTROBOX = document.querySelector("#outro-box");
+
+		if (data) {
+			gsap.to(OUTRO, {
+				duration: 0.5,
+				opacity: 1,
+				ease: "power3.inOut",
+			});
+
+			window.outroScroll = gsap.to(OUTROBOX, {
+				duration: 90,
+				y: "-100%",
+				ease: "static",
+				delay: 5,
+			});
+		} else {
+			gsap.to(OUTRO, {
+				duration: 0.5,
+				opacity: 0,
+				ease: "power3.inOut",
+				onComplete: () => {
+					window.outroScroll.kill();
+
+					gsap.to(OUTROBOX, {
+						duration: 0,
+						y: 0,
+					});
+				},
+			});
+		}
+	});
+
 	// PIXELS
 	function createPixelArt(pixelsContainer) {
 		let grid = 100,
@@ -283,14 +318,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 			CARDS.forEach((card, index) => {
 				if (CARDS.length - 1 > index) {
-					gsap.to(CARDS[index], {
+					window["flipCardFront" + index] = gsap.to(CARDS[index], {
 						duration: 1,
 						rotateY: 180,
 						ease: "power3.inOut",
 						delay: TIME * (index + 1) + 1,
 					});
 
-					gsap.to(CARDS[index + 1], {
+					window["flipCardBack" + index] = gsap.to(CARDS[index + 1], {
 						duration: 1,
 						rotateY: 0,
 						ease: "power3.inOut",
@@ -304,14 +339,17 @@ document.addEventListener("DOMContentLoaded", () => {
 				y: "100%",
 				opacity: 0,
 				ease: "power3.inOut",
-			});
+				onComplete: () => {
+					CARDS.forEach((card, index) => {
+						window["flipCardFront" + index].kill();
+						window["flipCardBack" + index].kill();
 
-			CARDS.forEach((card, index) => {
-				gsap.to(CARDS[index], {
-					duration: 0,
-					rotateY: 0,
-					delay: 2,
-				});
+						gsap.to(CARDS[index], {
+							duration: 0,
+							rotateY: index == 0 ? 0 : 180,
+						});
+					});
+				},
 			});
 		}
 	});
@@ -422,14 +460,14 @@ document.addEventListener("DOMContentLoaded", () => {
 				});
 
 				window.IMAGESCALE = gsap.to(IMAGES[index].querySelector("img"), {
-					duration: 20,
+					duration: 45,
 					scale: 1,
 					ease: "linear",
 					delay: 2,
 				});
 
 				window.SCALE = gsap.to(IMAGES[index].querySelector("#scale"), {
-					duration: 20,
+					duration: 45,
 					width: "100%",
 					ease: "linear",
 					delay: 2,
@@ -442,26 +480,42 @@ document.addEventListener("DOMContentLoaded", () => {
 					ease: "power3.inOut",
 				});
 
-				IMAGES[index].querySelector("img").style.transform = "scale(4)";
+				IMAGES[index].querySelector("img").style.transform = "scale(10)";
 				IMAGES[index].querySelector("#scale").style.width = "0%";
 			}
 		});
 	});
 
 	SOCKET.on("toggle-where-is-this-answer-done", async (data) => {
+		const IMAGES = await document.querySelectorAll(
+			"li[id^='where-is-this-image-']"
+		);
 		const ANSWERS = await document.querySelectorAll(
 			"li[id^='where-is-this-image-'] #correct-answer"
 		);
 
 		data.forEach(async (image, index) => {
-			IMAGESCALE.pause();
-			SCALE.pause();
+			IMAGESCALE.kill();
+			SCALE.kill();
 
 			if (image.answerVisible) {
+				gsap.to(IMAGES[index].querySelector("img"), {
+					duration: 3,
+					scale: 1,
+					ease: "power3.inOut",
+				});
+
+				gsap.to(IMAGES[index].querySelector("#scale"), {
+					duration: 3,
+					width: "100%",
+					ease: "power3.inOut",
+				});
+
 				gsap.to(ANSWERS[index], {
 					duration: 0.5,
 					opacity: 1,
 					ease: "power3.inOut",
+					delay: 3,
 				});
 			} else {
 				gsap.to(ANSWERS[index], {

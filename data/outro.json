@@ -1,0 +1,97 @@
+{
+	"member": [
+		{
+			"role": "Produktion",
+			"people": [
+				"Tom Gerold",
+				"Simon Porten",
+				"Oliver Mertens",
+				"Ernestine Wassermann",
+				"Hans Kornacher"
+			]
+		},
+		{
+			"role": "Redaktion",
+			"people": [
+				"Jonas Notzon",
+				"Yasmin Ziegler",
+				"Sing Mao Chung",
+				"Daniel Myrcik"
+			]
+		},
+		{
+			"role": "Regie",
+			"people": [
+				"Vanessa Nußbaum",
+				"Fabian Ngo",
+				"Livius Kahlo",
+				"Christian Dedy"
+			]
+		},
+		{
+			"role": "Moderation",
+			"people": ["Cansel Altunok", "Cilly Dickmann", "Alberije Osaj"]
+		},
+		{
+			"role": "Technisches Departement",
+			"people": ["Nicolas Friedmann", "Lisa Grebe", "Marvin Fels"]
+		},
+		{
+			"role": "Kamera & DOP",
+			"people": [
+				"Tim Pausch",
+				"Nam Son Vu",
+				"Orhan Karakas",
+				"Mohammadamin Sabetnia"
+			]
+		},
+		{
+			"role": "Licht",
+			"people": [
+				"Katerina Rudnytska",
+				"Mauricio Köppen",
+				"John Swann",
+				"Jonas Lindek"
+			]
+		},
+		{
+			"role": "Bildregie",
+			"people": ["Kenan Benli", "Jessica Haque", "Khaleeq Khan"]
+		},
+		{
+			"role": "Audio",
+			"people": ["Meliha Schadwinkel", "Enrico Caltabiano", "Nino Malgadey"]
+		},
+		{
+			"role": "Ausstattung & Szenenbild",
+			"people": [
+				"Alessandro Frank",
+				"Raziel Hatzke",
+				"Madina Ibragimova",
+				"Adonisa Gashi",
+				"Joash Koshan",
+				"Sekarja Benaggoune"
+			]
+		},
+		{
+			"role": "Grafik & Overlay",
+			"people": ["Justin Penner", "Paul Strebinger", "Anton Berg"]
+		},
+		{
+			"role": "Making Of",
+			"people": ["Timo Engel", "Clemens Brachtendorf"]
+		},
+		{
+			"role": "Social Media & Marketing",
+			"people": [
+				"Karam Hayani",
+				"Aleyna-Fatma Toplu",
+				"Merve Ak",
+				"Hurilay Güngör",
+				"Michelle Nietzschmann"
+			]
+		}
+	],
+
+	"visible": false
+}

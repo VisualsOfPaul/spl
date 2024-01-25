@@ -37,6 +37,7 @@ const COUNTLETTERSCONTROLLER = require("./controllers/countLettersController.js"
 const REMEMBERIMAGECONTROLLER = require("./controllers/rememberImageController.js");
 const IMITATECONTROLLER = require("./controllers/imitateController.js");
 const POLLCONTROLLER = require("./controllers/pollController.js");
+const OUTROCONTROLLER = require("./controllers/outroController.js");
 
 // SOCKET SETUP
 const IO = new SOCKETIO.Server(SERVER);
@@ -59,6 +60,16 @@ IO.on("connection", async (socket) => {
 			"toggle-starting-screen-done",
 			await (
 				await STARTINGSCREENCONTROLLER.toggle()
+			).visible
+		);
+	});
+
+	// OUTRO
+	socket.on("toggle-outro", async () => {
+		IO.emit(
+			"toggle-outro-done",
+			await (
+				await OUTROCONTROLLER.toggle()
 			).visible
 		);
 	});

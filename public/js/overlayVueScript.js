@@ -1,3 +1,46 @@
+// OUTRO
+const OUTRO = Vue.createApp({
+	data() {
+		return {
+			departments: [],
+		};
+	},
+	template: `
+		<article id="outro-box" class="outro-box">
+			<!-- Logo -->
+			<figure class="logo-container">
+				<img src="/assets/img/logo-color.png" class="logo">
+			</figure>
+
+			<!-- Departments -->
+			<ul class="departments">
+				<li v-for="department in departments" class="department-item">
+					<aside>
+						<h1>{{ department.role }}</h1>
+					</aside>
+					<aside>
+						<ul>
+							<li v-for="person in department.people">
+								<p>{{ person }}</p>
+							</li>
+						</ul>
+					</aside>
+				</li>
+			</ul>
+		</article>
+	`,
+	methods: {
+		async getOutro() {
+			const RESPONSE = await fetch("/api/outro");
+			const DATA = await RESPONSE.json();
+			this.departments = await DATA.member;
+		},
+	},
+	mounted() {
+		this.getOutro();
+	},
+}).mount("#outro-container");
+
 // BANDAGES
 const bandagesLeft = Vue.createApp({
 	data() {
@@ -748,7 +791,7 @@ const POLL = Vue.createApp({
 				<div class="content">
 					<h1>{{this.poll.pollQuestion}}</h1>
 					<div v-for="(player, index) in this.poll.pollPlayers" :key="index" :class="this.poll.winner == index ? 'winner' : ''">
-						<h2>{{ player.answer }} <span>({{ player.votes }}%)</span></h2>
+						<h2>({{ index + 1 }}) {{ player.answer }} <span>({{ player.votes }}%)</span></h2>
 						<div>
 							<div class="scale">
 								<div class="progress" :style="'width: ' + player.votes + '%;'"></div>
