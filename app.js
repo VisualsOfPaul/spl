@@ -38,6 +38,7 @@ const REMEMBERIMAGECONTROLLER = require("./controllers/rememberImageController.j
 const IMITATECONTROLLER = require("./controllers/imitateController.js");
 const POLLCONTROLLER = require("./controllers/pollController.js");
 const OUTROCONTROLLER = require("./controllers/outroController.js");
+const WINNERCONTROLLER = require("./controllers/winnerController.js");
 
 // SOCKET SETUP
 const IO = new SOCKETIO.Server(SERVER);
@@ -58,9 +59,9 @@ IO.on("connection", async (socket) => {
 
 	/**
 	 * Functions from games
-	*/
+	 */
 	IO.emit("update-quiz-done", await QUIZCONTROLLER.getQuiz());
-	IO.emit("update-lego-build-done", await LEGOCONTROLLER.get()); 
+	IO.emit("update-lego-build-done", await LEGOCONTROLLER.get());
 	IO.emit("update-remember-image-done", await REMEMBERIMAGECONTROLLER.get());
 	IO.emit("update-where-is-this-done", await WHEREISTHISCONTROLLER.get()); //
 	IO.emit("update-imitate-done", await IMITATECONTROLLER.getImitate()); //
@@ -294,6 +295,11 @@ IO.on("connection", async (socket) => {
 			POLLCONTROLLER.changePlayers(data);
 		}
 		IO.emit("toggle-poll-visible-done", await POLLCONTROLLER.togglePoll());
+	});
+
+	// WINNER
+	socket.on("toggle-winner", async (data) => {
+		IO.emit("toggle-winner-done", await WINNERCONTROLLER.toggle(data));
 	});
 
 	socket.on("disconnect", () => {

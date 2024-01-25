@@ -3,6 +3,9 @@ import io from "https://cdn.skypack.dev/socket.io-client";
 import gsap from "https://cdn.skypack.dev/gsap";
 import { getHost } from "./wsHost.js";
 
+// CONFETTI
+import confetti from "https://cdn.skypack.dev/canvas-confetti";
+
 document.addEventListener("DOMContentLoaded", () => {
 	// Establish connection
 	const SOCKET = io(getHost(window.location.href));
@@ -60,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 			clearInterval(window.STARTINGSCREENCOUNTDOWN);
 		}
-	});	
+	});
 
 	function startingScreenCountDown(time) {
 		const TIMER = document.querySelector("#starting-screen-countdown");
@@ -257,7 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		window.stopTimer();
 	});
 
-	SOCKET.on('update-timer-done', (data) => {
+	SOCKET.on("update-timer-done", (data) => {
 		if (data.visible) {
 			gsap.to("#timer", {
 				duration: 1,
@@ -310,7 +313,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				ease: "power3.inOut",
 			});
 		}
-	})
+	});
 
 	// POINTS (GAME)
 	const POINTS = document.querySelectorAll("div[id^='team-points-']");
@@ -428,9 +431,8 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 		}
 	});
-	
-	SOCKET.on("update-points-done", (data) => {
 
+	SOCKET.on("update-points-done", (data) => {
 		POINTS.forEach((point, index) => {
 			if (data.visible) {
 				gsap.to(point, {
@@ -496,9 +498,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 
-	SOCKET.on('update-quiz-done', (data) => {
-		
-	})
+	SOCKET.on("update-quiz-done", (data) => {});
 
 	// LEGO
 	SOCKET.on("toggle-lego-build-done", (data) => {
@@ -523,7 +523,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 
-	SOCKET.on('update-lego-build-done', (data) => {
+	SOCKET.on("update-lego-build-done", (data) => {
 		const BUILDS = document.querySelectorAll("li[id^='lego-build-image-']");
 
 		data.forEach((build, index) => {
@@ -543,7 +543,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				});
 			}
 		});
-	})
+	});
 
 	// MEMORY
 	// SOCKET.on("toggle-memory-done", (data) => {
@@ -705,7 +705,6 @@ document.addEventListener("DOMContentLoaded", () => {
 			const TIME = 15;
 
 			if (image.visible) {
-
 				// Show image
 				gsap.to(IMAGES[index], {
 					duration: 1,
@@ -776,7 +775,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 
-	SOCKET.on('update-imitate-done', (data) => {
+	SOCKET.on("update-imitate-done", (data) => {
 		const IMITATE = document.querySelectorAll(
 			"#imitate-container > ul > li[id^='imitate-']"
 		);
@@ -798,7 +797,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				});
 			}
 		});
-	})
+	});
 
 	// POLL
 	SOCKET.on("toggle-poll-visible-done", (data) => {
@@ -842,6 +841,55 @@ document.addEventListener("DOMContentLoaded", () => {
 				duration: 1,
 				y: 0,
 				opacity: 1,
+				ease: "power3.inOut",
+			});
+		}
+	});
+
+	// WINNER
+	SOCKET.on("toggle-winner-done", (data) => {
+		const WINNER = document.querySelectorAll("li[id^='winner-item-']");
+
+		if (data.visible) {
+			gsap.to(WINNER[data.course], {
+				duration: 1,
+				y: 0,
+				opacity: 1,
+				ease: "power3.inOut",
+			});
+
+			var duration = 30 * 1000;
+			var animationEnd = Date.now() + duration;
+			var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+			function randomInRange(min, max) {
+				return Math.random() * (max - min) + min;
+			}
+
+			var interval = setInterval(function () {
+				var timeLeft = animationEnd - Date.now();
+
+				if (timeLeft <= 0) {
+					return clearInterval(interval);
+				}
+
+				var particleCount = 100 * (timeLeft / duration);
+				confetti({
+					...defaults,
+					particleCount,
+					origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+				});
+				confetti({
+					...defaults,
+					particleCount,
+					origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+				});
+			}, 250);
+		} else {
+			gsap.to(WINNER[data.course], {
+				duration: 1,
+				y: "100%",
+				opacity: 0,
 				ease: "power3.inOut",
 			});
 		}

@@ -836,3 +836,47 @@ window.updateVotes = POLL.updateVotes;
 window.updatePlayers = POLL.updatePlayers;
 window.showPollWinner = POLL.showPollWinner;
 window.clearPoll = POLL.clearPoll;
+
+// WINNER
+const WINNER = Vue.createApp({
+	data() {
+		return {
+			teams: [],
+		};
+	},
+	template: `
+		<ul>
+			<li v-for="(team, index) in teams" :id="'winner-item-' + index" class="winner-outer">
+				<ul class="corners">
+					<li>&nbsp;</li>
+					<li>&nbsp;</li>
+					<li>&nbsp;</li>
+					<li>&nbsp;</li>
+				</ul>
+
+				<div class="winner-inner">
+					<ul class="corners">
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+						<li>&nbsp;</li>
+					</ul>
+
+					<div class="content">
+						<h2>G of IT ist</h2>
+						<h3>{{ team.name }}</h3>
+					</div>
+				</div>
+			</li>
+		</ul>
+	`,
+	methods: {
+		async getWinner() {
+			const response = await fetch("/api/teams");
+			this.teams = await response.json();
+		},
+	},
+	mounted() {
+		this.getWinner();
+	},
+}).mount("#winner-container");

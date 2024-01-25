@@ -644,7 +644,6 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: var(--border-thickness);
 }
 
 /* Outer border */
@@ -653,7 +652,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	bottom: calc(var(--border-thickness) * 2);
+	bottom: var(--spacing-xl);
 	left: 50%;
 	width: fit-content;
 	gap: var(--spacing-m);
@@ -1123,7 +1122,7 @@ body {
 		var(--border-thickness) 0 0 0 var(--border-inner-color),
 		0 calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
 		0 var(--border-thickness) 0 0 var(--border-inner-color);
-	background-color: var(--border-background-color);
+	background-color: var(--primary-color);
 }
 
 .sponsors-images-inner .corners li {
@@ -1754,4 +1753,96 @@ body {
 	font-weight: 500;
 	line-height: 100%;
 	color: var(--primary-color);
+}
+
+/* WINNER */
+.winner-container {
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.winner-container > ul {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-end;
+	height: 100%;
+	position: relative;
+	padding: var(--spacing-xl);
+}
+
+.winner-outer {
+	position: absolute;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: fit-content;
+	gap: var(--spacing-m);
+	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+		var(--border-thickness) 0 0 0 var(--border-outer-color),
+		0 calc(-1 * var(--border-thickness)) 0 0 var(--border-outer-color),
+		0 var(--border-thickness) 0 0 var(--border-outer-color);
+	padding: var(--border-thickness);
+	background-color: var(--border-background-color-transparent);
+	transform: translateY(100%);
+	opacity: 0;
+	z-index: 1;
+}
+
+.winner-outer .corners li {
+	background-color: var(--border-outer-color);
+}
+
+.winner-inner {
+	position: relative;
+	width: fit-content;
+	padding: var(--spacing-l);
+	box-shadow: calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+		var(--border-thickness) 0 0 0 var(--border-inner-color),
+		0 calc(-1 * var(--border-thickness)) 0 0 var(--border-inner-color),
+		0 var(--border-thickness) 0 0 var(--border-inner-color);
+	background-color: var(--border-background-color-transparent);
+}
+
+.winner-inner .corners li {
+	background-color: var(--border-inner-color);
+}
+
+.winner-inner .content {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: var(--primary-color);
+	gap: var(--spacing-m);
+}
+
+.winner-inner .content h2 {
+	font-size: var(--font-size-xl);
+	font-weight: 700;
+	line-height: 100%;
+	font-style: italic;
+	color: var(--secondary-color);
+}
+
+.winner-inner .content h3 {
+	font-size: var(--font-size-3xl);
+	font-weight: 700;
+	line-height: 100%;
+	font-style: italic;
+	color: var(--primary-color);
+	white-space: nowrap;
+}
+
+.confetti {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
 }
