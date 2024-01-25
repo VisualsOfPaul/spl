@@ -90,7 +90,6 @@ async function resetTotalPoints() {
 	return POINTS;
 }
 
-
 // EXPORTS
 module.exports = {
 	getTeams,
@@ -103,5 +102,5 @@ module.exports = {
 	updateTotalPoints,
 	toggleTotal,
 	resetTotalPoints,
-	getTotalPoints
+	getTotalPoints,
 };

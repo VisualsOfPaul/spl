@@ -39,9 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		SOCKET.on("toggle-starting-screen-done", (data) => {
 			const TOGGLE = STARTINGSCREENFORM.children[0];
 
-			TOGGLE.textContent = data
-				? "Startbild verstecken"
-				: "Startbild anzeigen";
+			TOGGLE.textContent = data ? "Startbild verstecken" : "Startbild anzeigen";
 			TOGGLE.classList.toggle("active", data);
 		});
 
@@ -64,7 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				? "Startbild verstecken"
 				: "Startbild anzeigen";
 			TOGGLE.classList.toggle("active", data.visible);
-		});	
+		});
 
 		// SPONSORS
 		const SPONSORFORM = document.querySelector("#show-sponsors-form");
@@ -148,7 +146,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			TOGGLE.classList.toggle("active", data);
 		});
 
-		SOCKET.on('update-timer-done', (data) => {
+		SOCKET.on("update-timer-done", (data) => {
 			const TOGGLE = document.querySelector("#toggle-timer");
 
 			TOGGLE.textContent = data.visible ? "Timer ausblenden" : "Timer anzeigen";
@@ -203,7 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			TOGGLE.classList.toggle("active", data);
 		});
 
-		SOCKET.on('update-total-points-done', (data) => {
+		SOCKET.on("update-total-points-done", (data) => {
 			const POINTS = document.querySelectorAll("#points-total-form input");
 
 			POINTS.forEach((point, index) => {
@@ -212,7 +210,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 			const TOGGLE = document.querySelector("#toggle-total-points");
 
-			TOGGLE.textContent = data.visible ? "Gesamtpunkte ausblenden" : "Gesamtpunkte anzeigen";
+			TOGGLE.textContent = data.visible
+				? "Gesamtpunkte ausblenden"
+				: "Gesamtpunkte anzeigen";
 			TOGGLE.classList.toggle("active", data.visible);
 		});
 
@@ -275,7 +275,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 			const TOGGLE = POINTSFORM.children[0];
 
-			TOGGLE.textContent = data.visible ? "Punkte ausblenden" : "Punkte anzeigen";
+			TOGGLE.textContent = data.visible
+				? "Punkte ausblenden"
+				: "Punkte anzeigen";
 			TOGGLE.classList.toggle("active", data.visible);
 		});
 
@@ -350,11 +352,13 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 		});
 
-		SOCKET.on('update-quiz-done', (data) => {
+		SOCKET.on("update-quiz-done", (data) => {
 			const QUESTIONS = document.querySelectorAll("#quiz-container ol li");
 
 			QUESTIONS.forEach((question, index) => {
-				question.children[1].textContent = data[index].visible ? "Frage ausblenden" : "Frage einblenden";
+				question.children[1].textContent = data[index].visible
+					? "Frage ausblenden"
+					: "Frage einblenden";
 				question.children[1].classList.toggle("active", data[index].visible);
 			});
 		});
@@ -392,7 +396,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					: "Bild anzeigen";
 				toggle.classList.toggle("active", data[index].visible);
 			});
-		})
+		});
 
 		// MEMORY
 		// const MEMORYFORM = document.querySelector("#memory-form");
@@ -451,7 +455,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 		});
 
-		SOCKET.on('update-where-is-this-done', (data) => {
+		SOCKET.on("update-where-is-this-done", (data) => {
 			const TOGGLES = document.querySelectorAll(
 				'button[id^="toggle-where-is-this-"]'
 			);
@@ -471,7 +475,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					: "Lösung anzeigen";
 				answer.classList.toggle("active", data[index].answerVisible);
 			});
-		})
+		});
 
 		// COUNT LETTERS
 		function toggleWord(index) {
@@ -526,8 +530,10 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 		});
 
-		SOCKET.on('update-remember-image-done', (data) => {
-			const TOGGLES = document.querySelectorAll('button[id^="toggle-remember-image-"]');
+		SOCKET.on("update-remember-image-done", (data) => {
+			const TOGGLES = document.querySelectorAll(
+				'button[id^="toggle-remember-image-"]'
+			);
 
 			TOGGLES.forEach((toggle, index) => {
 				toggle.textContent = data[index].visible
@@ -559,7 +565,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 		});
 
-		SOCKET.on('update-imitate-done', (data) => {
+		SOCKET.on("update-imitate-done", (data) => {
 			const TOGGLES = document.querySelectorAll(
 				'button[id^="toggle-imitate-"]'
 			);
@@ -663,6 +669,28 @@ document.addEventListener("DOMContentLoaded", () => {
 			data.started
 				? (TOGGLEPOLLBUTTON.textContent = "Umfrage Stoppen")
 				: (TOGGLEPOLLBUTTON.textContent = "Umfrage Starten");
+		});
+
+		// WINNER
+		const WINNERFORM = document.querySelector("#winner-form");
+
+		WINNERFORM.addEventListener("submit", ($event) => {
+			$event.preventDefault();
+
+			const WINNER = WINNERFORM.querySelector("#winner-select").value;
+
+			SOCKET.emit("toggle-winner", WINNER);
+		});
+
+		SOCKET.on("toggle-winner-done", (data) => {
+			const WINNER = WINNERFORM.querySelector("#winner-select");
+			const TOGGLE = WINNERFORM.querySelector("#toggle-winner");
+
+			TOGGLE.textContent =
+				data.visible != "" ? "Gewinner ausblenden" : "Gewinner anzeigen";
+			TOGGLE.classList.toggle("active", data.visible);
+
+			WINNER.value = data.course;
 		});
 
 		//DISCONNECT

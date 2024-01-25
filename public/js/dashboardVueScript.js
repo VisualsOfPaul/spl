@@ -288,3 +288,27 @@ const POINTSTOTAL = Vue.createApp({
 		this.getTeams();
 	},
 }).mount("#points-total-container");
+
+// WINNER
+const WINNER = Vue.createApp({
+	data() {
+		return {
+			teams: [],
+		};
+	},
+	template: `
+		<option disabled selected>Bitte wählen</option>
+		<option v-for="(team, index) in teams" :value="index">
+			{{ team.name }}
+		</option>
+	`,
+	methods: {
+		async getTeams() {
+			const response = await fetch("/api/teams");
+			this.teams = await response.json();
+		},
+	},
+	mounted() {
+		this.getTeams();
+	},
+}).mount("#winner-select");

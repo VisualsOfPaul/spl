@@ -54,7 +54,7 @@
 		"answerVisible": false
 	},
 	{
-		"question": "\"Cloud Computing\" ermöglicht den Zugriff auf Daten und Ressourcen über das Internet.",
+		"question": "\"Cloud Computing\" ermöglicht den \n Zugriff auf Daten und Ressourcen \n über das Internet.",
 		"answer": "true",
 		"visible": false,
 		"answerVisible": false
