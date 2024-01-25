@@ -21,13 +21,13 @@
 		"index": 3,
 		"visible": false,
 		"question": "Welche Pose hat der Elektriker?",
-		"question2": " Wie viele Blitze sind gelb?"
+		"question2": "Wie viele Blitze sind gelb?"
 	},
 	{
 		"index": 4,
 		"visible": false,
-		"question": "Aus welchen Zutaten besteht der Salat?",
-		"question2": "Wie viele Erdbeeren sind auf dem Bild?"
+		"question": "Nenne zwei verschiedene Stücke Obst/Gemüse aus dem Bild.",
+		"question2": "Aus welchen Zutaten besteht der Salat?"
 	},
 	{
 		"index": 5,
