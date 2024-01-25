@@ -750,6 +750,19 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	});
 
+	SOCKET.on("toggle-second-question-done", (data) => {
+		const QUESTIONS = document.querySelectorAll(
+			"#remember-image-container > ul > li"
+		);
+
+		QUESTIONS[data.index]
+			.querySelector("#question-1")
+			.classList.toggle("hidden");
+		QUESTIONS[data.index]
+			.querySelector("#question-2")
+			.classList.toggle("hidden");
+	});
+
 	// IMITATE
 	SOCKET.on("toggle-imitate-done", (data) => {
 		const IMITATE = document.querySelectorAll(

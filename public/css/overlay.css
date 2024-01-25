@@ -1461,11 +1461,17 @@ body {
 
 .remember-image-container > ul > li .card > .back .content {
 	display: flex;
+	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	height: 100%;
 	width: 100%;
 	padding: var(--spacing-l);
+}
+
+.remember-image-container .question-1.hidden,
+.remember-image-container .question-2.hidden {
+	display: none;
 }
 
 .remember-image-inner .image {
@@ -1669,8 +1675,9 @@ body {
 	top: 0;
 	width: 100vw;
 	height: 100vh;
-	background-color: #000000;
+	background-color: #00000080;
 	opacity: 0;
+	z-index: 10;
 }
 
 .outro-box {

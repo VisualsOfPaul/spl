@@ -214,6 +214,9 @@ const REMEMBERIMAGE = Vue.createApp({
 					<img :src="'/assets/remember-image/' + image.file">
 				</figure>
 				<button @click="toggleImage(index)" :id="'toggle-remember-image-' + index">Bild anzeigen</button>
+				<template v-if="image.question2 != null">
+					<button @click="toggleSecondQuestion(index)" :id="'toggle-second-question-' + index">Zweite Frage anzeigen</button>
+				</template>
 			</li>
 		</ul>
 	`,
@@ -225,6 +228,10 @@ const REMEMBERIMAGE = Vue.createApp({
 
 		async toggleImage(index) {
 			toggleRememberImage(index);
+		},
+
+		async toggleSecondQuestion(index) {
+			toggleSecondQuestion(index);
 		},
 	},
 	mounted() {

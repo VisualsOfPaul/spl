@@ -2,41 +2,49 @@
 	{
 		"index": 0,
 		"visible": false,
-		"question": "Wie viele Bälle sind auf dem Bild?"
+		"question": "Wie viele Bälle sind auf dem Bild?",
+		"question2": null
 	},
 	{
 		"index": 1,
 		"visible": false,
-		"question": "Welche Farbe hat die Uhr? <br> Wie viele Persoenen sind auf dem Bild?"
+		"question": "Welche Farbe hat die Uhr?",
+		"question2": "Wie viele Personen sind auf dem Bild?"
 	},
 	{
 		"index": 2,
 		"visible": false,
-		"question": "Was ist auf dem grünen Pulli? <br> Welches Kleidungsstück ist Pink?"
+		"question": "Was ist auf dem grünen Pulli?",
+		"question2": "Welches Kleidungsstück ist Pink?"
 	},
 	{
 		"index": 3,
 		"visible": false,
-		"question": "Welche Pose hat der Elektriker? <br> Wie viele Blitze sind gelb?"
+		"question": "Welche Pose hat der Elektriker?",
+		"question2": " Wie viele Blitze sind gelb?"
 	},
 	{
 		"index": 4,
 		"visible": false,
-		"question": "Aus welchen Zutaten besteht der Salat? <br> Wie viele Erdbeeren sind auf dem Bild?"
+		"question": "Aus welchen Zutaten besteht der Salat?",
+		"question2": "Wie viele Erdbeeren sind auf dem Bild?"
 	},
 	{
 		"index": 5,
 		"visible": false,
-		"question": "Was steht im Regal? <br> Wie viele Tische sind auf dem Bild?"
+		"question": "Was steht im Regal?",
+		"question2": "Wie viele Tische sind auf dem Bild?"
 	},
 	{
 		"index": 6,
 		"visible": false,
-		"question": "Wie viele Reifen sind zu sehen? <br> In welche Richtungen zeigen die Pfeile der Schilder?"
+		"question": "Wie viele Reifen sind zu sehen?",
+		"question2": "In welche Richtungen zeigen die Pfeile der Schilder?"
 	},
 	{
 		"index": 7,
 		"visible": false,
-		"question": "Wie viele i-Punkte sind auf dem Bild?"
+		"question": "Wie viele i-Punkte sind auf dem Bild?",
+		"question2": null
 	}
 ]

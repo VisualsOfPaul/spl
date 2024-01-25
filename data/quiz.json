@@ -1,61 +1,97 @@
 [
 	{
-		"question": "In der Informatik gibt es einen \n Unterschied zwischen \"NULL\" und \"0\".",
+		"question": "true or false: In der Informatik \n gibt es einen Unterschied zwischen \n \"NULL\" und \"0\".",
 		"answer": "true",
 		"visible": false,
 		"answerVisible": false
 	},
 	{
-		"question": "Ein \"Lisp\"-Programmierer könnte \n sagen: \"In my next life, I want to \n be a tree,\" und dabei einen \n syntaktisch korrekten Code meinen.",
-		"answer": "true",
-		"visible": false,
-		"answerVisible": false
-	},
-	{
-		"question": "Bei einer \"Zero-Day-Attacke\" handelt \n es sich um einen Angriff, der keinen \n Schaden verursacht.",
+		"question": "true or false: 144 Bits sind \n umgerechnet 16 Bytes.",
 		"answer": "false",
 		"visible": false,
 		"answerVisible": false
 	},
 	{
-		"question": "Eine \"Nonce\" ist in der Informatik \n ein Jargon für eine unerfahrene \n Person.",
-		"answer": "false",
-		"visible": false,
-		"answerVisible": false
-	},
-	{
-		"question": "Der Satz \"Dieser Satz ist falsch\" \n kann in der formalen Logik \n konsistent wahr sein.",
-		"answer": "Konsistenzparadoxon",
-		"visible": false,
-		"answerVisible": false
-	},
-	{
-		"question": "Der Begriff \"Y2K-Bug\" steht für \n \"Year 2000 Bug\" und führte \n tatsächlich zu globalen \n Computerproblemen.",
+		"question": "true or false: Ein \n \"Lisp\"-Programmierer könnte sagen: \n \"In my next life, I want to be \n a tree,\" und dabei  einen \n syntaktisch korrekten Code meinen.",
 		"answer": "true",
 		"visible": false,
 		"answerVisible": false
 	},
 	{
-		"question": "Der \"IPv6\"-Standard wurde \n eingeführt, um die begrenzte Anzahl \n von IPv4-Adressen zu erhöhen.",
+		"question": "true or false: \"TCP\" \n ist ein verbindungsorientiertes \n Protokoll, das für die \n Datenübertragung genutzt \n wird.",
 		"answer": "true",
 		"visible": false,
 		"answerVisible": false
 	},
 	{
-		"question": "Bei der Programmierung bedeutet \n \"Polymorphie\" zwangsläufig, dass \n ein Programm viele Bugs hat.",
+		"question": "true or false: Bei einer \n \"Zero-Day-Attacke\" handelt es \n sich um einen Angriff, der keinen \n Schaden verursacht.",
 		"answer": "false",
 		"visible": false,
 		"answerVisible": false
 	},
 	{
-		"question": "Der Begriff \"Refactoring\" bezeichnet \n das Hinzufügen neuer Funktionen \n zu einem bestehenden Code, um ihn \n zu verbessern.",
+		"question": "true or false: Eine \"Nonce\" \n ist in der Informatik ein \n Jargon für eine unerfahrene \n Person.",
 		"answer": "false",
 		"visible": false,
 		"answerVisible": false
 	},
 	{
-		"question": "\"Cloud Computing\" ermöglicht den \n Zugriff auf Daten und Ressourcen \n über das Internet.",
+		"question": "true or false: Der Begriff \n \"Y2K-Bug\" steht für \"Year \n 2000 Bug\" und führte \n tatsächlich zu globalen \n Computerproblemen.",
 		"answer": "true",
+		"visible": false,
+		"answerVisible": false
+	},
+	{
+		"question": "true or false: Bei der \n Programmierung bedeutet \n \"Polymorphie\" zwangsläufig, \n dass ein Programm viele \n Bugs hat.",
+		"answer": "false",
+		"visible": false,
+		"answerVisible": false
+	},
+	{
+		"question": "true or false: Der \n \"IPv6\"-Standard wurde \n eingeführt, um die begrenzte \n Anzahl von IPv4-Adressen \n zu erhöhen.",
+		"answer": "true",
+		"visible": false,
+		"answerVisible": false
+	},
+	{
+		"question": "true or false: Alan Turing, der \n sogenannte \"Vater der \n Informatik\" wurde aufgrund \n seiner Homosexualität verfolgt.",
+		"answer": "true",
+		"visible": false,
+		"answerVisible": false
+	},
+	{
+		"question": "true or false: Der Begriff \n \"Refactoring\" bezeichnet das \n Hinzufügen neuer Funktionen \n zu einem bestehenden Code, um \n ihn zu verbessern.",
+		"answer": "false",
+		"visible": false,
+		"answerVisible": false
+	},
+	{
+		"question": "true or false: Ein \"Router\" \n leitet Datenpakete zwischen \n verschiedenen Netzwerken \n weiter.",
+		"answer": "true",
+		"visible": false,
+		"answerVisible": false
+	},
+	{
+		"question": "true or false: Die \n Programmiersprache \"C\" ist eine \n prozedurale Programmiersprache.",
+		"answer": "true",
+		"visible": false,
+		"answerVisible": false
+	},
+	{
+		"question": "true or false: \"SQL\" steht \n für Systemized Query \n Language und wird für \n Datenbankabfragen verwendet.",
+		"answer": "false",
+		"visible": false,
+		"answerVisible": false
+	},
+	{
+		"question": "true or false: \"JavaScript\" \n ist eine clientseitige \n Programmiersprache für \n Webseiten.",
+		"answer": "true",
+		"visible": false,
+		"answerVisible": false
+	},
+	{
+		"question": "Schätzfrage: Wie viel \n Bier trinkt jeder Deutsche \n durchschnittlich pro Jahr?",
+		"answer": "92",
 		"visible": false,
 		"answerVisible": false
 	}

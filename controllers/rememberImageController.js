@@ -10,6 +10,7 @@ async function getImages() {
 		images.push({
 			file: file,
 			question: REMEMBERIMAGE[index].question,
+			question2: REMEMBERIMAGE[index].question2,
 		});
 	});
 
@@ -30,5 +31,5 @@ async function toggle(index) {
 module.exports = {
 	getImages,
 	toggle,
-	get
+	get,
 };

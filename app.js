@@ -253,6 +253,10 @@ IO.on("connection", async (socket) => {
 		);
 	});
 
+	socket.on("toggle-second-question", async (data) => {
+		IO.emit("toggle-second-question-done", await data);
+	});
+
 	// IMITATE
 	socket.on("toggle-imitate", async (data) => {
 		IO.emit("toggle-imitate-done", await IMITATECONTROLLER.toggle(data.index));

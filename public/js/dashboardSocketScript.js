@@ -517,6 +517,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 		window.toggleRememberImage = toggleRememberImage;
 
+		function toggleSecondQuestion(index) {
+			SOCKET.emit("toggle-second-question", {
+				index: index,
+			});
+		}
+
+		window.toggleSecondQuestion = toggleSecondQuestion;
+
 		SOCKET.on("toggle-remember-image-done", (data) => {
 			const TOGGLES = document.querySelectorAll(
 				'button[id^="toggle-remember-image-"]'

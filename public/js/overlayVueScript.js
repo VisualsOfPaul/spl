@@ -606,7 +606,8 @@ const REMEMBERIMAGE = Vue.createApp({
 							</ul>
 
 							<div class="content">
-								<p v-html="image.question"></p>
+								<p id="question-1" class="question-1">{{ image.question }}</p>
+								<p id="question-2" class="question-2 hidden">{{ (image.question2 == null) ? "" : image.question2 }}</p>
 							</div>
 						</div>
 					</div>
