@@ -14,29 +14,36 @@ document.addEventListener("DOMContentLoaded", () => {
 		console.log(`Connected with ${SOCKET.id}.`);
 	});
 
+	var timerstarted = false;
+
 	// STARTING SCREEN
 	SOCKET.on("toggle-starting-screen-done", (data) => {
 		const STARTINGSCREEN = document.querySelector("#starting-screen-container");
 
-		if (data) {
-			gsap.to(STARTINGSCREEN, {
-				duration: 0.5,
-				opacity: 1,
-				ease: "power3.inOut",
-			});
-
-			startingScreenCountDown({
-				minutes: 5,
-				seconds: 0,
-			});
-		} else {
-			gsap.to(STARTINGSCREEN, {
-				duration: 0.5,
-				opacity: 0,
-				ease: "power3.inOut",
-			});
-
-			clearInterval(window.STARTINGSCREENCOUNTDOWN);
+		if(!timerstarted) {
+			if (data) {
+				gsap.to(STARTINGSCREEN, {
+					duration: 0.5,
+					opacity: 1,
+					ease: "power3.inOut",
+				});
+	
+				timerstarted = true;
+	
+				startingScreenCountDown({
+					minutes: 5,
+					seconds: 0,
+				});
+			} else {
+				timerstarted = false;
+				gsap.to(STARTINGSCREEN, {
+					duration: 0.5,
+					opacity: 0,
+					ease: "power3.inOut",
+				});
+	
+				clearInterval(window.STARTINGSCREENCOUNTDOWN);
+			}
 		}
 	});
 
