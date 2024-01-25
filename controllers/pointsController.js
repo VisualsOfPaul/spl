@@ -24,22 +24,17 @@ async function updateTeamName(index, name) {
 async function updateTeamPoints(index, operation) {
 	const teamName = CURRENTPOINTS.teams[index].name;
 
-	const teamInPoints = POINTS.teams.find((team) => team.name === teamName);
 	const teamInCurrentPoints = CURRENTPOINTS.teams.find(
 		(team) => team.name === teamName
 	);
 
-	if (teamInPoints && teamInCurrentPoints) {
-		teamInPoints.points =
-			operation === "add" ? teamInPoints.points + 1 : teamInPoints.points - 1;
+	teamInCurrentPoints.points =
+		operation === "add"
+			? teamInCurrentPoints.points + 1
+			: teamInCurrentPoints.points - 1;
 
-		// Update current points
-		teamInCurrentPoints.points = teamInPoints.points;
-	} else {
-		console.error(
-			`Team "${teamName}" not found in either POINTS or CURRENTPOINTS.`
-		);
-	}
+	// Update current points
+	teamInCurrentPoints.points = teamInCurrentPoints.points;
 
 	return CURRENTPOINTS;
 }
