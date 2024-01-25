@@ -46,8 +46,24 @@ IO.on("connection", async (socket) => {
 	console.log(`Connected with ${socket.id}.`);
 
 	// FUNCTIONS TO BE CALLED AT CONNECTION
-	IO.emit("update-points-done", await POINTSCONTROLLER.getCurrentPoints());
-	IO.emit("update-poll", await POLLCONTROLLER.getPoll());
+	/**
+	 * Overall functions from dashboard
+	 */
+	IO.emit("update-points-done", await POINTSCONTROLLER.getCurrentPoints()); //
+	IO.emit("update-starting-screen-done", await STARTINGSCREENCONTROLLER.get()); //
+	IO.emit("update-sponsors-done", await SPONSORSCONTROLLER.get()); //
+	IO.emit("update-timer-done", await TIMERCONTROLLER.get()); //
+	IO.emit("update-total-points-done", await POINTSCONTROLLER.getTotalPoints()); //
+	IO.emit("update-poll-done", await POLLCONTROLLER.getPoll()); //
+
+	/**
+	 * Functions from games
+	*/
+	IO.emit("update-quiz-done", await QUIZCONTROLLER.getQuiz());
+	IO.emit("update-lego-build-done", await LEGOCONTROLLER.get()); 
+	IO.emit("update-remember-image-done", await REMEMBERIMAGECONTROLLER.get());
+	IO.emit("update-where-is-this-done", await WHEREISTHISCONTROLLER.get()); //
+	IO.emit("update-imitate-done", await IMITATECONTROLLER.getImitate()); //
 
 	// SWITCH VIEW
 	socket.on("switch-view", (data) => {
