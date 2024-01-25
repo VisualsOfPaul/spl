@@ -10,7 +10,6 @@ const SOCKET = io(REMOTELINK);
 
 SOCKET.on("disconnect", (reason) => {
   if(reason === 'io server disconnect') {
-    SOCKET.connect();
     console.log('Socket disconnected. Reconnecting...');
   }
 });
@@ -47,12 +46,11 @@ function onMessageHandler (target, context, msg, self) {
   if (self) { return; } // Ignore messages from the bot
 
   // Remove whitespace from chat message
-  const commandName = msg.trim();
+  const commandName = msg.trim().toLowerCase();
 
   // If the command is known, let's execute it
   switch(commandName) {
     case '!dice': 
-    case '!Dice':
         const num = rollDice();
         client.say(target, `You rolled a ${num}`);
         break;
@@ -73,17 +71,13 @@ function onMessageHandler (target, context, msg, self) {
         };
         break;
     case '!commands':
-    case '!Commands':
         client.say(target, `!dice, !commands, !website, !instagram`);
         break;
     case '!youtube':
-    case '!Youtube':
         client.say(target, `https://www.youtube.com/@mikoeln`);
         break;
     case '!instagram':
-    case '!Instagram':
     case '!insta':
-    case '!Insta':
         client.say(target, `https://www.instagram.com/mithkoeln/`);
         break;
     default: 

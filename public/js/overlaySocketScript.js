@@ -727,7 +727,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	// DISCONNECT
 	SOCKET.on("disconnect", (reason) => {
 		if (reason === "io server disconnect") {
-			SOCKET.connect();
 		}
 	});
 });
