@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Shutdown Stopped</p>
+
+    <script>
+        const fiveMinutes = 300000;
+        const tenMinutes = 600000;
+        const thirtySeconds = 30000;
+        const onAir = false;
+
+        setTimeout(() => {
+            window.location.href = "/stop-shutdown";
+        }, tenMinutes);
+    </script>
+</body>
+</html>

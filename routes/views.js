@@ -29,4 +29,8 @@ ROUTER.get("/overlay", async (req, res) => {
 	res.sendFile(PATH.join(__dirname, "../views/overlay.html"));
 });
 
+ROUTER.get("/stop-shutdown", async (req, res) => {
+	res.sendFile(PATH.join(__dirname, "../views/stop-shutdown.html"));
+});
+
 module.exports = ROUTER;
