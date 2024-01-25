@@ -45,12 +45,6 @@ const IO = new SOCKETIO.Server(SERVER);
 IO.on("connection", async (socket) => {
 	console.log(`Connected with ${socket.id}.`);
 
-	IO.emit("reload-client");
-
-	socket.on("reload-server", async () => {
-		setTimeout(IO.emit('reload-client'), 30000)
-	});
-
 	// FUNCTIONS TO BE CALLED AT CONNECTION
 	/**
 	 * Overall functions from dashboard

@@ -9,12 +9,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	SOCKET.on("connect", () => {
 		console.log(`Connected with ${SOCKET.id}.`);
 
-		SOCKET.on('reload-client', () => {
-			setTimeout(() => {
-				SOCKET.emit('reload-server');
-			}, 30000);
-		})
-
 		// SWITCH VIEW
 		async function switchView(index) {
 			SOCKET.emit("switch-view", {
